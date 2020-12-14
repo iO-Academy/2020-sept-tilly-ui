@@ -4,19 +4,37 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
 } from "react-router-dom";
 import Header from "./Components/Header";
 import Create from "./Components/Create";
 import Profile from "./Components/Profile";
 import Timeline from "./Components/Timeline";
-import LogUp from "./Components/LogUp/LogUp";
+import SignUp from "./Components/LogUp/SignUp";
+import LogIn from "./Components/LogUp/LogIn";
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {create: true, loggedIn: false, username: ''}
+    this.state = {
+      create: true,
+      loggedIn: false,
+      username: '',
+      email: '',
+      description: '',
+      name: ''
+    }
+  }
+
+  createUser = (userInfo) => {
+    const stateCopy = {...this.state};
+    stateCopy.username = userInfo.username;
+    stateCopy.email = userInfo.email;
+    stateCopy.description = userInfo.description;
+    stateCopy.name = userInfo.name;
+    stateCopy.loggedIn = true;
+    this.setState({...stateCopy});
   }
 
   render() {
@@ -25,11 +43,14 @@ class App extends React.Component {
 
           {!this.state.loggedIn ?
               <Switch>
+                <Route path="/login">
+                  <LogIn/>
+                </Route>
                 <Route path="/:userName">
                   <Profile/>
                 </Route>
                 <Route path="/">
-                  <LogUp />
+                  <SignUp onCreateUser={this.createUser}/>
                 </Route>
               </Switch>
               :

@@ -1,5 +1,7 @@
 import React from 'react';
 import Button from "../../Button";
+import {Link} from "react-router-dom";
+import '../logup.css';
 
 
 class SignUp extends React.Component {
@@ -7,15 +9,16 @@ class SignUp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-                username: '',
-                email: '',
-                password: '',
-                description: '',
+            username: '',
+            email: '',
+            password: '',
+            description: '',
             isValid: {
                 username: false,
                 password: false,
                 email: false
-            }}
+            }
+        }
     }
 
 
@@ -27,49 +30,79 @@ class SignUp extends React.Component {
         });
         this.validate()
 
-        console.log(this.state);
     }
 
     handleSubmit = () => {
+        this.validate();
         //push data to DB
         //Update to logged in
         //Check if isValid = true before posting data
-        if(
+        if (
             this.state.isValid.email &&
-            this.state.isValid.password &&
-            this.state.isValid.username
-        ){
-            //send data
+            this.state.isValid.password
+        ) {
+            const query = `mutation {
+                addUser(
+                    description: "${this.state.description}",
+                    email: "${this.state.email}",
+                    hash: "dfjdnj4fndjrfm",
+                    name: "chuck",
+                    username: "${this.state.username}"
+                ) 
+                {
+                    name
+                }
+            }`
+            console.log(query);
+            fetch('http://localhost:4002/graphql', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({query})
+            })
+                .then(r => r.json())
+                .then(data =>
+                    // console.log(data)
+                    this.createUser(this.state)
+                );
         }
+
     }
 
-    validate(){
-        let input = this.state;
+    createUser = (userInfo) => {
+        this.props.onCreateUser(userInfo);
+    }
+
+    validate() {
+        let input = {...this.state};
 
         if (typeof input["email"] !== "undefined") {
             const emailPattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
             if (emailPattern.test(input["email"])) {
-                this.state.isValid.email = true;
+                input.isValid.email = true;
             } else {
-                this.state.isValid.email = false;
+                input.isValid.email = false;
             }
         }
 
         if (typeof input["password"] !== "undefined") {
             const passwordPattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
             if (passwordPattern.test(input["password"])) {
-                this.state.isValid.password = true;
+                input.isValid.password = true;
+
             } else {
-                this.state.isValid.password = false;
+                input.isValid.password = false;
 
             }
         }
+
+        this.setState({input});
 
         //Need to add validation for username - comparing to DB usernames on file
     }
 
     render() {
-
         return (
 
             <div
@@ -87,7 +120,7 @@ class SignUp extends React.Component {
                     create an account
                 </h2>
 
-                <div id="logup-form">
+                <form id="logup-form">
                     <div className="logup-row">
                         <label
                             className="logup-label"
@@ -105,9 +138,9 @@ class SignUp extends React.Component {
                         />
                         <div
                             className="validity-check">
-                                {this.state.isValid.username &&
-                                <div className="valid-input">&#10003;</div>
-                                }
+                            {this.state.isValid.username &&
+                            <div className="valid-input">&#10003;</div>
+                            }
                         </div>
                     </div>
                     <div
@@ -132,9 +165,9 @@ class SignUp extends React.Component {
                         />
                         <div
                             className="validity-check">
-                                {this.state.isValid.email &&
-                                <div className="valid-input">&#10003;</div>
-                                }
+                            {this.state.isValid.email &&
+                            <div className="valid-input">&#10003;</div>
+                            }
                         </div>
                     </div>
                     <div
@@ -192,11 +225,11 @@ class SignUp extends React.Component {
                         </span>
                         <span>/500</span>
                     </div>
-                </div>
+                </form>
 
                 <Button
                     name="sign up"
-                    onClick={this.handleSubmit}
+                    onHandleClick={this.handleSubmit}
                 />
 
                 <div
@@ -206,10 +239,7 @@ class SignUp extends React.Component {
                         already have an account?
                     </p>
                     <p>
-                        <a
-                            onClick={this.props.onHandleSwitch}>
-                            log in
-                        </a>
+                        <Link to="/login">create one</Link>
                     </p>
                 </div>
 
