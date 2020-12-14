@@ -1,0 +1,28 @@
+
+button {
+    margin: 20px;
+    width: 80px;
+    height: 28px;
+    font-family: var(--main-type);
+    font-weight: bold;
+    background: var(--high-color);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px 1px #111111;
+}
+
+.follow {
+    width: 28px;
+    font-family: Arial, sans-serif;
+    font-size: large;
+    border-radius: 5px;
+}
+
+.unfollow {
+    transform: rotate(45deg);
+    background: var(--warn-color);
+}
+
+hr {
+    box-shadow: 0 5px 15px 1px #000;
+}
