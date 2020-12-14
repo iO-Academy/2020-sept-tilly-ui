@@ -31,7 +31,7 @@ class LogIn extends React.Component {
                     </div>
                 </div>
 
-                <Button name="log in" />
+                <Button name="log in" onClick={this.handleSubmit}/>
 
                 <div className="switch-logup">
                     <p className="small">

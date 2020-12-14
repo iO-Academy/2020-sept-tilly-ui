@@ -10,45 +10,49 @@ import Header from "./Components/Header";
 import Create from "./Components/Create";
 import Profile from "./Components/Profile";
 import Timeline from "./Components/Timeline";
-import UserProfile from "./Components/UserProfile";
-import SignUp from "./Components/LogUp/LogUp";
+import LogUp from "./Components/LogUp/LogUp";
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {create: true, loggedIn: false}
+    this.state = {create: true, loggedIn: false, username: ''}
   }
-
 
   render() {
     return (
-        <div>
+        <Router>
+
           {!this.state.loggedIn ?
-              <SignUp/> :
-              <Router>
-                <div>
-                  <Header/>
+              <Switch>
+                <Route path="/:userName">
+                  <Profile/>
+                </Route>
+                <Route path="/">
+                  <LogUp />
+                </Route>
+              </Switch>
+              :
+            <div>
+              <Header/>
 
-                  {this.state.create &&
-                  <Create/>}
+              {this.state.create &&
+              <Create/>}
 
-
-                  <Switch>
-                    <Route path="/profile">
-                      <Profile/>
-                    </Route>
-                    <Route path="/:userName">
-                      <UserProfile />
-                    </Route>
-                    <Route path="/">
-                      <Timeline/>
-                    </Route>
-                  </Switch>
-                </div>
-              </Router>
+              <Switch>
+                <Route path={"/" + this.state.username}>
+                  <Profile username={this.state.username}/>
+                </Route>
+                <Route path="/:userName">
+                  <Profile />
+                </Route>
+                <Route path="/">
+                  <Timeline/>
+                </Route>
+              </Switch>
+            </div>
           }
-        </div>
+        </Router>
     );
   }
 }

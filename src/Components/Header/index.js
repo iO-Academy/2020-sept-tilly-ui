@@ -6,7 +6,7 @@ class Header extends React.Component {
         return (
             <nav>
                 <Link to="/">timeline</Link>
-                <Link to="/profile">profile</Link>
+                <Link to={"/" + this.props.username}>profile</Link>
             </nav>
         );
     }
