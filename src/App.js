@@ -26,7 +26,8 @@ class App extends React.Component {
       username: '',
       email: '',
       description: '',
-      lessons: []
+      lessons: [],
+      following: []
     }
     this.decoder = decoder.bind(this);
   }
@@ -38,12 +39,12 @@ class App extends React.Component {
       loggedIn: true,
       id: decoded.id
     });
-    console.log(this.state);
     const query = `query {
       user (id: "${decoded.id}") {
         username,
         name,
         email,
+        description,
         following {
           name
         }
@@ -60,7 +61,15 @@ class App extends React.Component {
       body: JSON.stringify({query})
     })
         .then(r => r.json())
-        .then(data => console.log(data));
+        .then(data => this.setState({
+          username: data.data.user.username,
+          name: data.data.user.name,
+          email: data.data.user.email,
+          description: data.data.user.description,
+          lessons: data.data.user.lessons,
+          following: data.data.user.following
+        }));
+    setTimeout(() => console.log(this.state), 1000);
   }
 
   logIn = (id) => {
@@ -118,6 +127,7 @@ class App extends React.Component {
               :
             <div>
               <Header
+                  username={this.state.username}
                   onLogOut={this.logOut}
               />
               <main>

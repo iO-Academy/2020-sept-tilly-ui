@@ -43,8 +43,10 @@ class Create extends React.Component {
             },
             body: JSON.stringify({query})
         })
-            .then(r => console.log(r));
-        this.setState({text: ''});
+            .then(r => this.setState({
+                text: '',
+                length: 0
+            }));
     }
 
     render() {

@@ -5,7 +5,7 @@ class Timeline extends React.Component {
         return (
             <section id="my-lessons" className="primary">
                 <h3>
-                    my lessons
+                    timeline
                 </h3>
                 {this.props.lessons.map((lesson, i) =>
                     <div key={'lesson' + i} className="lesson">
