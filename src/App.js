@@ -4,7 +4,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
 } from "react-router-dom";
 import Header from "./Components/Header";
 import Create from "./Components/Create";
@@ -100,7 +99,6 @@ class App extends React.Component {
     const lesson = {lesson: text, date: 'just now'};
     newState.lessons.unshift(lesson);
     this.setState({newState});
-    console.log(this.state);
   }
 
   render() {
@@ -138,16 +136,14 @@ class App extends React.Component {
                 />}
                 <Switch>
                   <Route
-                      path="/:userName">
+                      path="/:username">
                     <Profile
-                        username={this.state.username}
                         lessons={this.state.lessons}
                     />
                   </Route>
                   <Route
                       path="/">
                     <Timeline
-                        id={this.state.id}
                         lessons={this.state.lessons}
                     />
                   </Route>

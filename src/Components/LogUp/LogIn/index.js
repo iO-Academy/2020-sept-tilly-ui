@@ -16,7 +16,7 @@ class LogIn extends React.Component {
             password: '',
             redirect: false
         }
-        this.decoder = this.decoder.bind(this);
+        this.decoder = decoder.bind(this);
     }
 
     handleInput = (event) => {
