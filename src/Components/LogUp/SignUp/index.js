@@ -3,13 +3,14 @@ import Button from "../../Button";
 import {Link} from "react-router-dom";
 import '../logup.css';
 
-
 class SignUp extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            id: '',
             username: '',
+            name: '',
             email: '',
             password: '',
             description: '',
@@ -17,10 +18,15 @@ class SignUp extends React.Component {
                 username: false,
                 password: false,
                 email: false
+            },
+            isAvailable: {
+                username: null,
+                email: null
             }
         }
+        this.checkUsername = this.checkUsername.bind(this);
+        this.checkEmail = this.checkEmail.bind(this);
     }
-
 
     handleInput = (event) => {
         const name = event.target.name;
@@ -28,32 +34,28 @@ class SignUp extends React.Component {
         this.setState({
             [name]: value
         });
-        this.validate()
-
+        this.validate();
+        this.state.isValid.username && this.checkUsername(event);
+        this.state.isValid.email && this.checkEmail(event);
     }
 
     handleSubmit = () => {
         this.validate();
-        //push data to DB
-        //Update to logged in
-        //Check if isValid = true before posting data
         if (
             this.state.isValid.email &&
-            this.state.isValid.password
+            this.state.isValid.password &&
+            this.state.isAvailable.username &&
+            this.state.isAvailable.email
         ) {
             const query = `mutation {
                 addUser(
-                    description: "${this.state.description}",
-                    email: "${this.state.email}",
-                    hash: "dfjdnj4fndjrfm",
-                    name: "chuck",
+                    name: "${this.state.name}",
                     username: "${this.state.username}"
-                ) 
-                {
-                    name
-                }
-            }`
-            console.log(query);
+                    email: "${this.state.email}",
+                    password: "${this.state.password}",
+                    description: "${this.state.description}",
+                )
+            }`;
             fetch('http://localhost:4002/graphql', {
                 method: 'POST',
                 headers: {
@@ -62,49 +64,84 @@ class SignUp extends React.Component {
                 body: JSON.stringify({query})
             })
                 .then(r => r.json())
-                .then(data =>
-                    // console.log(data)
-                    this.createUser(this.state)
-                );
+                .then(data => {
+                    const token = data.data.addUser;
+                    const jwt = require('jsonwebtoken');
+                    const decoded = jwt.verify(token, 'secret');
+                    localStorage.setItem('tillyToken', token);
+                    this.setState({id: decoded.id});
+                    this.createUser(this.state);
+                });
         }
-
     }
 
     createUser = (userInfo) => {
         this.props.onCreateUser(userInfo);
     }
 
-    validate() {
+    validate = () => {
         let input = {...this.state};
-
-        if (typeof input["email"] !== "undefined") {
-            const emailPattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-            if (emailPattern.test(input["email"])) {
-                input.isValid.email = true;
-            } else {
-                input.isValid.email = false;
-            }
+        if (typeof input["username"] !== "undefined") {
+            const usernamePattern = new RegExp(/^(?=.{3,12}$)[a-zA-Z0-9]+/);
+            input.isValid.username = usernamePattern.test(input["username"]);
         }
-
+        if (typeof input["email"] !== "undefined") {
+            const emailPattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/);
+            input.isValid.email = emailPattern.test(input["email"]);
+        }
         if (typeof input["password"] !== "undefined") {
             const passwordPattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
-            if (passwordPattern.test(input["password"])) {
-                input.isValid.password = true;
-
-            } else {
-                input.isValid.password = false;
-
-            }
+            input.isValid.password = passwordPattern.test(input["password"]);
         }
-
         this.setState({input});
+    }
 
-        //Need to add validation for username - comparing to DB usernames on file
+    async checkUsername(event) {
+        const query = `query {
+            availableUsername (username: "${event.target.value}") 
+        }`;
+        fetch('http://localhost:4002/graphql', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({query})
+        })
+            .then(r => r.json())
+            .then(data => {
+                console.log(data);
+                console.log(this.state.username);
+                    let available = {...this.state};
+                    available.isAvailable.username = !!data.data.availableUsername;
+                    this.setState({...available});
+                }
+            )
+    }
+
+    async checkEmail(event) {
+        const query = `query {
+            availableEmail (email: "${event.target.value}") 
+        }`;
+        fetch('http://localhost:4002/graphql', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({query})
+        })
+            .then(r => r.json())
+            .then(data => {
+                console.log(data);
+                console.log(this.state.email);
+                    let available = {...this.state};
+                    available.isAvailable.email = !!data.data.availableEmail;
+                    this.setState({...available});
+                }
+            )
     }
 
     render() {
         return (
-
             <div
                 id="logup">
 
@@ -138,14 +175,39 @@ class SignUp extends React.Component {
                         />
                         <div
                             className="validity-check">
-                            {this.state.isValid.username &&
-                            <div className="valid-input">&#10003;</div>
+                            {this.state.isValid.username && this.state.isAvailable.username &&
+                            <div className="valid-input">
+                                &#10003;
+                            </div>
                             }
                         </div>
                     </div>
                     <div
                         className="logup-row requirements fade-text x-small">
-                        required, only letters &amp;amp; numbers
+                        required, only letters &amp; numbers
+                    </div>
+                    <div className="logup-row">
+                        <label
+                            className="logup-label"
+                            htmlFor="name">
+                            name
+                        </label>
+                        <input
+                            id="name"
+                            className="logup-input"
+                            type="text"
+                            required
+                            name="name"
+                            value={this.state.name}
+                            onChange={this.handleInput}
+                        />
+                        <div
+                            className="validity-check">
+                        </div>
+                    </div>
+                    <div
+                        className="logup-row requirements fade-text x-small">
+                        required
                     </div>
                     <div
                         className="logup-row">
@@ -165,8 +227,10 @@ class SignUp extends React.Component {
                         />
                         <div
                             className="validity-check">
-                            {this.state.isValid.email &&
-                            <div className="valid-input">&#10003;</div>
+                            {this.state.isValid.email && this.state.isAvailable.email &&
+                            <div className="valid-input">
+                                &#10003;
+                            </div>
                             }
                         </div>
                     </div>
@@ -192,7 +256,9 @@ class SignUp extends React.Component {
                         <div
                             className="validity-check">
                             {this.state.isValid.password &&
-                            <div className="valid-input">&#10003;</div>
+                            <div className="valid-input">
+                                &#10003;
+                            </div>
                             }
                         </div>
                     </div>
@@ -223,15 +289,15 @@ class SignUp extends React.Component {
                             className="text-length">
                             {this.state.description.length}
                         </span>
-                        <span>/500</span>
+                        <span>
+                            /500
+                        </span>
                     </div>
                 </form>
-
                 <Button
                     name="sign up"
                     onHandleClick={this.handleSubmit}
                 />
-
                 <div
                     className="switch-logup">
                     <p
@@ -239,15 +305,14 @@ class SignUp extends React.Component {
                         already have an account?
                     </p>
                     <p>
-                        <Link to="/login">create one</Link>
+                        <Link to="/login">
+                            log in
+                        </Link>
                     </p>
                 </div>
-
             </div>
-
         );
     }
 }
-
 
 export default SignUp;

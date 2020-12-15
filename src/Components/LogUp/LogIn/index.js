@@ -11,10 +11,7 @@ class LogIn extends React.Component {
         this.state = {
             username: '',
             password: '',
-            isValid: {
-                username: false,
-                password: false,
-            }}
+        }
     }
 
     handleInput = (event) => {
@@ -23,23 +20,29 @@ class LogIn extends React.Component {
         this.setState({
             [name]: value
         });
-        console.log(this.state)
+        console.log(this.state);
     }
 
     handleSubmit = () => {
-        //If username/password valid - loggedIn = true
-        if(
-            this.state.isValid.password &&
-            this.state.isValid.username
-        ){
-
-        }
-    }
-
-    validate() {
-        // let input = this.state;
-
-        //
+        const query = `query {
+            availableUsername (username: "${this.state.username}") 
+        }`;
+        fetch('http://localhost:4002/graphql', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({query})
+        })
+            .then(r => r.json())
+            .then(data => {
+                    console.log(data);
+                    console.log(this.state.username);
+                    let available = {...this.state};
+                    available.isAvailable.username = !!data.data.availableUsername;
+                    this.setState({...available});
+                }
+            )
     }
 
     render() {

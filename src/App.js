@@ -20,19 +20,29 @@ class App extends React.Component {
     this.state = {
       create: true,
       loggedIn: false,
+      id: '',
+      name: '',
       username: '',
       email: '',
       description: '',
-      name: ''
     }
+  }
+
+  componentDidMount() {
+    localStorage.getItem('tillyToken') && this.setState({loggedIn: true});
+  }
+
+  logOut = () => {
+    localStorage.clear();
+    this.setState({loggedIn: false});
   }
 
   createUser = (userInfo) => {
     const stateCopy = {...this.state};
+    stateCopy.name = userInfo.name;
     stateCopy.username = userInfo.username;
     stateCopy.email = userInfo.email;
     stateCopy.description = userInfo.description;
-    stateCopy.name = userInfo.name;
     stateCopy.loggedIn = true;
     this.setState({...stateCopy});
   }
@@ -40,14 +50,13 @@ class App extends React.Component {
   render() {
     return (
         <Router>
-
           {!this.state.loggedIn ?
               <Switch>
                 <Route path="/login">
-                  <LogIn/>
+                  <LogIn />
                 </Route>
                 <Route path="/:userName">
-                  <Profile/>
+                  <Profile />
                 </Route>
                 <Route path="/">
                   <SignUp onCreateUser={this.createUser}/>
@@ -55,20 +64,22 @@ class App extends React.Component {
               </Switch>
               :
             <div>
-              <Header/>
-
+              <Header
+                  onLogOut={this.logOut}
+              />
               {this.state.create &&
-              <Create/>}
-
+              <Create />}
               <Switch>
                 <Route path={"/" + this.state.username}>
-                  <Profile username={this.state.username}/>
+                  <Profile username={this.state.username} />
                 </Route>
                 <Route path="/:userName">
-                  <Profile />
+                  <Profile
+                      username={this.state.username}
+                  />
                 </Route>
                 <Route path="/">
-                  <Timeline/>
+                  <Timeline />
                 </Route>
               </Switch>
             </div>
