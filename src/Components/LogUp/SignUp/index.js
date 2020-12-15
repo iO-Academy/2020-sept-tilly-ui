@@ -37,6 +37,7 @@ class SignUp extends React.Component {
         this.validate();
         this.state.isValid.username && this.checkUsername(event);
         this.state.isValid.email && this.checkEmail(event);
+        this.decoder = this.decoder.bind(this);
     }
 
     handleSubmit = () => {
@@ -66,9 +67,7 @@ class SignUp extends React.Component {
                 .then(r => r.json())
                 .then(data => {
                     const token = data.data.addUser;
-                    const jwt = require('jsonwebtoken');
-                    const decoded = jwt.verify(token, 'secret');
-                    localStorage.setItem('tillyToken', token);
+                    const decoded = this.decoder(token);
                     this.setState({id: decoded.id});
                     this.createUser(this.state);
                 });
@@ -109,13 +108,10 @@ class SignUp extends React.Component {
         })
             .then(r => r.json())
             .then(data => {
-                console.log(data);
-                console.log(this.state.username);
-                    let available = {...this.state};
-                    available.isAvailable.username = !!data.data.availableUsername;
-                    this.setState({...available});
-                }
-            )
+                let available = {...this.state};
+                available.isAvailable.username = !!data.data.availableUsername;
+                this.setState({...available});
+            });
     }
 
     async checkEmail(event) {
@@ -131,13 +127,10 @@ class SignUp extends React.Component {
         })
             .then(r => r.json())
             .then(data => {
-                console.log(data);
-                console.log(this.state.email);
-                    let available = {...this.state};
-                    available.isAvailable.email = !!data.data.availableEmail;
-                    this.setState({...available});
-                }
-            )
+                let available = {...this.state};
+                available.isAvailable.email = !!data.data.availableEmail;
+                this.setState({...available});
+            });
     }
 
     render() {

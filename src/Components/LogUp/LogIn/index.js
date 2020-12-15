@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from "../../Button";
-import {Link} from "react-router-dom";
+import {Redirect, Link} from "react-router-dom";
+import decoder from "../../../Functions/decoder";
 import '../logup.css';
 
 
@@ -9,9 +10,13 @@ class LogIn extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            incorrect: false,
+            id: '',
             username: '',
             password: '',
+            redirect: false
         }
+        this.decoder = this.decoder.bind(this);
     }
 
     handleInput = (event) => {
@@ -23,9 +28,10 @@ class LogIn extends React.Component {
         console.log(this.state);
     }
 
-    handleSubmit = () => {
-        const query = `query {
-            availableUsername (username: "${this.state.username}") 
+    handleSubmit = (event) => {
+        event.preventDefault();
+        const query = `mutation {
+            login (username: "${this.state.username}", password: "${this.state.password}")
         }`;
         fetch('http://localhost:4002/graphql', {
             method: 'POST',
@@ -36,18 +42,29 @@ class LogIn extends React.Component {
         })
             .then(r => r.json())
             .then(data => {
-                    console.log(data);
-                    console.log(this.state.username);
-                    let available = {...this.state};
-                    available.isAvailable.username = !!data.data.availableUsername;
-                    this.setState({...available});
+                if (data.data.login) {
+                    const token = data.data.login;
+                    const decoded = this.decoder(token);
+                    this.setState({
+                        id: decoded.id,
+                        incorrect: false,
+                        redirect: true
+                    });
+                    this.loginSuccess(this.state.id);
+                } else {
+                    this.setState({incorrect: true});
                 }
-            )
+            });
+    }
+
+    loginSuccess = (id) => {
+        this.props.onLoginSuccess(id);
     }
 
     render() {
         return (
-            <div
+            <form
+                onSubmit={this.handleSubmit}
                 id="logup">
 
                 <img
@@ -65,6 +82,11 @@ class LogIn extends React.Component {
 
                 <div
                     id="logup-form">
+                    <div
+                        className="logup-row small">
+                        {this.state.incorrect &&
+                        'The details you entered are incorrect. Try again!'}
+                    </div>
                     <div
                         className="logup-row">
                         <label
@@ -103,7 +125,7 @@ class LogIn extends React.Component {
 
                 <Button
                     name="log in"
-                    onClick={this.handleSubmit}/>
+                />
 
                 <div
                     className="switch-logup">
@@ -112,10 +134,13 @@ class LogIn extends React.Component {
                         don't have an account?
                     </p>
                     <p>
-                        <Link to="/">create one</Link>
+                        <Link to="/">
+                            create one
+                        </Link>
+                        {this.state.redirect && <Redirect to='/' />}
                     </p>
                 </div>
-            </div>
+            </form>
         );
     }
 }

@@ -1,0 +1,16 @@
+#create {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+}
+
+#create textarea {
+    width: 100%;
+    height: 100px;
+    resize: none;
+    padding: 8px;
+    font-family: var(--main-type);
+    border: 1px solid var(--high-color);
+    border-radius: 5px;
+    box-shadow: 0 5px 15px 1px #000;
+}
