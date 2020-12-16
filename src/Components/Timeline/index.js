@@ -5,69 +5,38 @@ class Timeline extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lessons: [],
+            lessons: this.props.allLessons,
+            visibleLessons: [],
+            offset: 10,
             following: []
         }
     }
 
     componentDidMount() {
-        if (this.props.username !== '') {
-            this.getFollowing();
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.following !== this.props.following) {
-            this.getFollowing();
-        }
-    }
-
-    getFollowing = () => {
-        const query = `query {
-            username(username: "${this.props.username}") {
-                following {
-                    username,
-                    lessons {
-                        id,
-                        lesson
-                    }
-                }
-            }
-        }`
-        fetch('http://localhost:4002/graphql', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({query})
+        window.addEventListener('scroll', this.handleScroll);
+        this.setState({
+            visibleLessons : this.state.lessons.slice(0, this.state.offset)
         })
-            .then(r => r.json())
-            .then(data => {
-                console.log(data);
-                let lessons = [];
-                data.data.username.following.forEach(following => {
-                    const date = following.lessons[0].id.toString().substring(0,8)
-                    const convert = new Date(parseInt(date, 16) * 1000)
-                    const newDate =convert.toLocaleDateString("EN-GB")
-                    lessons.unshift({lesson: following.lessons[0].lesson, date: newDate})
-                })
-                lessons.unshift(this.props.lessons[0])
-                this.setState({
-                    following: data.data.username.following,
-                    lessons: lessons
-                });
-            })
+    }
 
+    handleScroll = () => {
+        if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.scrollHeight) {
+            this.setState({
+                offset : this.state.offset + 5
+            })
+            this.setState({
+                visibleLessons : this.state.lessons.slice(0, this.state.offset)
+            })
+        }
     }
 
     render() {
         return (
-
             <section id="my-lessons" className="primary">
                 <h3>
                     timeline
                 </h3>
-                {this.state.lessons.map((lesson, i) =>
+                {this.state.visibleLessons.map((lesson, i) =>
                     <div key={'lesson' + i} className="lesson">
                         <span className="fade-text small">
                             {lesson.date}

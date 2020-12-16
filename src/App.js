@@ -11,7 +11,8 @@ import Timeline from "./Components/Timeline";
 import SignUp from "./Components/LogUp/SignUp";
 import LogIn from "./Components/LogUp/LogIn";
 import decoder from "./Functions/decoder";
-import getUser from "./Functions/getUser";
+import getUserData from "./Functions/getUserData";
+import getDate from "./Functions/getDate";
 
 class App extends React.Component {
 
@@ -25,17 +26,19 @@ class App extends React.Component {
             email: '',
             description: '',
             lessons: [],
-            following: []
+            following: [],
+            followers: [],
+            allLessons: []
         }
         this.decoder = decoder.bind(this);
-        // this.getUser = getUser.bind(this);
+        this.getUserData = getUserData.bind(this);
     }
 
     componentDidMount() {
-        this.getCurrentUser();
+        this.getData();
     }
 
-    getCurrentUser = () => {
+    getData = () => {
         if (localStorage.getItem('tillyToken')) {
             const token = localStorage.getItem('tillyToken');
             const decoded = this.decoder(token);
@@ -44,46 +47,7 @@ class App extends React.Component {
                 id: decoded.id,
                 username: decoded.username
             });
-            const query = `query {
-              user (id: "${decoded.id}") {
-                username,
-                name,
-                email,
-                description,
-                following {
-                  name
-                }
-                lessons {
-                  id,
-                  lesson
-                }
-              }
-            }`;
-            fetch('http://localhost:4002/graphql', {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify({query})
-            })
-                .then(r => r.json())
-                .then(data => {
-                    let lessons = [];
-                    data.data.user.lessons.forEach(lesson => {
-                        const date = lesson.id.toString().substring(0,8)
-                        const convert = new Date(parseInt(date, 16) * 1000)
-                        const newDate =convert.toLocaleDateString("EN-GB")
-                        lessons.unshift({lesson: lesson.lesson, date: newDate})
-                    })
-                    this.setState({
-                        username: data.data.user.username,
-                        name: data.data.user.name,
-                        email: data.data.user.email,
-                        description: data.data.user.description,
-                        lessons: lessons,
-                        following: data.data.user.following
-                    })
-                });
+            this.getUserData(decoded);
             setTimeout(() => console.log(this.state), 1000);
         }
     }
@@ -93,7 +57,7 @@ class App extends React.Component {
             loggedIn: true,
             id: id,
         });
-        this.getCurrentUser();
+        this.getData();
     }
 
     logOut = () => {
@@ -109,14 +73,15 @@ class App extends React.Component {
         stateCopy.email = userInfo.email;
         stateCopy.description = userInfo.description;
         stateCopy.loggedIn = true;
-        this.setState({stateCopy});
+        this.setState({...stateCopy});
     }
 
     addLesson = (text) => {
-        let stateCopy = {...this.state};
+        let stateCopy = {...this.state}
         const lesson = {lesson: text, date: 'just now'};
         stateCopy.lessons.unshift(lesson);
-        this.setState({stateCopy});
+        this.setState({...stateCopy});
+        this.setState({...stateCopy});
     }
 
     render() {
@@ -149,6 +114,7 @@ class App extends React.Component {
                             path="/">
                             {this.state.loggedIn ?
                                 <Timeline
+                                    allLessons={this.state.allLessons}
                                     lessons={this.state.lessons}
                                     following={this.state.following}
                                     username={this.state.username}
