@@ -12,17 +12,17 @@ class Timeline extends React.Component {
 
     componentDidMount() {
         if (this.props.username !== '') {
-            this.getFollowers();
+            this.getFollowing();
         }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.following !== this.props.following) {
-            this.getFollowers();
+            this.getFollowing();
         }
     }
 
-    getFollowers = () => {
+    getFollowing = () => {
         const query = `query {
             username(username: "${this.props.username}") {
                 following {
@@ -51,6 +51,7 @@ class Timeline extends React.Component {
                     const newDate =convert.toLocaleDateString("EN-GB")
                     lessons.unshift({lesson: following.lessons[0].lesson, date: newDate})
                 })
+                lessons.unshift(this.props.lessons[0])
                 this.setState({
                     following: data.data.username.following,
                     lessons: lessons

@@ -11,6 +11,7 @@ import Timeline from "./Components/Timeline";
 import SignUp from "./Components/LogUp/SignUp";
 import LogIn from "./Components/LogUp/LogIn";
 import decoder from "./Functions/decoder";
+import getUser from "./Functions/getUser";
 
 class App extends React.Component {
 
@@ -27,6 +28,7 @@ class App extends React.Component {
             following: []
         }
         this.decoder = decoder.bind(this);
+        // this.getUser = getUser.bind(this);
     }
 
     componentDidMount() {
@@ -39,7 +41,8 @@ class App extends React.Component {
             const decoded = this.decoder(token);
             token && this.setState({
                 loggedIn: true,
-                id: decoded.id
+                id: decoded.id,
+                username: decoded.username
             });
             const query = `query {
               user (id: "${decoded.id}") {
@@ -55,7 +58,7 @@ class App extends React.Component {
                   lesson
                 }
               }
-            }`
+            }`;
             fetch('http://localhost:4002/graphql', {
                 method: 'POST',
                 headers: {
@@ -106,14 +109,14 @@ class App extends React.Component {
         stateCopy.email = userInfo.email;
         stateCopy.description = userInfo.description;
         stateCopy.loggedIn = true;
-        this.setState({...stateCopy});
+        this.setState({stateCopy});
     }
 
     addLesson = (text) => {
-        let newState = {...this.state};
+        let stateCopy = {...this.state};
         const lesson = {lesson: text, date: 'just now'};
-        newState.lessons.unshift(lesson);
-        this.setState({newState});
+        stateCopy.lessons.unshift(lesson);
+        this.setState({stateCopy});
     }
 
     render() {
