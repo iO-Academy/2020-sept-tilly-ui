@@ -11,7 +11,9 @@ class Timeline extends React.Component {
     }
 
     componentDidMount() {
-        this.getFollowers();
+        if (this.props.username !== '') {
+            this.getFollowers();
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

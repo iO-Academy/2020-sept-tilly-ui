@@ -6,7 +6,6 @@ import {
     Route, Redirect,
 } from "react-router-dom";
 import Header from "./Components/Header";
-import Create from "./Components/Create";
 import Profile from "./Components/Profile";
 import Timeline from "./Components/Timeline";
 import SignUp from "./Components/LogUp/SignUp";
