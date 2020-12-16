@@ -43,19 +43,20 @@ class App extends React.Component {
                 id: decoded.id
             });
             const query = `query {
-          user (id: "${decoded.id}") {
-            username,
-            name,
-            email,
-            description,
-            following {
-              name
-            }
-            lessons {
-              lesson
-            }
-          }
-        }`
+              user (id: "${decoded.id}") {
+                username,
+                name,
+                email,
+                description,
+                following {
+                  name
+                }
+                lessons {
+                  id,
+                  lesson
+                }
+              }
+            }`
             fetch('http://localhost:4002/graphql', {
                 method: 'POST',
                 headers: {
@@ -64,14 +65,23 @@ class App extends React.Component {
                 body: JSON.stringify({query})
             })
                 .then(r => r.json())
-                .then(data => this.setState({
-                    username: data.data.user.username,
-                    name: data.data.user.name,
-                    email: data.data.user.email,
-                    description: data.data.user.description,
-                    lessons: data.data.user.lessons,
-                    following: data.data.user.following
-                }));
+                .then(data => {
+                    let lessons = [];
+                    data.data.user.lessons.forEach(lesson => {
+                        const date = lesson.id.toString().substring(0,8)
+                        const convert = new Date(parseInt(date, 16) * 1000)
+                        const newDate =convert.toLocaleDateString("EN-GB")
+                        lessons.unshift({lesson: lesson.lesson, date: newDate})
+                    })
+                    this.setState({
+                        username: data.data.user.username,
+                        name: data.data.user.name,
+                        email: data.data.user.email,
+                        description: data.data.user.description,
+                        lessons: lessons,
+                        following: data.data.user.following
+                    })
+                });
             setTimeout(() => console.log(this.state), 1000);
         }
     }
@@ -91,7 +101,7 @@ class App extends React.Component {
     }
 
     createUser = (userInfo) => {
-        const stateCopy = {...this.state};
+        let stateCopy = {...this.state};
         stateCopy.name = userInfo.name;
         stateCopy.username = userInfo.username;
         stateCopy.email = userInfo.email;
@@ -138,6 +148,8 @@ class App extends React.Component {
                             {this.state.loggedIn ?
                                 <Timeline
                                     lessons={this.state.lessons}
+                                    following={this.state.following}
+                                    username={this.state.username}
                                 />
                                 :
                                 <SignUp
