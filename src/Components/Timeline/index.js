@@ -19,6 +19,14 @@ class Timeline extends React.Component {
         })
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps != this.props) {
+            this.setState({
+                visibleLessons : this.state.lessons.slice(0, this.state.offset)
+            })
+        }
+    }
+
     handleScroll = () => {
         if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.scrollHeight) {
             this.setState({
