@@ -7,11 +7,11 @@ import {
 } from "react-router-dom";
 import Header from "./Components/Header";
 import Profile from "./Components/Profile";
+import Friend from "./Components/Friend";
 import Timeline from "./Components/Timeline";
 import SignUp from "./Components/LogUp/SignUp";
 import LogIn from "./Components/LogUp/LogIn";
 import decoder from "./Functions/decoder";
-import getUser from "./Functions/getUser";
 
 class App extends React.Component {
 
@@ -136,15 +136,20 @@ class App extends React.Component {
                                 onLoginSuccess={this.logIn}
                             />
                         </Route>}
+                        {this.state.loggedIn &&
                         <Route
-                            path="/:username">
+                            path={"/" + this.state.username}>
                             <Profile
                                 lessons={this.state.lessons}
                                 id={this.state.id}
                                 username={this.state.username}
                                 onAddLesson={this.addLesson}
                             />
-                        </Route>
+                        </Route>}
+                        <Route
+                            path="/:username"
+                            component={Friend}
+                        />
                         <Route
                             path="/">
                             {this.state.loggedIn ?

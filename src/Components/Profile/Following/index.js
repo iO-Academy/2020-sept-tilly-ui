@@ -5,32 +5,22 @@ class Following extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            lessons: []
         }
     }
 
-    componentDidMount() {
-
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-
-    }
-
-
-
     render() {
         return (
-
             <section className="secondary secondary-right">
-
-                <h4>you're following...</h4>
-
-
-                <div className="me-follow">
+                <h4>
+                    following
+                </h4>
+                <div
+                    className="me-follow">
                     <div>
-                        <span className="x-small">
-                            6 lessons
+                        <span
+                            className="lessons-length x-small">
+                            {this.state.lessons.length} lessons
                         </span>
                         <p>
                             <a>

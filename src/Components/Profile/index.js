@@ -1,6 +1,5 @@
 import React from 'react';
 import './profile.css';
-import decoder from "../../Functions/decoder";
 import Create from "../Create";
 
 class Profile extends React.Component {
@@ -15,11 +14,10 @@ class Profile extends React.Component {
     render() {
         return (
             <div>
-                {this.state.url === ('/' + this.props.username) &&
                 <Create
                     id={this.props.id}
                     onCreateLesson={this.props.onAddLesson}
-                />}
+                />
                 <section id="my-lessons" className="primary">
                     <h3>
                         my lessons
