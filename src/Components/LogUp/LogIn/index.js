@@ -11,6 +11,7 @@ class LogIn extends React.Component {
         super(props);
         this.state = {
             incorrect: false,
+            nonExistent: false,
             id: '',
             username: '',
             password: '',
@@ -23,7 +24,9 @@ class LogIn extends React.Component {
         const name = event.target.name;
         const value = event.target.value;
         this.setState({
-            [name]: value
+            [name]: value,
+            incorrect: false,
+            nonExistent: false
         });
         console.log(this.state);
     }
@@ -33,28 +36,35 @@ class LogIn extends React.Component {
         const query = `mutation {
             login (username: "${this.state.username}", password: "${this.state.password}")
         }`;
-        fetch('http://localhost:4002/graphql', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({query})
-        })
-            .then(r => r.json())
-            .then(data => {
-                if (data.data.login) {
-                    const token = data.data.login;
-                    const decoded = this.decoder(token);
-                    this.setState({
-                        id: decoded.id,
-                        incorrect: false,
-                        redirect: true
-                    });
-                    this.loginSuccess(this.state.id);
-                } else {
-                    this.setState({incorrect: true});
-                }
-            });
+        try {
+            fetch('http://localhost:4002/graphql', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({query})
+            })
+                .then(r => r.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.data.login === "Login failed") {
+                        this.setState({incorrect: true});
+                    }else if (data.data.login === null) {
+                        this.setState({nonExistent: true});
+                    } else {
+                        const token = data.data.login;
+                        const decoded = this.decoder(token);
+                        this.setState({
+                            id: decoded.id,
+                            incorrect: false,
+                            redirect: true
+                        });
+                        this.loginSuccess(this.state.id);
+                    }
+                });
+        } catch(err){
+            console.log(err);
+        }
     }
 
     loginSuccess = (id) => {
@@ -86,6 +96,8 @@ class LogIn extends React.Component {
                         className="logup-row small">
                         {this.state.incorrect &&
                         'The details you entered are incorrect. Try again!'}
+                        {this.state.nonExistent &&
+                        'Cannot find user. Try again!'}
                     </div>
                     <div
                         className="logup-row">

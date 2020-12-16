@@ -1,8 +1,10 @@
 import React from 'react';
 
 class Timeline extends React.Component {
+
     render() {
         return (
+
             <section id="my-lessons" className="primary">
                 <h3>
                     timeline

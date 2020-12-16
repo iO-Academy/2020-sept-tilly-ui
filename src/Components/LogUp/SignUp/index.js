@@ -2,6 +2,7 @@ import React from 'react';
 import Button from "../../Button";
 import {Link} from "react-router-dom";
 import '../logup.css';
+import decoder from "../../../Functions/decoder";
 
 class SignUp extends React.Component {
 
@@ -37,7 +38,7 @@ class SignUp extends React.Component {
         this.validate();
         this.state.isValid.username && this.checkUsername(event);
         this.state.isValid.email && this.checkEmail(event);
-        this.decoder = this.decoder.bind(this);
+        this.decoder = decoder.bind(this);
     }
 
     handleSubmit = () => {
