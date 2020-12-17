@@ -1,0 +1,32 @@
+button {
+    font-family: var(--main-type);
+    font-weight: bold;
+    background: var(--high-color);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px 1px #111111;
+}
+
+.generic {
+    margin: 20px;
+    width: 80px;
+    height: 28px;
+}
+
+.follow {
+    margin: 20px 5px;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: large;
+    border-radius: 5px;
+}
+
+.unfollow {
+    background: var(--warn-color);
+}
+
+.unfollow-rotate {
+    transform: rotate(45deg);
+}

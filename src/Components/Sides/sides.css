@@ -1,0 +1,28 @@
+.secondary {
+    position: fixed;
+    bottom: 0;
+    width: 450px;
+    max-width: 20vw;
+    height: calc(100vh - 120px);
+    margin: 0;
+    padding: 0 40px;
+    box-sizing: border-box;
+    box-shadow: 0 10px 15px -5px #111111;
+}
+
+.secondary-left {
+    left: 0;
+    border-right: 1px solid var(--line-color);
+}
+
+.secondary-right {
+    right: 0;
+    border-left: 1px solid var(--line-color);
+}
+
+.me-follow {
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-between;
+    font-size: small;
+}
