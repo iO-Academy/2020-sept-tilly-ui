@@ -85,6 +85,7 @@ class Profile extends React.Component {
                     myUsername={this.state.myUsername}
                     myFollowing={this.state.following}
                     following={this.state.following}
+                    loggedIn={this.props.loggedIn}
                 />
             </div>
         );

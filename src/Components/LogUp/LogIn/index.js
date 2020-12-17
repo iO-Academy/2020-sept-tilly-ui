@@ -77,10 +77,6 @@ class LogIn extends React.Component {
                 onSubmit={this.handleSubmit}
                 id="logup">
 
-                <img
-                    src="Images/tilly1.png"
-                    alt="tilly logo"/>
-
                 <h5>
                     today i learned lots... yay!
                 </h5>

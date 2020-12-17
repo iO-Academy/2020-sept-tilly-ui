@@ -16,8 +16,7 @@ class Header extends React.Component {
                         timeline
                     </Link>
                     <Link
-                        to={"/" + this.props.username}
-                        onClick={this.props.onChangeUrl}>
+                        to={"/" + this.props.username}>
                         profile
                     </Link>
                 </nav>

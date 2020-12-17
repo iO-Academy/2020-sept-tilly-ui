@@ -1,6 +1,7 @@
 import React from 'react';
 import Following from "../../Sides/Following";
 import Bio from "../../Sides/Bio";
+import {Redirect} from "react-router-dom";
 import getMinimalUserData from "../../../Functions/getMinimalUserData";
 import decoder from "../../../Functions/decoder";
 import follow from "../../../Functions/follow";
@@ -8,7 +9,6 @@ import unfollow from "../../../Functions/unfollow";
 import followFetch from "../../../Functions/followFetch";
 import Button from "../../Button";
 import '../profile.css';
-import {Redirect} from "react-router-dom";
 
 class Friend extends React.Component {
 
@@ -96,6 +96,7 @@ class Friend extends React.Component {
                     myUsername={this.props.myDetails.username}
                     myFollowing={this.props.myDetails.following}
                     following={this.state.following}
+                    loggedIn={this.props.myDetails.loggedIn}
                 />
                 {this.state.notFound && <Redirect to='/' />}
             </div>

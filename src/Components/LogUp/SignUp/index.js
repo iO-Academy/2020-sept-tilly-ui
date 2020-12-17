@@ -139,9 +139,6 @@ class SignUp extends React.Component {
             <div
                 id="logup">
 
-                <img
-                    src="Images/tilly1.png" alt="tilly logo"/>
-
                 <h5>
                     today i learned lots... yay!
                 </h5>

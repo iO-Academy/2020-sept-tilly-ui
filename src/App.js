@@ -7,6 +7,7 @@ import {
     Redirect,
 } from "react-router-dom";
 import Header from "./Components/Header";
+import LoginHeader from "./Components/Header/LoginHeader";
 import Profile from "./Components/Profile";
 import Friend from "./Components/Profile/Friend";
 import Timeline from "./Components/Timeline";
@@ -37,12 +38,6 @@ class App extends React.Component {
 
     componentDidMount() {
         this.getData();
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps !== this.props) {
-
-        }
     }
 
     componentWillUnmount() {
@@ -103,6 +98,8 @@ class App extends React.Component {
                     username={this.state.username}
                     onLogOut={this.logOut}
                 />}
+                {!this.state.loggedIn &&
+                <LoginHeader />}
                 <main>
                     <Switch>
                         <Route
@@ -120,6 +117,7 @@ class App extends React.Component {
                                 description={this.state.description}
                                 lessons={this.state.lessons}
                                 following={this.state.following}
+                                loggedIn={this.state.loggedIn}
                                 onAddLesson={this.addLesson}
                                 onGetData={this.getData}
                             />

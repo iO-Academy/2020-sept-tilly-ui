@@ -7,8 +7,8 @@ class Timeline extends React.Component {
         super(props);
         this.state = {
             lessons: [],
-            offset: 10,
-            following: []
+            following: [],
+            offset: 10
         }
     }
 
@@ -17,6 +17,7 @@ class Timeline extends React.Component {
         this.setState({
             lessons: this.props.allLessons.slice(0, this.state.offset)
         });
+        setTimeout(()=>console.log(this.props.lessons));
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

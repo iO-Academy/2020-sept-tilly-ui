@@ -20,6 +20,14 @@ body {
   background: var(--main-color);
 }
 
+.logo {
+  position: absolute;
+  width: 60px;
+  left: 0;
+  right: 0;
+  margin: 5px auto;
+}
+
 a {
   color: var(--high-color);
   text-decoration: none;
