@@ -14,14 +14,14 @@ class Timeline extends React.Component {
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
         this.setState({
-            lessons: this.props.lessons.slice(0, this.state.offset)
+            lessons: this.props.allLessons.slice(0, this.state.offset)
         });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps !== this.props) {
             this.setState({
-                lessons: this.props.lessons.slice(0, this.state.offset)
+                lessons: this.props.allLessons.slice(0, this.state.offset)
             });
         }
     }
@@ -32,7 +32,7 @@ class Timeline extends React.Component {
                 offset: this.state.offset + 5
             })
             this.setState({
-                lessons: this.props.lessons.slice(0, this.state.offset)
+                lessons: this.props.allLessons.slice(0, this.state.offset)
             })
         }
     }

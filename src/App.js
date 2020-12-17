@@ -4,11 +4,10 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Redirect,
 } from "react-router-dom";
 import Header from "./Components/Header";
 import Profile from "./Components/Profile";
-import Friend from "./Components/Friend";
+// import Friend from "./Components/Friend";
 import Timeline from "./Components/Timeline";
 import SignUp from "./Components/LogUp/SignUp";
 import LogIn from "./Components/LogUp/LogIn";
@@ -48,8 +47,6 @@ class App extends React.Component {
                 followers: [],
                 allLessons: []
             }
-            console.log(this.state.username)
-            // setTimeout(()=> {console.log(this.state)}, 1000)
         }
     }
 

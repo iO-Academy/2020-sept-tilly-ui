@@ -41,6 +41,15 @@ export default function getUserData(username) {
                 allLessons = allLessons.concat(getLessons(user));
             });
             allLessons = allLessons.concat(lessons);
+            allLessons.sort((a, b) => {
+                if (a.id > b.id) {
+                    return -1
+                }
+                if (a.id < b.id) {
+                    return 1
+                }
+                return 0
+            })
             this.setState({
                 username: data.data.username.username,
                 name: data.data.username.name,
