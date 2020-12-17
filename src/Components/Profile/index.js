@@ -14,7 +14,7 @@ class Profile extends React.Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
         this.setState({
             lessons: this.props.lessons.slice(0, this.state.offset)
