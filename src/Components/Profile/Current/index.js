@@ -1,9 +1,9 @@
 import React from 'react';
-import Following from '../Sides/Following';
-import '../Profile/profile.css'
-import getUserData from "../../Functions/getUserData";
+import Create from "../../Create";
+import Following from "../../Sides/Following";
+import '../profile.css';
 
-class Friend extends React.Component {
+class Current extends React.Component {
 
     constructor(props) {
         super(props);
@@ -13,28 +13,23 @@ class Friend extends React.Component {
             email: '',
             description: '',
             lessons: [],
-            following: []
+            following: [],
+            url: window.location.pathname
         }
-        this.getUserData = getUserData.bind(this);
-    }
-
-    componentDidMount() {
-        this.getUserData(this.props.match.params.username);
-    }
-
-    componentWillUnmount() {
-        const controller = new AbortController();
-        controller.abort();
     }
 
     render() {
         return (
             <div>
+                <Create
+                    id={this.props.id}
+                    onCreateLesson={this.props.onAddLesson}
+                />
                 <section id="my-lessons" className="primary">
                     <h3>
-                        {this.state.username}'s lessons
+                        my lessons
                     </h3>
-                    {this.state.lessons.map((lesson, i) =>
+                    {this.props.lessons.map((lesson, i) =>
                         <div key={'lesson' + i} className="lesson">
                             <span className="fade-text small">
                                 {lesson.date}
@@ -46,11 +41,11 @@ class Friend extends React.Component {
                     )}
                 </section>
                 <Following
-                    following={this.state.following}
+                    following={this.props.following}
                 />
             </div>
         );
     }
 }
 
-export default Friend;
+export default Current;

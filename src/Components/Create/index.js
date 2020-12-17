@@ -9,7 +9,8 @@ class Create extends React.Component {
         this.state = {
             text: '',
             length: 0,
-            tooLong: false
+            tooLong: false,
+            tooShort: true
         };
     }
 
@@ -19,7 +20,8 @@ class Create extends React.Component {
         this.setState({
             text: text,
             length: length,
-            tooLong: (length > 255)
+            tooLong: (length > 255),
+            tooShort: (length < 1)
         });
     }
 
@@ -70,7 +72,7 @@ class Create extends React.Component {
                     </span>
                 </div>
                 <Button
-                    disabled={this.state.tooLong}
+                    disabled={this.state.tooLong || this.state.tooShort}
                     onHandleClick={this.createLesson}
                     className="generic"
                     name="create"

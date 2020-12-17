@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import Header from "./Components/Header";
 import Profile from "./Components/Profile";
-import Friend from "./Components/Friend";
+import Friend from "./Components/Profile/Friend";
 import Timeline from "./Components/Timeline";
 import SignUp from "./Components/LogUp/SignUp";
 import LogIn from "./Components/LogUp/LogIn";
@@ -29,7 +29,8 @@ class App extends React.Component {
             lessons: [],
             following: [],
             followers: [],
-            allLessons: []
+            allLessons: [],
+            urlName: '',
         }
         this.decoder = decoder.bind(this);
         this.getUserData = getUserData.bind(this);
@@ -37,6 +38,17 @@ class App extends React.Component {
 
     componentDidMount() {
         this.getData();
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps !== this.props) {
+
+        }
+    }
+
+    componentWillUnmount() {
+        const controller = new AbortController();
+        controller.abort();
     }
 
     getData = () => {
@@ -49,7 +61,6 @@ class App extends React.Component {
                 username: decoded.username
             });
             this.getUserData(decoded);
-            console.log(decoded);
         }
     }
 
@@ -94,22 +105,23 @@ class App extends React.Component {
                 />}
                 <main>
                     <Switch>
-                        {!this.state.loggedIn &&
                         <Route
                             path="/login">
                             <LogIn
                                 onLoginSuccess={this.logIn}
                             />
-                        </Route>}
+                        </Route>
                         {this.state.loggedIn &&
                         <Route
                             path={"/" + this.state.username}>
                             <Profile
                                 id={this.state.id}
                                 username={this.state.username}
+                                description={this.state.description}
                                 lessons={this.state.lessons}
                                 following={this.state.following}
                                 onAddLesson={this.addLesson}
+                                onGetData={this.getData}
                             />
                         </Route>}
                         <Route

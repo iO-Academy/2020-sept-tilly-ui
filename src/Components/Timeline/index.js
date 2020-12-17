@@ -5,8 +5,7 @@ class Timeline extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lessons: this.props.allLessons,
-            visibleLessons: [],
+            lessons: [],
             offset: 10,
             following: []
         }
@@ -15,16 +14,22 @@ class Timeline extends React.Component {
     componentDidMount() {
         window.addEventListener('scroll', this.handleScroll);
         this.setState({
-            visibleLessons: this.state.lessons.slice(0, this.state.offset)
+            lessons: this.props.allLessons.slice(0, this.state.offset)
         });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps !== this.props) {
             this.setState({
-                visibleLessons: this.state.lessons.slice(0, this.state.offset)
+                lessons: this.props.allLessons.slice(0, this.state.offset)
             });
         }
+    }
+
+    componentWillUnmount() {
+        const controller = new AbortController();
+        const signal = controller.signal;
+        controller.abort();
     }
 
     handleScroll = () => {
@@ -33,7 +38,7 @@ class Timeline extends React.Component {
                 offset: this.state.offset + 5
             })
             this.setState({
-                visibleLessons: this.state.lessons.slice(0, this.state.offset)
+                lessons: this.props.allLessons.slice(0, this.state.offset)
             })
         }
     }
@@ -44,7 +49,7 @@ class Timeline extends React.Component {
                 <h3>
                     timeline
                 </h3>
-                {this.state.visibleLessons.map((lesson, i) =>
+                {this.state.lessons.map((lesson, i) =>
                     <div key={'lesson' + i} className="lesson">
                         <span className="fade-text small">
                             {lesson.date}

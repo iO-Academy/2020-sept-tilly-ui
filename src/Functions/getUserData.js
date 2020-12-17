@@ -3,20 +3,23 @@ import getLessons from "./getLessons";
 export default function getUserData(decoded) {
     const query = `query {
               user (id: "${decoded.id}") {
+                id,
                 username,
                 name,
                 email,
                 description,
                 following {
-                  name
-                  username
+                  id,
+                  name,
+                  username,
+                  description,
                   lessons {
                     id,
                     lesson
                   }
                 },
                 followers {
-                    name
+                    name,
                     username
                 },
                 lessons {
@@ -34,14 +37,23 @@ export default function getUserData(decoded) {
     })
         .then(r => r.json())
         .then(data => {
-            console.log(data);
             let lessons = getLessons(data.data.user);
             let allLessons = []
             data.data.user.following.forEach(user => {
                 allLessons = allLessons.concat(getLessons(user));
             });
             allLessons = allLessons.concat(lessons);
+            allLessons.sort((a, b) => {
+                if (a.id > b.id) {
+                    return -1
+                }
+                if (a.id < b.id) {
+                    return 1
+                }
+                return 0
+            });
             this.setState({
+                id: data.data.user.id,
                 username: data.data.user.username,
                 name: data.data.user.name,
                 email: data.data.user.email,

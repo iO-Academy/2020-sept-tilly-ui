@@ -17,12 +17,16 @@ button {
     margin: 20px 5px;
     width: 20px;
     height: 20px;
+    padding: 0;
     font-family: Arial, sans-serif;
     font-size: large;
     border-radius: 5px;
 }
 
 .unfollow {
-    transform: rotate(45deg);
     background: var(--warn-color);
+}
+
+.unfollow-rotate {
+    transform: rotate(45deg);
 }

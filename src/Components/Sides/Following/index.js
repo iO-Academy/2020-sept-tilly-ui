@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 import Button from "../../Button";
 import '../sides.css';
 
@@ -23,6 +24,7 @@ class Following extends React.Component {
                 following: this.props.following
             });
         }
+        setTimeout(() => console.log(this.state), 100);
     }
 
     render() {
@@ -36,23 +38,32 @@ class Following extends React.Component {
                     className="me-follow">
                     <div>
                         <p>
-                            <a>
+                            <Link to={"/" + following.username}>
                                 {following.username}
-                            </a>
+                            </Link>
                         </p>
                         <p className="fade-text x-small">
-                            {following.username} but actually description maybe,
-                            see how it looks with this much text, writing words,
-                            maybe too much?
+                            {following.description}
                         </p>
                     </div>
                     <div>
+                        {this.props.myUsername !== following.username &&
+                        !this.props.myFollowing.find(o => o.username === following.username) &&
                         <Button
-                            className="follow unfollow"
-                            name={following.id}
-                            onClick={this.unfollow}>
-                            +
-                        </Button>
+                            className="follow"
+                            onHandleClick={this.props.onFollow}
+                            value={following.id}
+                            name="+"
+                        />
+                        }
+                        {this.props.myFollowing.find(o => o.username === following.username) &&
+                        <Button
+                            className="follow unfollow unfollow-rotate"
+                            onHandleClick={this.props.onUnfollow}
+                            value={following.id}
+                            name="+"
+                        />
+                        }
                     </div>
                 </div>
                 )}
