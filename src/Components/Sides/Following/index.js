@@ -49,10 +49,8 @@ class Following extends React.Component {
                     <div>
                         <Button
                             className="follow unfollow"
-                            name={following.id}
-                            onClick={this.unfollow}>
-                            +
-                        </Button>
+                            name='+'
+                            onClick={this.unfollow} />
                     </div>
                 </div>
                 )}

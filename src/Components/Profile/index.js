@@ -8,7 +8,24 @@ class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            url: window.location.pathname
+            url: window.location.pathname,
+            lessons: [],
+            offset: 10,
+        }
+    }
+
+    componentWillMount() {
+        window.addEventListener('scroll', this.handleScroll);
+        this.setState({
+            lessons: this.props.lessons.slice(0, this.state.offset)
+        });
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps !== this.props) {
+            this.setState({
+                lessons: this.props.lessons.slice(0, this.state.offset)
+            });
         }
     }
 
@@ -23,7 +40,7 @@ class Profile extends React.Component {
                     <h3>
                         my lessons
                     </h3>
-                    {this.props.lessons.map((lesson, i) =>
+                    {this.state.lessons.map((lesson, i) =>
                         <div key={'lesson' + i} className="lesson">
                             <span className="fade-text small">
                                 {lesson.date}

@@ -22,8 +22,8 @@ class App extends React.Component {
         this.state = {
             loggedIn: false,
             id: '',
-            name: '',
             username: '',
+            name: '',
             email: '',
             description: '',
             lessons: [],
@@ -33,13 +33,27 @@ class App extends React.Component {
         }
         this.decoder = decoder.bind(this);
         this.getUserData = getUserData.bind(this);
+        if (localStorage.getItem('tillyToken')) {
+            const token = localStorage.getItem('tillyToken');
+            const decoded = this.decoder(token);
+            this.state = {
+                loggedIn: true,
+                id: decoded.id,
+                username: decoded.username,
+                name: '',
+                email: '',
+                description: '',
+                lessons: [],
+                following: [],
+                followers: [],
+                allLessons: []
+            }
+            console.log(this.state.username)
+            // setTimeout(()=> {console.log(this.state)}, 1000)
+        }
     }
 
     componentDidMount() {
-        this.getData();
-    }
-
-    getData = () => {
         if (localStorage.getItem('tillyToken')) {
             const token = localStorage.getItem('tillyToken');
             const decoded = this.decoder(token);
@@ -47,18 +61,26 @@ class App extends React.Component {
                 loggedIn: true,
                 id: decoded.id,
                 username: decoded.username
-            });
-            this.getUserData(decoded);
-            console.log(decoded);
+            })
+        }
+        if (this.state.username !== '') {
+            this.getUserData(this.state.username);
         }
     }
 
-    logIn = (id) => {
+    // componentDidUpdate(prevProps) {
+    //     if (this.state.username !== this.props.match.params) {
+    //         this.setState({ username: this.props.match.params});
+    //     }
+    // }
+
+    logIn = (decoded) => {
         this.setState({
             loggedIn: true,
-            id: id,
+            id: decoded.id,
+            username: decoded.username
         });
-        this.getData();
+        this.getUserData(this.state.username);
     }
 
     logOut = () => {
@@ -101,7 +123,6 @@ class App extends React.Component {
                                 onLoginSuccess={this.logIn}
                             />
                         </Route>}
-                        {this.state.loggedIn &&
                         <Route
                             path={"/" + this.state.username}>
                             <Profile
@@ -111,11 +132,11 @@ class App extends React.Component {
                                 following={this.state.following}
                                 onAddLesson={this.addLesson}
                             />
-                        </Route>}
-                        <Route
-                            path="/:username"
-                            component={Friend}
-                        />
+                        </Route>
+                        {/*<Route*/}
+                        {/*    path="/:username"*/}
+                        {/*    component={Friend}*/}
+                        {/*/>*/}
                         <Route
                             path="/">
                             {this.state.loggedIn ?
