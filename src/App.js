@@ -3,7 +3,8 @@ import "./App.css";
 import {
     BrowserRouter as Router,
     Switch,
-    Route, Redirect,
+    Route,
+    Redirect,
 } from "react-router-dom";
 import Header from "./Components/Header";
 import Profile from "./Components/Profile";
@@ -12,6 +13,7 @@ import Timeline from "./Components/Timeline";
 import SignUp from "./Components/LogUp/SignUp";
 import LogIn from "./Components/LogUp/LogIn";
 import decoder from "./Functions/decoder";
+import getUser from "./Functions/getUser";
 
 class App extends React.Component {
 
@@ -28,7 +30,7 @@ class App extends React.Component {
             following: []
         }
         this.decoder = decoder.bind(this);
-        // this.getUser = getUser.bind(this);
+        this.getUser = getUser.bind(this);
     }
 
     componentDidMount() {
@@ -44,8 +46,10 @@ class App extends React.Component {
                 id: decoded.id,
                 username: decoded.username
             });
+            console.log(decoded)
             const query = `query {
-              user (id: "${decoded.id}") {
+              username (username: "${decoded.username}") {
+                id,
                 username,
                 name,
                 email,
@@ -69,22 +73,21 @@ class App extends React.Component {
                 .then(r => r.json())
                 .then(data => {
                     let lessons = [];
-                    data.data.user.lessons.forEach(lesson => {
-                        const date = lesson.id.toString().substring(0,8)
-                        const convert = new Date(parseInt(date, 16) * 1000)
-                        const newDate =convert.toLocaleDateString("EN-GB")
-                        lessons.unshift({lesson: lesson.lesson, date: newDate})
-                    })
+                    data.data.username.lessons.forEach(lesson => {
+                        const date = lesson.id.toString().substring(0,8);
+                        const convert = new Date(parseInt(date, 16) * 1000);
+                        const newDate = convert.toLocaleDateString("EN-GB");
+                        lessons.unshift({lesson: lesson.lesson, date: newDate});
+                    });
                     this.setState({
-                        username: data.data.user.username,
-                        name: data.data.user.name,
-                        email: data.data.user.email,
-                        description: data.data.user.description,
+                        username: data.data.username.username,
+                        name: data.data.username.name,
+                        email: data.data.username.email,
+                        description: data.data.username.description,
                         lessons: lessons,
-                        following: data.data.user.following
-                    })
+                        following: data.data.username.following
+                    });
                 });
-            setTimeout(() => console.log(this.state), 1000);
         }
     }
 
@@ -109,14 +112,14 @@ class App extends React.Component {
         stateCopy.email = userInfo.email;
         stateCopy.description = userInfo.description;
         stateCopy.loggedIn = true;
-        this.setState({stateCopy});
+        this.setState({...stateCopy});
     }
 
     addLesson = (text) => {
         let stateCopy = {...this.state};
         const lesson = {lesson: text, date: 'just now'};
         stateCopy.lessons.unshift(lesson);
-        this.setState({stateCopy});
+        this.setState({...stateCopy});
     }
 
     render() {
@@ -154,9 +157,9 @@ class App extends React.Component {
                             path="/">
                             {this.state.loggedIn ?
                                 <Timeline
+                                    username={this.state.username}
                                     lessons={this.state.lessons}
                                     following={this.state.following}
-                                    username={this.state.username}
                                 />
                                 :
                                 <SignUp

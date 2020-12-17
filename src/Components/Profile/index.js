@@ -1,6 +1,7 @@
 import React from 'react';
 import './profile.css';
 import Create from "../Create";
+import Following from "../Sides/Following";
 
 class Profile extends React.Component {
 
@@ -33,6 +34,9 @@ class Profile extends React.Component {
                         </div>
                     )}
                 </section>
+                <Following
+                    following={this.props.following}
+                />
             </div>
         );
     }

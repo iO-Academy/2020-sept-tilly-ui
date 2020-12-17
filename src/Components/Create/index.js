@@ -73,6 +73,7 @@ class Create extends React.Component {
                 <Button
                     disabled={this.state.tooLong}
                     onHandleClick={this.createLesson}
+                    className="generic"
                     name="create"
                 />
             </section>

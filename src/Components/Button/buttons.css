@@ -1,8 +1,4 @@
-
 button {
-    margin: 20px;
-    width: 80px;
-    height: 28px;
     font-family: var(--main-type);
     font-weight: bold;
     background: var(--high-color);
@@ -11,8 +7,16 @@ button {
     box-shadow: 0 5px 15px 1px #111111;
 }
 
+.generic {
+    margin: 20px;
+    width: 80px;
+    height: 28px;
+}
+
 .follow {
-    width: 28px;
+    margin: 20px 5px;
+    width: 20px;
+    height: 20px;
     font-family: Arial, sans-serif;
     font-size: large;
     border-radius: 5px;
@@ -21,8 +25,4 @@ button {
 .unfollow {
     transform: rotate(45deg);
     background: var(--warn-color);
-}
-
-hr {
-    box-shadow: 0 5px 15px 1px #000;
 }

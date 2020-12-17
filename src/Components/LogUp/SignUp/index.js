@@ -289,6 +289,7 @@ class SignUp extends React.Component {
                     </div>
                 </form>
                 <Button
+                    className="generic"
                     name="sign up"
                     onHandleClick={this.handleSubmit}
                 />

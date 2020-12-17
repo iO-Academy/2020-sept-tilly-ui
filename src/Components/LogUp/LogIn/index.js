@@ -136,6 +136,7 @@ class LogIn extends React.Component {
                 </div>
 
                 <Button
+                    className="generic"
                     name="log in"
                 />
 

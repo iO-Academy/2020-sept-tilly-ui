@@ -1,19 +1,20 @@
-export default function getUser(decoded) {
+export default function getUser(param) {
     const query = `query {
-              user (id: "${decoded.id}") {
+              username (username: "${param}") {
+                id,
                 username,
                 name,
                 email,
                 description,
                 following {
-                  name
+                  username
                 }
                 lessons {
                   id,
                   lesson
                 }
               }
-            }`
+            }`;
     fetch('http://localhost:4002/graphql', {
         method: 'POST',
         headers: {
@@ -24,19 +25,19 @@ export default function getUser(decoded) {
         .then(r => r.json())
         .then(data => {
             let lessons = [];
-            data.data.user.lessons.forEach(lesson => {
-                const date = lesson.id.toString().substring(0,8)
-                const convert = new Date(parseInt(date, 16) * 1000)
-                const newDate =convert.toLocaleDateString("EN-GB")
-                lessons.unshift({lesson: lesson.lesson, date: newDate})
-            })
+            data.data.username.lessons.forEach(lesson => {
+                const date = lesson.id.toString().substring(0,8);
+                const convert = new Date(parseInt(date, 16) * 1000);
+                const newDate = convert.toLocaleDateString("EN-GB");
+                lessons.unshift({lesson: lesson.lesson, date: newDate});
+            });
             this.setState({
-                username: data.data.user.username,
-                name: data.data.user.name,
-                email: data.data.user.email,
-                description: data.data.user.description,
+                username: data.data.username.username,
+                name: data.data.username.name,
+                email: data.data.username.email,
+                description: data.data.username.description,
                 lessons: lessons,
-                following: data.data.user.following
-            })
+                following: data.data.username.following
+            });
         });
 }
