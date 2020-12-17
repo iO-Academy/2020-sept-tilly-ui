@@ -24,7 +24,6 @@ class Following extends React.Component {
                 following: this.props.following
             });
         }
-        setTimeout(() => console.log(this.state), 100);
     }
 
     render() {

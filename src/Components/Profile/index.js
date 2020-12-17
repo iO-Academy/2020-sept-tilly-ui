@@ -2,6 +2,9 @@ import React from 'react';
 import Following from "../Sides/Following";
 import Create from "../Create";
 import Bio from "../Sides/Bio";
+import follow from "../../Functions/follow";
+import unfollow from "../../Functions/unfollow";
+import followFetch from "../../Functions/followFetch";
 import './profile.css';
 
 class Profile extends React.Component {
@@ -19,6 +22,9 @@ class Profile extends React.Component {
             current: true,
             token: ''
         }
+        this.follow = follow.bind(this);
+        this.unfollow = unfollow.bind(this);
+        this.followFetch = followFetch.bind(this);
     }
 
     componentDidMount() {
@@ -46,31 +52,6 @@ class Profile extends React.Component {
         const controller = new AbortController();
         const signal = controller.signal;
         controller.abort();
-    }
-
-    unfollow = (event) => {
-        const token = localStorage.getItem('tillyToken');
-        console.log(event.target.value);
-        console.log(token);
-        console.log(this.state);
-        const query = `mutation {
-            unfollow(
-                followee: "${event.target.value}",
-                follower: "${this.state.id}",
-                token: "${token}"
-            )
-        }`;
-        fetch('http://localhost:4002/graphql', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({query})
-        })
-            .then(r => r.json())
-            .then(data => {
-                this.props.onGetData();
-            });
     }
 
     render() {

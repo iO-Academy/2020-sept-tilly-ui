@@ -30,7 +30,7 @@ class App extends React.Component {
             following: [],
             followers: [],
             allLessons: [],
-            urlName: '',
+            token: '',
         }
         this.decoder = decoder.bind(this);
         this.getUserData = getUserData.bind(this);
@@ -58,7 +58,8 @@ class App extends React.Component {
             token && this.setState({
                 loggedIn: true,
                 id: decoded.id,
-                username: decoded.username
+                username: decoded.username,
+                token: token
             });
             this.getUserData(decoded);
         }
@@ -126,7 +127,7 @@ class App extends React.Component {
                         </Route>}
                         <Route
                             path="/:username"
-                            component={Friend}
+                            render={props => <Friend myDetails={this.state} onGetData={this.getData} {...props} />}
                         />
                         <Route
                             path="/">
