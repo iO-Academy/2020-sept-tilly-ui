@@ -2,6 +2,7 @@ import React from 'react';
 import './profile.css';
 import decoder from "../../Functions/decoder";
 import Create from "../Create";
+import Search from "../Search";
 
 class Profile extends React.Component {
 
@@ -35,6 +36,7 @@ class Profile extends React.Component {
                         </div>
                     )}
                 </section>
+                <Search />
             </div>
         );
     }
