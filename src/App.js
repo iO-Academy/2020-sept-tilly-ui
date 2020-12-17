@@ -13,7 +13,7 @@ import Timeline from "./Components/Timeline";
 import SignUp from "./Components/LogUp/SignUp";
 import LogIn from "./Components/LogUp/LogIn";
 import decoder from "./Functions/decoder";
-import getUser from "./Functions/getUser";
+import getUserData from "./Functions/getUserData";
 
 class App extends React.Component {
 
@@ -27,17 +27,19 @@ class App extends React.Component {
             email: '',
             description: '',
             lessons: [],
-            following: []
+            following: [],
+            followers: [],
+            allLessons: []
         }
         this.decoder = decoder.bind(this);
-        this.getUser = getUser.bind(this);
+        this.getUserData = getUserData.bind(this);
     }
 
     componentDidMount() {
-        this.getCurrentUser();
+        this.getData();
     }
 
-    getCurrentUser = () => {
+    getData = () => {
         if (localStorage.getItem('tillyToken')) {
             const token = localStorage.getItem('tillyToken');
             const decoded = this.decoder(token);
@@ -46,48 +48,8 @@ class App extends React.Component {
                 id: decoded.id,
                 username: decoded.username
             });
-            console.log(decoded)
-            const query = `query {
-              username (username: "${decoded.username}") {
-                id,
-                username,
-                name,
-                email,
-                description,
-                following {
-                  name
-                }
-                lessons {
-                  id,
-                  lesson
-                }
-              }
-            }`;
-            fetch('http://localhost:4002/graphql', {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify({query})
-            })
-                .then(r => r.json())
-                .then(data => {
-                    let lessons = [];
-                    data.data.username.lessons.forEach(lesson => {
-                        const date = lesson.id.toString().substring(0,8);
-                        const convert = new Date(parseInt(date, 16) * 1000);
-                        const newDate = convert.toLocaleDateString("EN-GB");
-                        lessons.unshift({lesson: lesson.lesson, date: newDate});
-                    });
-                    this.setState({
-                        username: data.data.username.username,
-                        name: data.data.username.name,
-                        email: data.data.username.email,
-                        description: data.data.username.description,
-                        lessons: lessons,
-                        following: data.data.username.following
-                    });
-                });
+            this.getUserData(decoded);
+            console.log(decoded);
         }
     }
 
@@ -96,7 +58,7 @@ class App extends React.Component {
             loggedIn: true,
             id: id,
         });
-        this.getCurrentUser();
+        this.getData();
     }
 
     logOut = () => {
@@ -116,7 +78,7 @@ class App extends React.Component {
     }
 
     addLesson = (text) => {
-        let stateCopy = {...this.state};
+        let stateCopy = {...this.state}
         const lesson = {lesson: text, date: 'just now'};
         stateCopy.lessons.unshift(lesson);
         this.setState({...stateCopy});
@@ -143,9 +105,10 @@ class App extends React.Component {
                         <Route
                             path={"/" + this.state.username}>
                             <Profile
-                                lessons={this.state.lessons}
                                 id={this.state.id}
                                 username={this.state.username}
+                                lessons={this.state.lessons}
+                                following={this.state.following}
                                 onAddLesson={this.addLesson}
                             />
                         </Route>}
@@ -158,6 +121,7 @@ class App extends React.Component {
                             {this.state.loggedIn ?
                                 <Timeline
                                     username={this.state.username}
+                                    allLessons={this.state.allLessons}
                                     lessons={this.state.lessons}
                                     following={this.state.following}
                                 />

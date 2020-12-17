@@ -12,12 +12,16 @@ class Following extends React.Component {
     }
 
     componentDidMount() {
-        setTimeout(() => this.setState({following: this.props.following}), 200);
+        setTimeout(() => this.setState({
+            following: this.props.following
+        }), 200);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.following !== this.props.following) {
-            this.setState({following: this.props.following});
+            this.setState({
+                following: this.props.following
+            });
         }
     }
 

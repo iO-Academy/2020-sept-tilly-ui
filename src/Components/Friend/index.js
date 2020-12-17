@@ -1,7 +1,7 @@
 import React from 'react';
 import Following from '../Sides/Following';
 import '../Profile/profile.css'
-import getUser from "../../Functions/getUser";
+import getUserData from "../../Functions/getUserData";
 
 class Friend extends React.Component {
 
@@ -15,11 +15,11 @@ class Friend extends React.Component {
             lessons: [],
             following: []
         }
-        this.getUser = getUser.bind(this);
+        this.getUserData = getUserData.bind(this);
     }
 
     componentDidMount() {
-        this.getUser(this.props.match.params.username);
+        this.getUserData(this.props.match.params.username);
     }
 
     componentWillUnmount() {

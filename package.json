@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.5.0",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.8",
     "node-sass": "^5.0.0",
     "react": "^17.0.1",
     "react-cookie": "^4.0.3",
