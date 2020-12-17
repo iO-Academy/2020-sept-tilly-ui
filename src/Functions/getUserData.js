@@ -1,7 +1,6 @@
 import getLessons from "./getLessons";
 
 export default function getUserData(username) {
-    console.log(username);
     const query = `query {
               username (username: "${username}") {
                 username,

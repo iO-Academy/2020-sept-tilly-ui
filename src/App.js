@@ -4,6 +4,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
+    useParams
 } from "react-router-dom";
 import Header from "./Components/Header";
 import Profile from "./Components/Profile";
@@ -48,6 +49,12 @@ class App extends React.Component {
                 allLessons: []
             }
         }
+        function Params () {let {username} = useParams()}
+        console.log(<Params />)
+        // console.log(this.state.params)
+        // if (this.state.username !== this.props.match.params) {
+        //     this.setState({ username: this.props.match.params});
+        // }
     }
 
     componentDidMount() {
@@ -120,8 +127,9 @@ class App extends React.Component {
                                 onLoginSuccess={this.logIn}
                             />
                         </Route>}
+                        {this.state.username !== "" &&
                         <Route
-                            path={"/" + this.state.username}>
+                            path="/:username">
                             <Profile
                                 id={this.state.id}
                                 username={this.state.username}
@@ -130,6 +138,7 @@ class App extends React.Component {
                                 onAddLesson={this.addLesson}
                             />
                         </Route>
+                        }
                         {/*<Route*/}
                         {/*    path="/:username"*/}
                         {/*    component={Friend}*/}
