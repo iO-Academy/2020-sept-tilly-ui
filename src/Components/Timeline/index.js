@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 import './timeline.css';
 
 class Timeline extends React.Component {
@@ -17,7 +18,6 @@ class Timeline extends React.Component {
         this.setState({
             lessons: this.props.allLessons.slice(0, this.state.offset)
         });
-        setTimeout(()=>console.log(this.props.lessons));
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -53,8 +53,13 @@ class Timeline extends React.Component {
                 </h3>
                 {this.state.lessons.map((lesson, i) =>
                     <div key={'lesson' + i} className="lesson">
+                        <span className="small">
+                            <Link to={"/" + lesson.username}>
+                                {lesson.username}
+                            </Link> learned,
+                        </span>
                         <span className="fade-text small">
-                            {lesson.date}
+                            on {lesson.date}
                         </span>
                         <p>
                             {lesson.lesson}
