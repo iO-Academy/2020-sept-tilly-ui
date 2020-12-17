@@ -1,6 +1,7 @@
 #create {
-    margin: 30px auto auto auto;
+    margin: 80px auto 0 auto;
     width: 100%;
+    padding-bottom: 30px;
     text-align: center;
     border-bottom: 1px solid  var(--line-color);
 }

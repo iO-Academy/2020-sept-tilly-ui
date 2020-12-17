@@ -32,6 +32,10 @@ export default function getMinimalUserData(username) {
     })
         .then(r => r.json())
         .then(data => {
+            if (data.data.username === null) {
+                this.setState({notFound: true});
+                return;
+            }
             let lessons = [];
             data.data.username.lessons.forEach(lesson => {
                 const newDate = getDate(lesson.id);

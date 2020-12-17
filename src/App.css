@@ -25,49 +25,12 @@ a {
   text-decoration: none;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  height: 60px;
-  background: var(--bars-color);
-}
-
-header img {
-  margin: auto 20px;
-  height: 100%;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  min-width: 200px;
-  height: 100%;
-  line-height: 55px;
-}
-
-#navTwo {
-  height: 100%;
-  font-size: small;
-  text-align: right;
-  line-height: 30px;
-}
-
-nav div, #navTwo div {
-  margin: auto 20px;
-}
-
 h1, h1, h3, h4, h5, h6 {
   text-align: center;
 }
 
 p {
   font-size: medium;
-}
-
-#container {
-  margin: 30px auto;
-  width: 100%;
 }
 
 main {

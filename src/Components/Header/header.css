@@ -1,0 +1,34 @@
+header {
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    background: var(--bars-color);
+}
+
+header img {
+    margin: auto 20px;
+    height: 100%;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    min-width: 200px;
+    height: 100%;
+    line-height: 55px;
+}
+
+#navTwo {
+    height: 100%;
+    font-size: small;
+    text-align: right;
+    line-height: 30px;
+}
+
+nav div, #navTwo div {
+    margin: auto 20px;
+}

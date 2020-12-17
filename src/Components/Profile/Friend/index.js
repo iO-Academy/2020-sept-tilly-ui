@@ -8,6 +8,7 @@ import unfollow from "../../../Functions/unfollow";
 import followFetch from "../../../Functions/followFetch";
 import Button from "../../Button";
 import '../profile.css';
+import {Redirect} from "react-router-dom";
 
 class Friend extends React.Component {
 
@@ -21,7 +22,7 @@ class Friend extends React.Component {
             description: '',
             lessons: [],
             following: [],
-            current: true,
+            notFound: false
         }
         this.getMinimalUserData = getMinimalUserData.bind(this);
         this.decoder = decoder.bind(this);
@@ -54,21 +55,25 @@ class Friend extends React.Component {
                     description={this.state.description}
                 />
                 <section id="my-lessons" className="primary">
-                    {!this.props.myDetails.following.find(o => o.username === this.state.username) &&
-                        <Button
-                            onHandleClick={this.follow}
-                            value={this.state.id}
-                            className="generic"
-                            name="follow"
-                        />
-                    }
-                    {this.props.myDetails.following.find(o => o.username === this.state.username) &&
-                        <Button
-                            onHandleClick={this.unfollow}
-                            value={this.state.id}
-                            className="generic unfollow"
-                            name="unfollow"
-                        />
+                    {this.props.myDetails.loggedIn &&
+                    <div>
+                        {!this.props.myDetails.following.find(o => o.username === this.state.username) &&
+                            <Button
+                                onHandleClick={this.follow}
+                                value={this.state.id}
+                                className="generic"
+                                name="follow"
+                            />
+                        }
+                        {this.props.myDetails.following.find(o => o.username === this.state.username) &&
+                            <Button
+                                onHandleClick={this.unfollow}
+                                value={this.state.id}
+                                className="generic unfollow"
+                                name="unfollow"
+                            />
+                        }
+                    </div>
                     }
                     <h3>
                         {this.state.username}'s lessons
@@ -92,6 +97,7 @@ class Friend extends React.Component {
                     myFollowing={this.props.myDetails.following}
                     following={this.state.following}
                 />
+                {this.state.notFound && <Redirect to='/' />}
             </div>
         );
     }

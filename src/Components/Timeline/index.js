@@ -1,4 +1,5 @@
 import React from 'react';
+import './timeline.css';
 
 class Timeline extends React.Component {
 
@@ -45,7 +46,7 @@ class Timeline extends React.Component {
 
     render() {
         return (
-            <section id="my-lessons" className="primary">
+            <section id="timeline" className="primary">
                 <h3>
                     timeline
                 </h3>

@@ -30,7 +30,6 @@ class App extends React.Component {
             following: [],
             followers: [],
             allLessons: [],
-            token: '',
         }
         this.decoder = decoder.bind(this);
         this.getUserData = getUserData.bind(this);
