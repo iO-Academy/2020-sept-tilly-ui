@@ -24,9 +24,10 @@ nav {
 
 #navTwo {
     height: 100%;
-    font-size: small;
+    font-size: x-small;
     text-align: right;
-    line-height: 30px;
+    line-height: 55px;
+    cursor: pointer;
 }
 
 nav div, #navTwo div {

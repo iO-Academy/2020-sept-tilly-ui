@@ -22,9 +22,7 @@ class Header extends React.Component {
                 </nav>
                 <div
                     id="navTwo">
-                    <div>
-                        settings
-                    </div>
+
                     <div
                         onClick={this.props.onLogOut}>
                         log out
