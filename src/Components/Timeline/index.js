@@ -28,12 +28,6 @@ class Timeline extends React.Component {
         }
     }
 
-    componentWillUnmount() {
-        const controller = new AbortController();
-        const signal = controller.signal;
-        controller.abort();
-    }
-
     handleScroll = () => {
         if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.scrollHeight) {
             this.setState({
