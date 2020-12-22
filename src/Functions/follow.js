@@ -10,5 +10,5 @@ export default function follow(event) {
                 token: "${token}"
             )
         }`;
-    this.followFetch(query);
+    this.followFetch(query, this.abortController);
 }

@@ -1,6 +1,6 @@
 import getDate from "./getDate";
 
-export default function getMinimalUserData(username) {
+export default function getMinimalUserData(username, abortController) {
     const query = `query {
           username (username: "${username}") {
             id,
@@ -28,7 +28,8 @@ export default function getMinimalUserData(username) {
         headers: {
             'content-type': 'application/json'
         },
-        body: JSON.stringify({query})
+        body: JSON.stringify({query}),
+        signal: abortController.signal
     })
         .then(r => r.json())
         .then(data => {

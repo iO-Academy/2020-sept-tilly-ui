@@ -31,21 +31,22 @@ class Friend extends React.Component {
         this.followFetch = followFetch.bind(this);
     }
 
+    abortController = new AbortController();
+
     componentDidMount() {
-        this.getMinimalUserData(this.props.match.params.username);
+        this.getMinimalUserData(this.props.match.params.username, this.abortController);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps !== this.props) {
-            this.getMinimalUserData(this.props.match.params.username);
+            this.getMinimalUserData(this.props.match.params.username, this.abortController);
         }
     }
 
     componentWillUnmount() {
-        const controller = new AbortController();
-        const signal = controller.signal;
-        controller.abort();
+        this.abortController.abort();
     }
+
 
     render() {
         return (

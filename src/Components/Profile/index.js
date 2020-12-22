@@ -27,6 +27,8 @@ class Profile extends React.Component {
         this.followFetch = followFetch.bind(this);
     }
 
+    abortController = new AbortController();
+
     componentDidMount() {
         this.setState({
             username: this.props.username,
@@ -49,9 +51,7 @@ class Profile extends React.Component {
     }
 
     componentWillUnmount() {
-        const controller = new AbortController();
-        const signal = controller.signal;
-        controller.abort();
+        this.abortController.abort();
     }
 
     render() {
