@@ -47,7 +47,6 @@ class Friend extends React.Component {
         this.abortController.abort();
     }
 
-
     render() {
         return (
             <div>

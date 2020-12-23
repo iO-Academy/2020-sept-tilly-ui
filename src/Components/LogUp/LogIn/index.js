@@ -28,7 +28,6 @@ class LogIn extends React.Component {
             incorrect: false,
             nonExistent: false
         });
-        console.log(this.state);
     }
 
     handleSubmit = (event) => {
@@ -46,10 +45,9 @@ class LogIn extends React.Component {
             })
                 .then(r => r.json())
                 .then(data => {
-                    console.log(data);
                     if (data.data.login === "Login failed") {
                         this.setState({incorrect: true});
-                    }else if (data.data.login === null) {
+                    } else if (data.data.login === null) {
                         this.setState({nonExistent: true});
                     } else {
                         const token = data.data.login;
@@ -59,16 +57,12 @@ class LogIn extends React.Component {
                             incorrect: false,
                             redirect: true
                         });
-                        this.loginSuccess(this.state.id);
+                        this.props.onLoginSuccess(this.state.id);
                     }
                 });
         } catch(err){
             console.log(err);
         }
-    }
-
-    loginSuccess = (id) => {
-        this.props.onLoginSuccess(id);
     }
 
     render() {
