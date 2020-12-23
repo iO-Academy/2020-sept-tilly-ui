@@ -1,6 +1,4 @@
 import React from 'react';
-import {Link} from "react-router-dom";
-import Button from "../../Button";
 import '../sides.css';
 
 class Bio extends React.Component {
@@ -10,14 +8,6 @@ class Bio extends React.Component {
         this.state = {
             following: []
         }
-    }
-
-    componentDidMount() {
-
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-
     }
 
     render() {

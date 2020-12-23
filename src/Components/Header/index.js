@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import './header.css';
 
 class Header extends React.Component {
     render() {
@@ -15,16 +16,13 @@ class Header extends React.Component {
                         timeline
                     </Link>
                     <Link
-                        to={"/" + this.props.username}
-                        onClick={this.props.onChangeUrl}>
+                        to={"/" + this.props.username}>
                         profile
                     </Link>
                 </nav>
                 <div
                     id="navTwo">
-                    <div>
-                        settings
-                    </div>
+
                     <div
                         onClick={this.props.onLogOut}>
                         log out

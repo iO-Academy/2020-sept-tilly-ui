@@ -1,4 +1,6 @@
 import React from 'react';
+import {Link} from "react-router-dom";
+import './timeline.css';
 
 class Timeline extends React.Component {
 
@@ -6,8 +8,8 @@ class Timeline extends React.Component {
         super(props);
         this.state = {
             lessons: [],
-            offset: 10,
-            following: []
+            following: [],
+            offset: 10
         }
     }
 
@@ -26,12 +28,6 @@ class Timeline extends React.Component {
         }
     }
 
-    componentWillUnmount() {
-        const controller = new AbortController();
-        const signal = controller.signal;
-        controller.abort();
-    }
-
     handleScroll = () => {
         if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.scrollHeight) {
             this.setState({
@@ -45,14 +41,19 @@ class Timeline extends React.Component {
 
     render() {
         return (
-            <section id="my-lessons" className="primary">
+            <section id="timeline" className="primary">
                 <h3>
                     timeline
                 </h3>
                 {this.state.lessons.map((lesson, i) =>
                     <div key={'lesson' + i} className="lesson">
+                        <span className="small">
+                            <Link to={"/" + lesson.username}>
+                                {lesson.username}
+                            </Link> learned,
+                        </span>
                         <span className="fade-text small">
-                            {lesson.date}
+                            on {lesson.date}
                         </span>
                         <p>
                             {lesson.lesson}

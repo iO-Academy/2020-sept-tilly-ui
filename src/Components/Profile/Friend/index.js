@@ -1,13 +1,16 @@
 import React from 'react';
 import Following from "../../Sides/Following";
 import Bio from "../../Sides/Bio";
-import getUserData from "../../../Functions/getUserData";
+import {Redirect} from "react-router-dom";
+import getMinimalUserData from "../../../Functions/getMinimalUserData";
 import decoder from "../../../Functions/decoder";
-import getDate from "../../../Functions/getDate";
+import follow from "../../../Functions/follow";
+import unfollow from "../../../Functions/unfollow";
+import followFetch from "../../../Functions/followFetch";
 import Button from "../../Button";
 import '../profile.css';
 
-class Profile extends React.Component {
+class Friend extends React.Component {
 
     constructor(props) {
         super(props);
@@ -19,164 +22,31 @@ class Profile extends React.Component {
             description: '',
             lessons: [],
             following: [],
-            current: true,
-            myId: '',
-            myUsername: '',
-            myFollowing: [],
+            notFound: false
         }
-        this.getUserData = getUserData.bind(this);
+        this.getMinimalUserData = getMinimalUserData.bind(this);
         this.decoder = decoder.bind(this);
+        this.follow = follow.bind(this);
+        this.unfollow = unfollow.bind(this);
+        this.followFetch = followFetch.bind(this);
     }
 
+    abortController = new AbortController();
+
     componentDidMount() {
-        this.getUser(this.props.match.params.username);
-        this.getCurrentUser();
+        this.getMinimalUserData(this.props.match.params.username, this.abortController);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps !== this.props) {
-            this.getUser(this.props.match.params.username);
+            this.getMinimalUserData(this.props.match.params.username, this.abortController);
         }
     }
 
     componentWillUnmount() {
-        const controller = new AbortController();
-        const signal = controller.signal;
-        controller.abort();
+        this.abortController.abort();
     }
 
-    getCurrentUser = () => {
-        if (localStorage.getItem('tillyToken')) {
-            const token = localStorage.getItem('tillyToken');
-            const decoded = this.decoder(token);
-            token && this.setState({
-                loggedIn: true,
-                myId: decoded.id,
-                myUsername: decoded.username,
-                token: token
-            });
-            const query = `query {
-              user (id: "${decoded.id}") {
-                username,
-                following {
-                  name,
-                  username,
-                  description,
-                  lessons {
-                    id,
-                    lesson
-                  }
-                }
-              }
-            }`
-                fetch('http://localhost:4002/graphql', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify({query})
-                })
-                    .then(r => r.json())
-                    .then(data => {
-                        this.setState({
-                            myFollowing: data.data.user.following
-                        });
-                    });
-            setTimeout(() => console.log(this.state.username), 500);
-            }
-    }
-
-    getUser = (name) => {
-        const query = `query {
-          username (username: "${name}") {
-            id,
-            username,
-            name,
-            description,
-            following {
-              id,
-              name,
-              username,
-              description,
-              lessons {
-                id,
-                lesson
-              }
-            },
-            lessons {
-              id,
-              lesson
-            }
-          }
-        }`
-        fetch('http://localhost:4002/graphql', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({query})
-        })
-            .then(r => r.json())
-            .then(data => {
-                let lessons = [];
-                data.data.username.lessons.forEach(lesson => {
-                    const newDate = getDate(lesson.id);
-                    lessons.unshift({id: lesson.id, lesson: lesson.lesson, date: newDate});
-                });
-                this.setState({
-                    id: data.data.username.id,
-                    username: data.data.username.username,
-                    name: data.data.username.name,
-                    description: data.data.username.description,
-                    lessons: lessons,
-                    following: data.data.username.following
-                });
-            });
-    }
-
-    follow = (event) => {
-        console.log(event.target.value)
-        const query = `mutation {
-            follow(
-                followee: "${event.target.value}",
-                follower: "${this.state.myId}",
-                token: "${this.state.token}"
-            )
-        }`;
-        fetch('http://localhost:4002/graphql', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({query})
-        })
-            .then(r => r.json())
-            .then(data => {
-                this.getCurrentUser();
-            });
-    }
-
-    unfollow = (event) => {
-        console.log(event.target.value)
-        const query = `mutation {
-            unfollow(
-                followee: "${event.target.value}",
-                follower: "${this.state.myId}",
-                token: "${this.state.token}"
-            )
-        }`;
-        fetch('http://localhost:4002/graphql', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({query})
-        })
-            .then(r => r.json())
-            .then(data => {
-                this.getCurrentUser();
-            });
-    }
 
     render() {
         return (
@@ -186,21 +56,25 @@ class Profile extends React.Component {
                     description={this.state.description}
                 />
                 <section id="my-lessons" className="primary">
-                    {!this.state.myFollowing.find(o => o.username === this.state.username) &&
-                        <Button
-                            onHandleClick={this.follow}
-                            value={this.state.id}
-                            className="generic"
-                            name="follow"
-                        />
-                    }
-                    {this.state.myFollowing.find(o => o.username === this.state.username) &&
-                        <Button
-                            onHandleClick={this.unfollow}
-                            value={this.state.id}
-                            className="generic unfollow"
-                            name="unfollow"
-                        />
+                    {this.props.myDetails.loggedIn &&
+                    <div>
+                        {!this.props.myDetails.following.find(o => o.username === this.state.username) &&
+                            <Button
+                                onHandleClick={this.follow}
+                                value={this.state.id}
+                                className="generic"
+                                name="follow"
+                            />
+                        }
+                        {this.props.myDetails.following.find(o => o.username === this.state.username) &&
+                            <Button
+                                onHandleClick={this.unfollow}
+                                value={this.state.id}
+                                className="generic unfollow"
+                                name="unfollow"
+                            />
+                        }
+                    </div>
                     }
                     <h3>
                         {this.state.username}'s lessons
@@ -219,13 +93,16 @@ class Profile extends React.Component {
                 <Following
                     onFollow={this.follow}
                     onUnfollow={this.unfollow}
-                    myUsername={this.state.myUsername}
-                    myFollowing={this.state.myFollowing}
+                    onGetData={this.props.onGetData}
+                    myUsername={this.props.myDetails.username}
+                    myFollowing={this.props.myDetails.following}
                     following={this.state.following}
+                    loggedIn={this.props.myDetails.loggedIn}
                 />
+                {this.state.notFound && <Redirect to='/' />}
             </div>
         );
     }
 }
 
-export default Profile;
+export default Friend;

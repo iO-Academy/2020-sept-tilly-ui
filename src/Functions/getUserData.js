@@ -1,6 +1,6 @@
 import getLessons from "./getLessons";
 
-export default function getUserData(decoded) {
+export default function getUserData(decoded, abortController) {
     const query = `query {
               user (id: "${decoded.id}") {
                 id,
@@ -33,24 +33,25 @@ export default function getUserData(decoded) {
         headers: {
             'content-type': 'application/json'
         },
-        body: JSON.stringify({query})
+        body: JSON.stringify({query}),
+        signal: abortController.signal
     })
         .then(r => r.json())
         .then(data => {
             let lessons = getLessons(data.data.user);
-            let allLessons = []
+            let allLessons = [];
             data.data.user.following.forEach(user => {
                 allLessons = allLessons.concat(getLessons(user));
             });
             allLessons = allLessons.concat(lessons);
             allLessons.sort((a, b) => {
                 if (a.id > b.id) {
-                    return -1
+                    return -1;
                 }
                 if (a.id < b.id) {
-                    return 1
+                    return 1;
                 }
-                return 0
+                return 0;
             });
             this.setState({
                 id: data.data.user.id,

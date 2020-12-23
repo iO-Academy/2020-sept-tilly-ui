@@ -24,7 +24,6 @@ class Following extends React.Component {
                 following: this.props.following
             });
         }
-        setTimeout(() => console.log(this.state), 100);
     }
 
     render() {
@@ -46,6 +45,7 @@ class Following extends React.Component {
                             {following.description}
                         </p>
                     </div>
+                    {this.props.loggedIn &&
                     <div>
                         {this.props.myUsername !== following.username &&
                         !this.props.myFollowing.find(o => o.username === following.username) &&
@@ -65,6 +65,7 @@ class Following extends React.Component {
                         />
                         }
                     </div>
+                    }
                 </div>
                 )}
             </section>
