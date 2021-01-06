@@ -11,23 +11,23 @@ class Header extends React.Component {
                     padded={false}
                 />
                 <nav>
-                    <Link
-                        to="/">
-                        timeline
-                    </Link>
-                    <Link
-                        to={"/" + this.props.username}>
-                        profile
-                    </Link>
-                </nav>
-                <div
-                    id="navTwo">
-
-                    <div
+                    <div>
+                        <Link
+                            to="/">
+                            timeline
+                        </Link>
+                    </div>
+                    <div>
+                        <Link
+                            to={"/" + this.props.username}>
+                            profile
+                        </Link>
+                    </div>
+                    <div id="navTwo"
                         onClick={this.props.onLogOut}>
                         log out
                     </div>
-                </div>
+                </nav>
             </header>
         );
     }

@@ -26,7 +26,6 @@ header {
 nav {
     display: flex;
     justify-content: space-between;
-    min-width: 200px;
     height: 100%;
     line-height: 55px;
 }
@@ -39,6 +38,6 @@ nav {
     cursor: pointer;
 }
 
-nav div, #navTwo div {
+nav div {
     margin: auto 20px;
 }
