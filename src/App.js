@@ -31,6 +31,7 @@ class App extends React.Component {
             following: [],
             followers: [],
             allLessons: [],
+            tokenError: '',
         }
         this.decoder = decoder.bind(this);
         this.getUserData = getUserData.bind(this);
@@ -48,14 +49,19 @@ class App extends React.Component {
     getData = () => {
         if (localStorage.getItem('tillyToken')) {
             const token = localStorage.getItem('tillyToken');
-            const decoded = this.decoder(token);
-            token && this.setState({
-                loggedIn: true,
-                id: decoded.id,
-                username: decoded.username,
-                token: token
-            });
-            this.getUserData(decoded, this.abortController);
+            try {
+                const decoded = this.decoder(token);
+                this.setState({
+                    loggedIn: true,
+                    id: decoded.id,
+                    username: decoded.username,
+                    token: token
+                });
+                this.getUserData(decoded, this.abortController);
+            } catch(err) {
+                console.log(err);
+                this.logOut();
+            }
         }
     }
 
@@ -69,8 +75,9 @@ class App extends React.Component {
 
     logOut = () => {
         localStorage.clear();
-        this.setState({loggedIn: false});
-        window.location.href = '/login';
+        this.setState({
+            loggedIn: false
+        });
     }
 
     createUser = (userInfo) => {
