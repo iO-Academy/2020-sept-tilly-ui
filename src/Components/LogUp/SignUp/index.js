@@ -29,13 +29,13 @@ class SignUp extends React.Component {
         this.checkEmail = this.checkEmail.bind(this);
     }
 
-    handleInput = (event) => {
+    handleInput = async (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        this.setState({
+        await this.setState({
             [name]: value
         });
-        this.validate();
+        this.validate()
         this.state.isValid.username && this.checkUsername(event);
         this.state.isValid.email && this.checkEmail(event);
         this.decoder = decoder.bind(this);
