@@ -55,29 +55,32 @@ class Friend extends React.Component {
                     description={this.state.description}
                 />
                 <section id="my-lessons" className="primary">
-                    {this.props.myDetails.loggedIn &&
-                    <div>
-                        {!this.props.myDetails.following.find(o => o.username === this.state.username) &&
-                            <Button
-                                onHandleClick={this.follow}
-                                value={this.state.id}
-                                className="generic mainFollow"
-                                name="follow"
-                            />
-                        }
-                        {this.props.myDetails.following.find(o => o.username === this.state.username) &&
-                            <Button
-                                onHandleClick={this.unfollow}
-                                value={this.state.id}
-                                className="generic unfollow mainFollow"
-                                name="unfollow"
-                            />
+                    <div className="profileFollow">
+                        <div className="generic"></div>
+                        <h3>
+                            {this.state.username}'s lessons
+                        </h3>
+                        {this.props.myDetails.loggedIn &&
+                        <div>
+                            {!this.props.myDetails.following.find(o => o.username === this.state.username) &&
+                                <Button
+                                    onHandleClick={this.follow}
+                                    value={this.state.id}
+                                    className="generic"
+                                    name="follow"
+                                />
+                            }
+                            {this.props.myDetails.following.find(o => o.username === this.state.username) &&
+                                <Button
+                                    onHandleClick={this.unfollow}
+                                    value={this.state.id}
+                                    className="generic unfollow"
+                                    name="unfollow"
+                                />
+                            }
+                        </div>
                         }
                     </div>
-                    }
-                    <h3>
-                        {this.state.username}'s lessons
-                    </h3>
                     {this.state.lessons.map((lesson, i) =>
                         <div key={'lesson' + i} className="lesson">
                         <span className="fade-text small">
