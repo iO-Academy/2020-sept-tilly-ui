@@ -1,13 +1,14 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import './header.css';
+import logo from '../../tilly1.png';
 
 class Header extends React.Component {
     render() {
         return (
             <header>
                 <img
-                    src="images/tilly1.png"
+                    src={logo}
                     alt="tilly logo"
                 />
                 <nav>

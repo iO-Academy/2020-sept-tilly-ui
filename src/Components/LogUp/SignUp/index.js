@@ -251,7 +251,7 @@ class SignUp extends React.Component {
                     </div>
                     <div
                         className="logup-row requirements fade-text x-small">
-                        required, min. 6 characters
+                        required, min. 5 characters &amp; 1 number
                     </div>
                     <div
                         className="logup-row">
