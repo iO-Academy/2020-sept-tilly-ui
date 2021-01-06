@@ -61,7 +61,7 @@ class Friend extends React.Component {
                             <Button
                                 onHandleClick={this.follow}
                                 value={this.state.id}
-                                className="generic"
+                                className="generic mainFollow"
                                 name="follow"
                             />
                         }
@@ -69,7 +69,7 @@ class Friend extends React.Component {
                             <Button
                                 onHandleClick={this.unfollow}
                                 value={this.state.id}
-                                className="generic unfollow"
+                                className="generic unfollow mainFollow"
                                 name="unfollow"
                             />
                         }

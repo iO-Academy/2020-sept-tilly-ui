@@ -1,4 +1,5 @@
 import React from 'react';
+import Logo from "./Logo";
 import {Link} from "react-router-dom";
 import './header.css';
 
@@ -6,9 +7,8 @@ class Header extends React.Component {
     render() {
         return (
             <header>
-                <img
-                    src="images/tilly1.png"
-                    alt="tilly logo"
+                <Logo
+                    padded={false}
                 />
                 <nav>
                     <Link

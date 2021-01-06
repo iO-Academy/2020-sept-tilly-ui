@@ -70,16 +70,21 @@ class LogIn extends React.Component {
             <form
                 onSubmit={this.handleSubmit}
                 id="logup">
-
                 <h5>
                     today i learned lots... yay!
                 </h5>
-
                 <h2
                     className="logup-title">
                     log in
                 </h2>
-
+                <div
+                    className="switch-logup">
+                    <p
+                        className="small">
+                        don't have an account? <Link to="/">create one</Link>
+                        {this.state.redirect && <Redirect to='/' />}
+                    </p>
+                </div>
                 <div
                     id="logup-form">
                     <div
@@ -124,25 +129,10 @@ class LogIn extends React.Component {
                         />
                     </div>
                 </div>
-
                 <Button
                     className="generic"
                     name="log in"
                 />
-
-                <div
-                    className="switch-logup">
-                    <p
-                        className="small">
-                        don't have an account?
-                    </p>
-                    <p>
-                        <Link to="/">
-                            create one
-                        </Link>
-                        {this.state.redirect && <Redirect to='/' />}
-                    </p>
-                </div>
             </form>
         );
     }

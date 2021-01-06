@@ -20,14 +20,6 @@ body {
   background: var(--main-color);
 }
 
-.logo {
-  position: absolute;
-  width: 60px;
-  left: 0;
-  right: 0;
-  margin: 5px auto;
-}
-
 a {
   color: var(--high-color);
   text-decoration: none;
@@ -42,9 +34,6 @@ p {
 }
 
 main {
-  position: absolute;
-  left: 0;
-  right: 0;
   width: 600px;
   max-width: 50vw;
   min-height: calc(100vh - 100px);

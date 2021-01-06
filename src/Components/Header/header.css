@@ -9,9 +9,18 @@ header {
     background: var(--bars-color);
 }
 
-header img {
-    margin: auto 20px;
-    height: 100%;
+.logo {
+    text-align: center;
+}
+
+.logoImg {
+    width: 60px;
+    padding: 0 20px;
+}
+
+.logoImgLogup {
+    width: 60px;
+    padding: 2vh 0 0 0;
 }
 
 nav {
