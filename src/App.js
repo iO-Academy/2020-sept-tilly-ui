@@ -71,7 +71,17 @@ class App extends React.Component {
     logOut = () => {
         localStorage.clear();
         this.setState({
-            loggedIn: false
+            loggedIn: false,
+            id: '',
+            name: '',
+            username: '',
+            email: '',
+            description: '',
+            lessons: [],
+            following: [],
+            followers: [],
+            allLessons: [],
+            tokenError: ''
         });
     }
 
