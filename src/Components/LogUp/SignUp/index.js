@@ -41,14 +41,14 @@ class SignUp extends React.Component {
         await this.setState({
             [name]: value
         });
-        this.validate()
+        this.validate([event.target.name])
         this.state.isValid.username && this.checkUsername(event);
         this.state.isValid.email && this.checkEmail(event);
         this.decoder = decoder.bind(this);  // TODO: Should this be here?
     }
 
     handleSubmit = () => {
-        this.validate();
+        // this.validate();
         if (
             this.state.isValid.email &&
             this.state.isValid.password &&
@@ -82,21 +82,30 @@ class SignUp extends React.Component {
         }
     }
 
-    validate = () => {
-        let input = {...this.state};
-        if (typeof input["username"] !== "undefined") {
-            const usernamePattern = new RegExp(/^(?=.{3,12}$)[a-zA-Z0-9]+/);
-            input.isValid.username = usernamePattern.test(input["username"]);
-        }
-        if (typeof input["email"] !== "undefined") {
-            const emailPattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/);
-            input.isValid.email = emailPattern.test(input["email"]);
-        }
-        if (typeof input["password"] !== "undefined") {
-            const passwordPattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
-            input.isValid.password = passwordPattern.test(input["password"]);
-        }
-        this.setState({input});
+    validate = (fields) => {
+        fields.forEach(field => {
+            switch (field) {
+                case 'username':
+                    const usernamePattern = new RegExp(/^(?=.{3,20}$)[a-zA-Z0-9]+/);
+                    this.state.username && usernamePattern.test(this.state.username) &&
+                        this.setState(isValid.username)
+            }
+        })
+
+        // let input = {...this.state};
+        // if (typeof input["username"] !== "undefined") {
+        //     const usernamePattern = new RegExp(/^(?=.{3,20}$)[a-zA-Z0-9]+/);
+        //     input.isValid.username = usernamePattern.test(input["username"]);
+        // }
+        // if (typeof input["email"] !== "undefined") {
+        //     const emailPattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/);
+        //     input.isValid.email = emailPattern.test(input["email"]);
+        // }
+        // if (typeof input["password"] !== "undefined") {
+        //     const passwordPattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
+        //     input.isValid.password = passwordPattern.test(input["password"]);
+        // }
+        // this.setState({input});
     }
 
     async checkUsername(event) {
@@ -179,7 +188,7 @@ class SignUp extends React.Component {
                     </div>
                     <div
                         className="logup-row requirements fade-text x-small">
-                        required, only letters &amp; numbers
+                        required, 3-20 letters or numbers
                     </div>
                     {/*Name*/}
                     <div className="logup-row">
@@ -199,11 +208,16 @@ class SignUp extends React.Component {
                         />
                         <div
                             className="validity-check">
+                            {this.state.name.length > 0 &&
+                            <div className="valid-input">
+                                &#10003;
+                            </div>
+                            }
                         </div>
                     </div>
                     <div
                         className="logup-row requirements fade-text x-small">
-                        required
+                        required, 3-20 letters
                     </div>
                     {/*Email*/}
                     <div
@@ -291,7 +305,7 @@ class SignUp extends React.Component {
                     </div>
                     <div
                         className="logup-row requirements fade-text x-small">
-                        required, min. 5 characters &amp; 1 number
+                        required
                     </div>
                     {/*Description*/}
                     <div
