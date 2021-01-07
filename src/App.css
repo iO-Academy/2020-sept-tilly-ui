@@ -37,7 +37,7 @@ main {
   width: 600px;
   max-width: 50vw;
   min-height: calc(100vh - 100px);
-  margin: 80px auto auto auto;
+  margin: 40px auto auto auto;
 }
 
 .primary {
