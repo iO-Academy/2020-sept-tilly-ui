@@ -28,10 +28,6 @@ class SignUp extends React.Component {
         this.checkEmail = this.checkEmail.bind(this);
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log(this.state);
-    }
-
     handleInput = async (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -45,7 +41,7 @@ class SignUp extends React.Component {
     }
 
     handleSubmit = () => {
-        // this.validate();
+        // this.validate(); // TODO: Do we need this? Can pass in an array if needed.
         if (
             this.state.validName &&
             this.state.validPassword &&
