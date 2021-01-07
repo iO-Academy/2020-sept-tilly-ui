@@ -14,10 +14,12 @@ class SignUp extends React.Component {
             name: '',
             email: '',
             password: '',
+            confirmPassword: '',
             description: '',
             isValid: {
                 username: false,
                 password: false,
+                confirmPassword: false,
                 email: false
             },
             isAvailable: {
@@ -29,6 +31,10 @@ class SignUp extends React.Component {
         this.checkEmail = this.checkEmail.bind(this);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log(this.state)
+    }
+
     handleInput = async (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -38,7 +44,7 @@ class SignUp extends React.Component {
         this.validate()
         this.state.isValid.username && this.checkUsername(event);
         this.state.isValid.email && this.checkEmail(event);
-        this.decoder = decoder.bind(this);
+        this.decoder = decoder.bind(this);  // TODO: Should this be here?
     }
 
     handleSubmit = () => {
@@ -46,6 +52,7 @@ class SignUp extends React.Component {
         if (
             this.state.isValid.email &&
             this.state.isValid.password &&
+            this.state.isValid.confirmPassword &&
             this.state.isAvailable.username &&
             this.state.isAvailable.email
         ) {
@@ -145,6 +152,7 @@ class SignUp extends React.Component {
                 </h2>
 
                 <form id="logup-form">
+                    {/*Username*/}
                     <div className="logup-row">
                         <label
                             className="logup-label"
@@ -173,6 +181,7 @@ class SignUp extends React.Component {
                         className="logup-row requirements fade-text x-small">
                         required, only letters &amp; numbers
                     </div>
+                    {/*Name*/}
                     <div className="logup-row">
                         <label
                             className="logup-label"
@@ -196,6 +205,7 @@ class SignUp extends React.Component {
                         className="logup-row requirements fade-text x-small">
                         required
                     </div>
+                    {/*Email*/}
                     <div
                         className="logup-row">
                         <label
@@ -225,6 +235,7 @@ class SignUp extends React.Component {
                         className="logup-row requirements fade-text x-small">
                         required
                     </div>
+                    {/*Password*/}
                     <div
                         className="logup-row">
                         <label
@@ -253,6 +264,36 @@ class SignUp extends React.Component {
                         className="logup-row requirements fade-text x-small">
                         required, min. 5 characters &amp; 1 number
                     </div>
+                    {/*Confirm password*/}
+                    <div
+                        className="logup-row">
+                        <label
+                            className="logup-label"
+                            htmlFor="password">confirm password
+                        </label>
+                        <input
+                            id="confirmPassword"
+                            className="logup-input"
+                            type="password"
+                            required
+                            name="confirmPassword"
+                            value={this.state.confirmPassword}
+                            onChange={this.handleInput}
+                        />
+                        <div
+                            className="validity-check">
+                            {this.state.isValid.confirmPassword &&
+                            <div className="valid-input">
+                                &#10003;
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <div
+                        className="logup-row requirements fade-text x-small">
+                        required, min. 5 characters &amp; 1 number
+                    </div>
+                    {/*Description*/}
                     <div
                         className="logup-row">
                         <label
