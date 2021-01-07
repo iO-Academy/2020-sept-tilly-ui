@@ -9,27 +9,44 @@ header {
     background: var(--bars-color);
 }
 
-header img {
-    margin: auto 20px;
-    height: 100%;
+.logo {
+    text-align: center;
+}
+
+.logoImg {
+    width: 60px;
+    padding: 0 20px;
+}
+
+.logoImgLogup {
+    width: 60px;
+    padding: 2vh 0 0 0;
 }
 
 nav {
     display: flex;
     justify-content: space-between;
-    min-width: 200px;
     height: 100%;
     line-height: 55px;
 }
 
-#navTwo {
+nav div {
+    margin: auto 20px;
+}
+
+.navTwo {
+    display: flex;
+    justify-content: space-between;
     height: 100%;
-    font-size: x-small;
+    font-size: small;
     text-align: right;
     line-height: 55px;
     cursor: pointer;
 }
 
-nav div, #navTwo div {
-    margin: auto 20px;
+.navTwo button {
+    cursor: pointer;
+    margin: auto 5px;
+    padding: 5px 7px;
+    background: var(--fade-color);
 }

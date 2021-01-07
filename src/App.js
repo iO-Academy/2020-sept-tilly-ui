@@ -1,13 +1,8 @@
 import React from 'react';
 import "./App.css";
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Redirect,
-} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 import Header from "./Components/Header";
-import LoginHeader from "./Components/Header/LoginHeader";
+import Logo from "./Components/Header/Logo";
 import Profile from "./Components/Profile";
 import Friend from "./Components/Profile/Friend";
 import Timeline from "./Components/Timeline";
@@ -140,7 +135,9 @@ class App extends React.Component {
                     </Router>
                     :
                     <Router>
-                        <LoginHeader/>
+                        <Logo
+                            padded={true}
+                        />
                         <main>
                             <Switch>
                                 <Route
