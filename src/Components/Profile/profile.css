@@ -6,6 +6,7 @@
 .lesson {
     width: 100%;
     padding: 10px 0;
+    border-bottom: 1px solid var(--line-color);
 }
 
 .profileHeader {
@@ -29,6 +30,7 @@
     margin: 20px 0;
     font-size: small;
     padding: 20px;
-    border-top: 1px solid var(--line-color);
-    border-bottom: 1px solid var(--line-color);
+    background: #2a2a2a;
+    border: 1px solid var(--line-color);
+    box-shadow: 0 5px 15px -5px #111111;
 }

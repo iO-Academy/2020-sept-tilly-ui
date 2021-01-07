@@ -57,10 +57,6 @@ class Profile extends React.Component {
     render() {
         return (
             <div>
-                <Bio
-                    username={this.state.username}
-                    description={this.state.description}
-                />
                 <Create
                     id={this.props.id}
                     onCreateLesson={this.props.onAddLesson}

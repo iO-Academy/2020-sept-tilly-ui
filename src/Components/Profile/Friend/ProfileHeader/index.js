@@ -7,7 +7,7 @@ export default function ProfileHeader(props) {
         <div className="profileHeader">
             <div className={props.myDetails.loggedIn ? "profileTitleSpaceBetween" : "profileTitleCenter"}>
                 <h3>
-                    {props.username}'s lessons
+                    {props.username}
                 </h3>
                 {props.myDetails.loggedIn &&
                 <div>
