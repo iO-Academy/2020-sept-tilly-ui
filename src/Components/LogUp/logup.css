@@ -1,6 +1,5 @@
 #logup {
     position: relative;
-    top: 50px;
     margin: auto;
     width: 400px;
     text-align: center;
@@ -46,9 +45,12 @@
 .valid-input {
     margin: 5px;
     width: 20px;
+    height: 20px;
     font-size: small;
-    line-height: 20px;
-    text-align: right;
+    font-weight: bold;
+    line-height: 22px;
+    text-align: center;
+    color: var(--main-color);
     background-color: var(--high-color);
     border-radius: 100%;
 }
@@ -60,7 +62,8 @@
 }
 
 .switch-logup {
-    margin: 70px 0 0 0;
+    margin: 20px 0 20px 0;
+    color: var(--fade-color);
 }
 
 #about-me {

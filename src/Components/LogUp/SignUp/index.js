@@ -158,7 +158,13 @@ class SignUp extends React.Component {
                     className="logup-title">
                     create an account
                 </h2>
-
+                <div
+                    className="switch-logup">
+                    <p
+                        className="small">
+                        already have an account? <Link to="/login">log in</Link>
+                    </p>
+                </div>
                 <form id="logup-form">
                     {/*Username*/}
                     <div className="logup-row">
@@ -340,18 +346,6 @@ class SignUp extends React.Component {
                     name="sign up"
                     onHandleClick={this.handleSubmit}
                 />
-                <div
-                    className="switch-logup">
-                    <p
-                        className="small">
-                        already have an account?
-                    </p>
-                    <p>
-                        <Link to="/login">
-                            log in
-                        </Link>
-                    </p>
-                </div>
             </div>
         );
     }

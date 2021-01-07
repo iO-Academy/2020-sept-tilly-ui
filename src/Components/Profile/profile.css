@@ -1,9 +1,15 @@
 #my-lessons {
-    margin: 50px auto 0 auto;
+    margin: 100px 0 0 0;
     text-align: left;
 }
 
 .lesson {
     width: 100%;
     padding: 10px 0;
+}
+
+.profileFollow {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }

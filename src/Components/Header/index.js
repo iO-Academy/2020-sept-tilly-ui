@@ -1,34 +1,49 @@
 import React from 'react';
+import Logo from "./Logo";
 import {Link} from "react-router-dom";
 import './header.css';
-import logo from '../../tilly1.png';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 class Header extends React.Component {
+
+    doNothing = () => {
+        console.log('settings button');
+    }
+
     render() {
         return (
             <header>
-                <img
-                    src={logo}
-                    alt="tilly logo"
+                <Logo
+                    padded={false}
                 />
                 <nav>
-                    <Link
-                        to="/">
-                        timeline
-                    </Link>
-                    <Link
-                        to={"/" + this.props.username}>
-                        profile
-                    </Link>
-                </nav>
-                <div
-                    id="navTwo">
-
-                    <div
-                        onClick={this.props.onLogOut}>
-                        log out
+                    <div>
+                        <Link
+                            to="/">
+                            timeline
+                        </Link>
                     </div>
-                </div>
+                    <div>
+                        <Link
+                            to={"/" + this.props.username}>
+                            profile
+                        </Link>
+                    </div>
+                    <div className="navTwo">
+                        <button
+                            onClick={this.doNothing}>
+                            <FontAwesomeIcon icon={faCog} />
+                        </button>
+                        <button
+                            onClick={this.props.onLogOut}>
+                            <FontAwesomeIcon
+                                icon={faSignOutAlt}
+                            />
+                        </button>
+                    </div>
+                </nav>
             </header>
         );
     }
