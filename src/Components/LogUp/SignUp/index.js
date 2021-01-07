@@ -80,26 +80,29 @@ class SignUp extends React.Component {
     }
 
     validate = (fields) => {
+        const usernamePattern = new RegExp(/^(?=.{3,20}$)[a-zA-Z0-9]+/);
+        const namePattern = new RegExp(/^(?=.{3,20}$)[a-zA-Z0-9]+/);
+        const emailPattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/);
+        const passwordPattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
+
         fields.forEach(field => {
             switch (field) {
                 case 'username':
-                    const usernamePattern = new RegExp(/^(?=.{3,20}$)[a-zA-Z0-9]+/);
                     this.setState({validUsername: this.state.username && usernamePattern.test(this.state.username)});
                     break;
                 case 'name':
-                    const namePattern = new RegExp(/^(?=.{3,20}$)[a-zA-Z0-9]+/);
                     this.setState({validName: this.state.name && namePattern.test(this.state.name)})
                     break;
                 case 'email':
-                    const emailPattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/);
                     this.setState({validEmail: this.state.email && emailPattern.test(this.state.email)});
                     break;
                 case 'password':
-                    const passwordPattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
                     this.setState({validPassword: this.state.password && passwordPattern.test(this.state.password)});
+                    this.setState({passwordConfirmed: this.state.password === this.state.confirmPassword});
                     break;
                 case 'confirmPassword':
-                    this.setState({passwordConfirmed: this.state.password === this.state.confirmPassword});
+                    this.setState({validPassword: this.state.password && passwordPattern.test(this.state.password)});
+                    this.setState({passwordConfirmed: this.state.password && this.state.password === this.state.confirmPassword});
             }
         })
     }
