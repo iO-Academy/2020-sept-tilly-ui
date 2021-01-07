@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import './header.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faUser, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 class Header extends React.Component {
 
@@ -22,28 +22,34 @@ class Header extends React.Component {
                     <div>
                         <Link
                             to="/">
-                            timeline
+                            <FontAwesomeIcon icon={faEllipsisV} />
+                            <div className="navText">
+                                timeline
+                            </div>
                         </Link>
                     </div>
                     <div>
                         <Link
                             to={"/" + this.props.username}>
-                            profile
+                            <FontAwesomeIcon icon={faUser} />
+                            <div className="navText">
+                                profile
+                            </div>
                         </Link>
                     </div>
-                    <div className="navTwo">
-                        <button
-                            onClick={this.doNothing}>
-                            <FontAwesomeIcon icon={faCog} />
-                        </button>
-                        <button
-                            onClick={this.props.onLogOut}>
-                            <FontAwesomeIcon
-                                icon={faSignOutAlt}
-                            />
-                        </button>
-                    </div>
                 </nav>
+                <div className="navTwo">
+                    <button
+                        onClick={this.doNothing}>
+                        <FontAwesomeIcon icon={faCog} />
+                    </button>
+                    <button
+                        onClick={this.props.onLogOut}>
+                        <FontAwesomeIcon
+                            icon={faSignOutAlt}
+                        />
+                    </button>
+                </div>
             </header>
         );
     }
