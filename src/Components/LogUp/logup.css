@@ -67,12 +67,8 @@
 }
 
 #about-me {
-    margin: 10px 0 0 0;
-    width: 284px;
-    height: 80px;
-    padding: 8px;
+    height: 120px;
     font-family: var(--main-type);
-    resize: none;
 }
 
 .requirements {
