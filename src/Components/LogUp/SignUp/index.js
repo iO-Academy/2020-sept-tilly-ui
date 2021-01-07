@@ -35,8 +35,8 @@ class SignUp extends React.Component {
             [name]: value
         });
         this.validate([event.target.name])
-        this.state.validUsername && this.checkUsername(event);
-        this.state.validEmail && this.checkEmail(event);
+        event.target.name === "username" && this.state.validUsername && this.checkUsername(event);
+        event.target.name === "email" && this.state.validEmail && this.checkEmail(event);
         this.decoder = decoder.bind(this);  // TODO: Should this be here?
     }
 
@@ -77,7 +77,7 @@ class SignUp extends React.Component {
 
     validate = (fields) => {
         const usernamePattern = new RegExp(/^(?=.{3,20}$)[a-zA-Z0-9]+/);
-        const namePattern = new RegExp(/^(?=.{3,20}$)[a-zA-Z0-9]+/);
+        const namePattern = new RegExp(/^(?=.{3,20}$)[a-zA-Z]+/);
         const emailPattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/);
         const passwordPattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
 
