@@ -3,7 +3,15 @@ import Logo from "./Logo";
 import {Link} from "react-router-dom";
 import './header.css';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+
 class Header extends React.Component {
+
+    doNothing = () => {
+        console.log('settings button');
+    }
+
     render() {
         return (
             <header>
@@ -23,9 +31,17 @@ class Header extends React.Component {
                             profile
                         </Link>
                     </div>
-                    <div id="navTwo"
-                        onClick={this.props.onLogOut}>
-                        log out
+                    <div className="navTwo">
+                        <button
+                            onClick={this.doNothing}>
+                            <FontAwesomeIcon icon={faCog} />
+                        </button>
+                        <button
+                            onClick={this.props.onLogOut}>
+                            <FontAwesomeIcon
+                                icon={faSignOutAlt}
+                            />
+                        </button>
                     </div>
                 </nav>
             </header>

@@ -1,11 +1,6 @@
 import React from 'react';
 import "./App.css";
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Redirect,
-} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 import Header from "./Components/Header";
 import Logo from "./Components/Header/Logo";
 import Profile from "./Components/Profile";

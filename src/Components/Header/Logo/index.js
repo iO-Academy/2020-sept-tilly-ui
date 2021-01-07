@@ -7,7 +7,7 @@ export default function Logo(props) {
             <Link to="/">
                 <img
 
-                    class={props.padded ? "logoImgLogup" : "logoImg"}
+                    className={props.padded ? "logoImgLogup" : "logoImg"}
                     src="images/tilly.svg"
                     alt="tilly logo"
                 />
