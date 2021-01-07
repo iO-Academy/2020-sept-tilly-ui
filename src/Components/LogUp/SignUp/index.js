@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import Button from "../../Button";
 import {Link} from "react-router-dom";
-import '../logup.css';
+import "../logup.css";
 import decoder from "../../../Functions/decoder";
 
 class SignUp extends React.Component {
@@ -9,30 +9,27 @@ class SignUp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: '',
-            username: '',
-            name: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-            description: '',
-            isValid: {
-                username: false,
-                password: false,
-                confirmPassword: false,
-                email: false
-            },
-            isAvailable: {
-                username: null,
-                email: null
-            }
+            id: "",
+            username: "",
+            name: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+            description: "",
+            validUsername: false,
+            validName: false,
+            validPassword: false,
+            passwordConfirmed: false,
+            validEmail: false,
+            usernameAvailable: null,
+            emailAvailable: null
         }
         this.checkUsername = this.checkUsername.bind(this);
         this.checkEmail = this.checkEmail.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log(this.state)
+        console.log(this.state);
     }
 
     handleInput = async (event) => {
@@ -42,19 +39,19 @@ class SignUp extends React.Component {
             [name]: value
         });
         this.validate([event.target.name])
-        this.state.isValid.username && this.checkUsername(event);
-        this.state.isValid.email && this.checkEmail(event);
+        this.state.validUsername && this.checkUsername(event);
+        this.state.validEmail && this.checkEmail(event);
         this.decoder = decoder.bind(this);  // TODO: Should this be here?
     }
 
     handleSubmit = () => {
         // this.validate();
         if (
-            this.state.isValid.email &&
-            this.state.isValid.password &&
-            this.state.isValid.confirmPassword &&
-            this.state.isAvailable.username &&
-            this.state.isAvailable.email
+            this.state.validName &&
+            this.state.validPassword &&
+            this.state.passwordConfirmed &&
+            this.state.usernameAvailable &&
+            this.state.emailAvailable
         ) {
             const query = `mutation {
                 addUser(
@@ -87,25 +84,24 @@ class SignUp extends React.Component {
             switch (field) {
                 case 'username':
                     const usernamePattern = new RegExp(/^(?=.{3,20}$)[a-zA-Z0-9]+/);
-                    this.state.username && usernamePattern.test(this.state.username) &&
-                        this.setState(isValid.username)
+                    this.setState({validUsername: this.state.username && usernamePattern.test(this.state.username)});
+                    break;
+                case 'name':
+                    const namePattern = new RegExp(/^(?=.{3,20}$)[a-zA-Z0-9]+/);
+                    this.setState({validName: this.state.name && namePattern.test(this.state.name)})
+                    break;
+                case 'email':
+                    const emailPattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/);
+                    this.setState({validEmail: this.state.email && emailPattern.test(this.state.email)});
+                    break;
+                case 'password':
+                    const passwordPattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
+                    this.setState({validPassword: this.state.password && passwordPattern.test(this.state.password)});
+                    break;
+                case 'confirmPassword':
+                    this.setState({passwordConfirmed: this.state.password === this.state.confirmPassword});
             }
         })
-
-        // let input = {...this.state};
-        // if (typeof input["username"] !== "undefined") {
-        //     const usernamePattern = new RegExp(/^(?=.{3,20}$)[a-zA-Z0-9]+/);
-        //     input.isValid.username = usernamePattern.test(input["username"]);
-        // }
-        // if (typeof input["email"] !== "undefined") {
-        //     const emailPattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/);
-        //     input.isValid.email = emailPattern.test(input["email"]);
-        // }
-        // if (typeof input["password"] !== "undefined") {
-        //     const passwordPattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
-        //     input.isValid.password = passwordPattern.test(input["password"]);
-        // }
-        // this.setState({input});
     }
 
     async checkUsername(event) {
@@ -122,7 +118,7 @@ class SignUp extends React.Component {
             .then(r => r.json())
             .then(data => {
                 let available = {...this.state};
-                available.isAvailable.username = !!data.data.availableUsername;
+                available.usernameAvailable = !!data.data.availableUsername;
                 this.setState({...available});
             });
     }
@@ -141,7 +137,7 @@ class SignUp extends React.Component {
             .then(r => r.json())
             .then(data => {
                 let available = {...this.state};
-                available.isAvailable.email = !!data.data.availableEmail;
+                available.emailAvailable = !!data.data.availableEmail;
                 this.setState({...available});
             });
     }
@@ -179,7 +175,7 @@ class SignUp extends React.Component {
                         />
                         <div
                             className="validity-check">
-                            {this.state.isValid.username && this.state.isAvailable.username &&
+                            {this.state.validUsername && this.state.usernameAvailable &&
                             <div className="valid-input">
                                 &#10003;
                             </div>
@@ -208,7 +204,7 @@ class SignUp extends React.Component {
                         />
                         <div
                             className="validity-check">
-                            {this.state.name.length > 0 &&
+                            {this.state.validName &&
                             <div className="valid-input">
                                 &#10003;
                             </div>
@@ -238,7 +234,7 @@ class SignUp extends React.Component {
                         />
                         <div
                             className="validity-check">
-                            {this.state.isValid.email && this.state.isAvailable.email &&
+                            {this.state.validEmail && this.state.emailAvailable &&
                             <div className="valid-input">
                                 &#10003;
                             </div>
@@ -267,7 +263,7 @@ class SignUp extends React.Component {
                         />
                         <div
                             className="validity-check">
-                            {this.state.isValid.password &&
+                            {this.state.validPassword &&
                             <div className="valid-input">
                                 &#10003;
                             </div>
@@ -296,7 +292,7 @@ class SignUp extends React.Component {
                         />
                         <div
                             className="validity-check">
-                            {this.state.isValid.confirmPassword &&
+                            {this.state.passwordConfirmed &&
                             <div className="valid-input">
                                 &#10003;
                             </div>
