@@ -89,6 +89,7 @@ class LogIn extends React.Component {
                         {this.state.nonExistent &&
                         'Cannot find user. Try again!'}
                     </div>
+                    {/*username*/}
                     <div
                         className="logup-row">
                         <label
@@ -105,7 +106,13 @@ class LogIn extends React.Component {
                             value={this.state.username}
                             onChange={this.handleInput}
                         />
+                        <div className="validity-check"></div>
                     </div>
+                    <div
+                        className="logup-row requirements fade-text x-small">
+                        required
+                    </div>
+                    {/*password*/}
                     <div
                         className="logup-row">
                         <label
@@ -122,6 +129,11 @@ class LogIn extends React.Component {
                             value={this.state.password}
                             onChange={this.handleInput}
                         />
+                        <div className="validity-check"></div>
+                    </div>
+                    <div
+                        className="logup-row requirements fade-text x-small">
+                        required
                     </div>
                 </div>
 
