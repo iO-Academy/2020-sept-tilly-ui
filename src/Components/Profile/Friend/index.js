@@ -9,6 +9,7 @@ import unfollow from "../../../Functions/unfollow";
 import followFetch from "../../../Functions/followFetch";
 import Button from "../../Button";
 import '../profile.css';
+import ProfileHeader from "./ProfileHeader";
 
 class Friend extends React.Component {
 
@@ -50,37 +51,15 @@ class Friend extends React.Component {
     render() {
         return (
             <div>
-                <Bio
-                    username={this.state.username}
-                    description={this.state.description}
-                />
                 <section id="my-lessons" className="primary">
-                    <div className="profileFollow">
-                        <div className="generic"></div>
-                        <h3>
-                            {this.state.username}'s lessons
-                        </h3>
-                        {this.props.myDetails.loggedIn &&
-                        <div>
-                            {!this.props.myDetails.following.find(o => o.username === this.state.username) &&
-                                <Button
-                                    onHandleClick={this.follow}
-                                    value={this.state.id}
-                                    className="generic"
-                                    name="follow"
-                                />
-                            }
-                            {this.props.myDetails.following.find(o => o.username === this.state.username) &&
-                                <Button
-                                    onHandleClick={this.unfollow}
-                                    value={this.state.id}
-                                    className="generic unfollow"
-                                    name="unfollow"
-                                />
-                            }
-                        </div>
-                        }
-                    </div>
+                    <ProfileHeader
+                        id={this.props.id}
+                        username={this.state.username}
+                        description={this.state.description}
+                        myDetails={this.props.myDetails}
+                        onFollow={this.follow}
+                        onUnfollow={this.unfollow}
+                    />
                     {this.state.lessons.map((lesson, i) =>
                         <div key={'lesson' + i} className="lesson">
                         <span className="fade-text small">

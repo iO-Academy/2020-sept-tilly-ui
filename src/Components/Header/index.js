@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import './header.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faUser, faCog, faShoePrints } from '@fortawesome/free-solid-svg-icons';
 
 class Header extends React.Component {
 
@@ -22,28 +22,48 @@ class Header extends React.Component {
                     <div>
                         <Link
                             to="/">
-                            timeline
+                            <FontAwesomeIcon
+                                icon={faEllipsisV}
+                                alt="my timeline"
+                                title="my timeline"
+                            />
+                            <div className="navText">
+                                timeline
+                            </div>
                         </Link>
                     </div>
                     <div>
                         <Link
                             to={"/" + this.props.username}>
-                            profile
+                            <FontAwesomeIcon
+                                icon={faUser}
+                                alt="my profile"
+                                title="my profile"
+                            />
+                            <div className="navText">
+                                profile
+                            </div>
                         </Link>
                     </div>
-                    <div className="navTwo">
-                        <button
-                            onClick={this.doNothing}>
-                            <FontAwesomeIcon icon={faCog} />
-                        </button>
-                        <button
-                            onClick={this.props.onLogOut}>
-                            <FontAwesomeIcon
-                                icon={faSignOutAlt}
-                            />
-                        </button>
-                    </div>
                 </nav>
+                <div className="navTwo">
+                    <button
+                        onClick={this.doNothing}>
+                        <FontAwesomeIcon
+                            icon={faCog}
+                            alt="settings"
+                            title="settings"
+                        />
+                    </button>
+                    <button
+                        onClick={this.props.onLogOut}>
+                        <FontAwesomeIcon
+                            icon={faShoePrints}
+                            alt="log out"
+                            title="log out"
+                        />
+                    </button>
+                </div>
             </header>
         );
     }

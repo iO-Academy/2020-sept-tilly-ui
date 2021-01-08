@@ -26,6 +26,7 @@ class SignUp extends React.Component {
         }
         this.checkUsername = this.checkUsername.bind(this);
         this.checkEmail = this.checkEmail.bind(this);
+        this.decoder = decoder.bind(this);
     }
 
     handleInput = async (event) => {
@@ -35,13 +36,11 @@ class SignUp extends React.Component {
             [name]: value
         });
         this.validate([event.target.name])
-        event.target.name === "username" && this.state.validUsername && this.checkUsername(event);
-        event.target.name === "email" && this.state.validEmail && this.checkEmail(event);
-        this.decoder = decoder.bind(this);  // TODO: Should this be here?
+        event.target.name === "username" && this.state.validUsername && await this.checkUsername(event);
+        event.target.name === "email" && this.state.validEmail && await this.checkEmail(event);
     }
 
     handleSubmit = () => {
-        // this.validate(); // TODO: Do we need this? Can pass in an array if needed.
         if (
             this.state.validName &&
             this.state.validPassword &&
