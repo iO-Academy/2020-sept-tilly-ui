@@ -2,27 +2,41 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import Button from "../../Button";
 import '../sides.css';
+import getFollowing from "../../../Functions/getFollowing";
+import follow from "../../../Functions/follow";
+import unfollow from "../../../Functions/unfollow";
 
 class Following extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            following: []
+            following: [],
+            currentUserFollowing: []
+        }
+        this.follow = follow.bind(this);
+        this.unfollow = unfollow.bind(this);
+        this.getFollowing = getFollowing.bind(this);
+
+        if (this.props.username && this.props.myUsername) {
+            this.getFollowing("following", this.props.username, this.abortController);
+            this.getFollowing("currentUserFollowing", this.props.myUsername, this.abortController);
         }
     }
 
+    abortController = new AbortController();
+
     componentDidMount() {
-        setTimeout(() => this.setState({
-            following: this.props.following
-        }), 200);
+        if (this.props.username && this.props.myUsername) {
+            this.getFollowing("following", this.props.username, this.abortController);
+            this.getFollowing("currentUserFollowing", this.props.myUsername, this.abortController);
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.following !== this.props.following) {
-            this.setState({
-                following: this.props.following
-            });
+        if (prevProps !== this.props && this.props.username && this.props.myUsername) {
+            this.getFollowing("following", this.props.username, this.abortController);
+            this.getFollowing("currentUserFollowing", this.props.myUsername, this.abortController);
         }
     }
 
@@ -33,40 +47,40 @@ class Following extends React.Component {
                     following
                 </h4>
                 {this.state.following.map(following =>
-                <div
-                    className="me-follow">
-                    <div>
-                        <p>
-                            <Link to={"/" + following.username}>
-                                {following.username}
-                            </Link>
-                        </p>
-                        <p className="fade-text x-small">
-                            {following.description}
-                        </p>
-                    </div>
-                    {this.props.loggedIn &&
-                    <div>
-                        {this.props.myUsername !== following.username &&
-                        !this.props.myFollowing.find(o => o.username === following.username) &&
-                        <Button
-                            className="follow"
-                            onHandleClick={this.props.onFollow}
-                            value={following.id}
-                            name="+"
-                        />
+                    <div
+                        className="me-follow">
+                        <div>
+                            <p>
+                                <Link to={"/" + following.username}>
+                                    {following.username}
+                                </Link>
+                            </p>
+                            <p className="fade-text x-small">
+                                {following.description}
+                            </p>
+                        </div>
+                        {this.props.loggedIn &&
+                        <div>
+                            {this.props.myUsername !== following.username &&
+                            !this.state.currentUserFollowing.find(o => o.username === following.username) &&
+                            <Button
+                                className="follow"
+                                onHandleClick={this.follow}
+                                value={following.id}
+                                name="+"
+                            />
+                            }
+                            {this.state.currentUserFollowing.find(o => o.username === following.username) &&
+                            <Button
+                                className="follow unfollow unfollow-rotate"
+                                onHandleClick={this.unfollow}
+                                value={following.id}
+                                name="+"
+                            />
+                            }
+                        </div>
                         }
-                        {this.props.myFollowing.find(o => o.username === following.username) &&
-                        <Button
-                            className="follow unfollow unfollow-rotate"
-                            onHandleClick={this.props.onUnfollow}
-                            value={following.id}
-                            name="+"
-                        />
-                        }
                     </div>
-                    }
-                </div>
                 )}
             </section>
         );

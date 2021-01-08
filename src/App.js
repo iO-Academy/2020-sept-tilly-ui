@@ -10,6 +10,7 @@ import SignUp from "./Components/LogUp/SignUp";
 import LogIn from "./Components/LogUp/LogIn";
 import decoder from "./Functions/decoder";
 import getUserData from "./Functions/getUserData";
+import getLessons from "./Functions/getLessons";
 
 class App extends React.Component {
 
@@ -17,15 +18,11 @@ class App extends React.Component {
         super(props);
         this.state = {
             loggedIn: false,
-            id: '',
-            name: '',
-            username: '',
-            email: '',
-            description: '',
-            lessons: [],
-            following: [],
-            followers: [],
-            allLessons: [],
+            id: "",
+            name: "",
+            username: "",
+            email: "",
+            description: "",
             tokenError: '',
         }
         this.decoder = decoder.bind(this);
@@ -49,10 +46,9 @@ class App extends React.Component {
                 this.setState({
                     loggedIn: true,
                     id: decoded.id,
-                    username: decoded.username,
                     token: token
                 });
-                this.getUserData(decoded, this.abortController);
+                this.getUserData(decoded.username, this.abortController)
             } catch(err) {
                 console.log(err);
                 this.logOut();
@@ -60,7 +56,7 @@ class App extends React.Component {
         }
     }
 
-    logIn = (id) => {
+    logIn = async (id) => {
         this.setState({
             loggedIn: true,
             id: id,
@@ -114,32 +110,36 @@ class App extends React.Component {
                         <main>
                             <Switch>
                                 <Route
-                                    path={"/" + this.state.username}>
-                                    <Profile
-                                        id={this.state.id}
-                                        username={this.state.username}
-                                        description={this.state.description}
-                                        lessons={this.state.lessons}
-                                        following={this.state.following}
-                                        loggedIn={this.state.loggedIn}
-                                        onAddLesson={this.addLesson}
-                                        onGetData={this.getData}
-                                    />
-                                </Route>
-                                <Route
                                     path="/:username"
-                                    render={props => <Friend myDetails={this.state}
-                                                             onGetData={this.getData} {...props} />}
+                                    render={props => <Profile currentUser={this.state} {...props} />}
                                 />
-                                <Route
-                                    path="/">
-                                    <Timeline
-                                        username={this.state.username}
-                                        allLessons={this.state.allLessons}
-                                        lessons={this.state.lessons}
-                                        following={this.state.following}
-                                    />
-                                </Route>
+                                {/*<Route*/}
+                                {/*    path={"/" + this.state.username}>*/}
+                                {/*    <Profile*/}
+                                {/*        id={this.state.id}*/}
+                                {/*        username={this.state.username}*/}
+                                {/*        description={this.state.description}*/}
+                                {/*        lessons={this.state.lessons}*/}
+                                {/*        following={this.state.following}*/}
+                                {/*        loggedIn={this.state.loggedIn}*/}
+                                {/*        onAddLesson={this.addLesson}*/}
+                                {/*        onGetData={this.getData}*/}
+                                {/*    />*/}
+                                {/*</Route>*/}
+                                {/*<Route*/}
+                                {/*    path="/:username"*/}
+                                {/*    render={props => <Friend myDetails={this.state}*/}
+                                {/*                             onGetData={this.getData} {...props} />}*/}
+                                {/*/>*/}
+                                {/*<Route*/}
+                                {/*    path="/">*/}
+                                {/*    <Timeline*/}
+                                {/*        username={this.state.username}*/}
+                                {/*        allLessons={this.state.allLessons}*/}
+                                {/*        lessons={this.state.lessons}*/}
+                                {/*        following={this.state.following}*/}
+                                {/*    />*/}
+                                {/*</Route>*/}
                             </Switch>
                         </main>
                     </Router>

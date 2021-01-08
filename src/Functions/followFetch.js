@@ -9,6 +9,7 @@ export default function followFetch(query, abortController) {
     })
         .then(r => r.json())
         .then(data => {
-            this.props.onGetData();
+            this.getFollowing("following", this.props.username, this.abortController);
+            this.getFollowing("currentUserFollowing", this.props.myUsername, this.abortController);
         });
 }

@@ -4,50 +4,64 @@ import Create from "../Create";
 import Bio from "../Sides/Bio";
 import follow from "../../Functions/follow";
 import unfollow from "../../Functions/unfollow";
-import followFetch from "../../Functions/followFetch";
+import getLessons from "../../Functions/getLessons";
+import getFollowing from "../../Functions/getFollowing";
+
+// import followFetch from "../../Functions/followFetch";
 import './profile.css';
+import ProfileHeader from "./ProfileHeader";
 
 class Profile extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            id: '',
+            id: this.props.currentUser.id,
             name: '',
-            username: '',
+            username: this.props.match.params.username,
             email: '',
-            description: '',
+            description: this.props.currentUser.description,
             lessons: [],
-            following: [],
+            // following: [],
             current: true,
             token: ''
         }
-        this.follow = follow.bind(this);
-        this.unfollow = unfollow.bind(this);
-        this.followFetch = followFetch.bind(this);
+        // this.follow = follow.bind(this);
+        // this.unfollow = unfollow.bind(this);
+        this.getLessons = getLessons.bind(this);
+        // this.getFollowing = getFollowing.bind(this);
+        // this.followFetch = followFetch.bind(this);
+
+        this.getLessons(this.props.match.params.username, this.abortController)
     }
 
     abortController = new AbortController();
 
-    componentDidMount() {
-        this.setState({
-            username: this.props.username,
-            description: this.props.description,
-            lessons: this.props.lessons,
-            following: this.props.following
-        });
-    }
+    // componentDidMount() {
+    //     this.setState({
+    //         id: this.props.currentUser.id,
+    //         username: this.props.currentUser.username,
+    //         description: this.props.currentUser.description,
+    //     });
+    // }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps !== this.props) {
+            this.getLessons(this.props.match.params.username, this.abortController)
             this.setState({
-                id: this.props.id,
-                username: this.props.username,
-                description: this.props.description,
-                lessons: this.props.lessons,
-                following: this.props.following
-            });
+                username: this.props.match.params.username
+            })
         }
+        // if (prevProps !== this.props) {
+    //         console.log(this.props)
+    //         this.setState({
+    //             id: this.props.currentUser.id,
+    //             username: this.props.currentUser.username,
+    //             description: this.props.currentUser.description,
+    //             // following: this.getFollowing(this.props.currentUser.username, this.abortController)
+    //         });
+    //         this.getLessons(this.props.currentUser.username, this.abortController)
+    //     }
     }
 
     componentWillUnmount() {
@@ -62,9 +76,9 @@ class Profile extends React.Component {
                     onCreateLesson={this.props.onAddLesson}
                 />
                 <section id="my-lessons" className="primary">
-                    <h3>
-                        my lessons
-                    </h3>
+                    <ProfileHeader
+                        currentUser={this.props.currentUser}
+                    />
                     {this.state.lessons.map((lesson, i) =>
                         <div key={'lesson' + i} className="lesson">
                         <span className="fade-text small">
@@ -77,10 +91,8 @@ class Profile extends React.Component {
                     )}
                 </section>
                 <Following
-                    onUnfollow={this.unfollow}
-                    myUsername={this.state.myUsername}
-                    myFollowing={this.state.following}
-                    following={this.state.following}
+                    username={this.props.match.params.username}
+                    myUsername={this.props.currentUser.username}
                     loggedIn={this.props.loggedIn}
                 />
             </div>
