@@ -1,4 +1,5 @@
 import decoder from "./decoder";
+import fetchQuery from "./fetchQuery";
 
 export default function follow(event) {
     const token = localStorage.getItem('tillyToken');
@@ -10,5 +11,5 @@ export default function follow(event) {
                 token: "${token}"
             )
         }`;
-    this.followFetch(query, this.abortController);
+    // fetchQuery(query);
 }

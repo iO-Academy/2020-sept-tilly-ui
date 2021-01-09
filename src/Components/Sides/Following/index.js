@@ -18,26 +18,43 @@ class Following extends React.Component {
         this.unfollow = unfollow.bind(this);
         this.getFollowing = getFollowing.bind(this);
 
-        if (this.props.username && this.props.myUsername) {
-            this.getFollowing("following", this.props.username, this.abortController);
-            this.getFollowing("currentUserFollowing", this.props.myUsername, this.abortController);
-        }
+        // if (this.props.username && this.props.myUsername) {
+        //     this.getFollowing(this.props.username, this.abortController);
+        //     this.getFollowing(this.props.myUsername, this.abortController);
+        // }
     }
 
     abortController = new AbortController();
 
     componentDidMount() {
-        if (this.props.username && this.props.myUsername) {
-            this.getFollowing("following", this.props.username, this.abortController);
-            this.getFollowing("currentUserFollowing", this.props.myUsername, this.abortController);
-        }
+        this.getFollowingData();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps !== this.props && this.props.username && this.props.myUsername) {
-            this.getFollowing("following", this.props.username, this.abortController);
-            this.getFollowing("currentUserFollowing", this.props.myUsername, this.abortController);
+        if (prevProps !== this.props) {
+            this.getFollowingData();
         }
+    }
+
+    getFollowingData = () => {
+        if (this.props.username && this.props.myUsername) {
+            this.getFollowing(this.props.username, this.abortController)
+                .then(data => {
+                    this.setState({
+                        following: data.data.username.following
+                    })
+                })
+            this.getFollowing(this.props.myUsername, this.abortController)
+                .then(data => {
+                    this.setState({
+                        currentUserFollowing: data.data.username.following
+                    })
+                })
+        }
+    }
+
+    componentWillUnmount() {
+        this.abortController.abort();
     }
 
     render() {

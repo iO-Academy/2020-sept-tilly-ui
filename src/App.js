@@ -23,7 +23,9 @@ class App extends React.Component {
             username: "",
             email: "",
             description: "",
-            tokenError: '',
+            token: "",
+            decoded: "",
+            tokenError: "",
         }
         this.decoder = decoder.bind(this);
         this.getUserData = getUserData.bind(this);
@@ -32,36 +34,58 @@ class App extends React.Component {
     abortController = new AbortController();
 
     componentDidMount() {
-        this.getData();
+        // this.getData();
     }
     componentWillUnmount() {
         this.abortController.abort();
     }
 
-    getData = () => {
-        if (localStorage.getItem('tillyToken')) {
-            const token = localStorage.getItem('tillyToken');
-            try {
-                const decoded = this.decoder(token);
-                this.setState({
-                    loggedIn: true,
-                    id: decoded.id,
-                    token: token
-                });
-                this.getUserData(decoded.username, this.abortController)
-            } catch(err) {
-                console.log(err);
-                this.logOut();
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevState.id !== this.state.id) {
+            if (localStorage.getItem('tillyToken')) {
+                const token = localStorage.getItem('tillyToken');
+                try {
+                    const decoded = this.decoder(token);
+                    this.setState({
+                        loggedIn: true,
+                        id: decoded.id,
+                        token: token
+                    });
+                    this.getUserData(decoded.username, this.abortController)
+                } catch(err) {
+                    console.log(err);
+                    this.logOut();
+                }
             }
         }
     }
 
-    logIn = async (id) => {
+    // getData = () => {
+    //     if (localStorage.getItem('tillyToken')) {
+    //         const token = localStorage.getItem('tillyToken');
+    //         try {
+    //             const decoded = this.decoder(token);
+    //             this.setState({
+    //                 loggedIn: true,
+    //                 id: decoded.id,
+    //                 token: token
+    //             });
+    //             this.getUserData(decoded.username, this.abortController)
+    //         } catch(err) {
+    //             console.log(err);
+    //             this.logOut();
+    //         }
+    //     }
+    // }
+
+    logIn = async (token, decoded) => {
         this.setState({
             loggedIn: true,
-            id: id,
+            id: decoded.id,
+            token: token,
+            decoded: decoded
         });
-        this.getData();
+        // this.getData();
     }
 
     logOut = () => {
@@ -131,15 +155,12 @@ class App extends React.Component {
                                 {/*    render={props => <Friend myDetails={this.state}*/}
                                 {/*                             onGetData={this.getData} {...props} />}*/}
                                 {/*/>*/}
-                                {/*<Route*/}
-                                {/*    path="/">*/}
-                                {/*    <Timeline*/}
-                                {/*        username={this.state.username}*/}
-                                {/*        allLessons={this.state.allLessons}*/}
-                                {/*        lessons={this.state.lessons}*/}
-                                {/*        following={this.state.following}*/}
-                                {/*    />*/}
-                                {/*</Route>*/}
+                                <Route
+                                    path="/">
+                                    <Timeline
+                                        currentUser={this.state}
+                                    />
+                                </Route>
                             </Switch>
                         </main>
                     </Router>
@@ -156,17 +177,21 @@ class App extends React.Component {
                                         onLoginSuccess={this.logIn}
                                     />
                                 </Route>
-                                <Route
-                                    path="/:username"
-                                    render={props => <Friend myDetails={this.state}
-                                                             onGetData={this.getData} {...props} />}
-                                />
+                                {/*<Route*/}
+                                {/*    path="/:username"*/}
+                                {/*    render={props => <Friend myDetails={this.state}*/}
+                                {/*                             onGetData={this.getData} {...props} />}*/}
+                                {/*/>*/}
                                 <Route
                                     path="/">
                                     <SignUp
                                         onCreateUser={this.createUser}
                                     />
                                 </Route>
+                                <Route
+                                    path="/:username"
+                                    render={props => <Profile currentUser={this.state} {...props} />}
+                                />
                             </Switch>
                         </main>
                     </Router>

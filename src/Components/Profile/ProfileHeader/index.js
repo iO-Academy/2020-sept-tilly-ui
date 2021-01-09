@@ -15,25 +15,26 @@ class ProfileHeader extends React.Component {
         this.unfollow = unfollow.bind(this);
         this.getFollowing = getFollowing.bind(this);
 
-        if (this.props.myUsername) {
-            this.getFollowing("currentUserFollowing", this.props.myUsername, this.abortController);
+        if (this.props.currentUser) {
+            this.getFollowing("currentUserFollowing", this.props.currentUser.username, this.abortController);
         }
     }
 
     abortController = new AbortController();
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps !== this.props && this.props.myUsername) {
-            this.getFollowing("currentUserFollowing", this.props.myUsername, this.abortController);
+        if (prevProps !== this.props && this.props.currentUser) {
+            this.getFollowing("currentUserFollowing", this.props.currentUser.username, this.abortController);
         }
     }
 
     render() {
         return (
+            this.props.currentUser.username !== this.props.username &&
             <div className="profileHeader">
                 <div className={this.props.currentUser.loggedIn ? "profileTitleSpaceBetween" : "profileTitleCenter"}>
                     <h3>
-                        {this.props.currentUser.username}
+                        {this.props.username}
                     </h3>
                     {this.props.currentUser.loggedIn &&
                     <div>

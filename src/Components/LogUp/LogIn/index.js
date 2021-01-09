@@ -53,11 +53,10 @@ class LogIn extends React.Component {
                         const token = data.data.login;
                         const decoded = this.decoder(token);
                         this.setState({
-                            id: decoded.id,
                             incorrect: false,
                             redirect: true
                         });
-                        this.props.onLoginSuccess(this.state.id);
+                        this.props.onLoginSuccess(token, decoded);
                     }
                 });
         } catch(err){

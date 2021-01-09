@@ -1,16 +1,16 @@
 import getDate from "./getDate";
+import fetchQuery from "./fetchQuery";
 
 export default function getLessons(username, abortController) {
     const query = `query {
               username (username: "${username}") {
-                username,
                 lessons {
                   id,
                   lesson
                 }
               }
             }`
-    fetch('http://localhost:4002/graphql', {
+    return fetch('http://localhost:4002/graphql', {
         method: 'POST',
         headers: {
             'content-type': 'application/json'
@@ -21,12 +21,15 @@ export default function getLessons(username, abortController) {
         .then(r => r.json())
         .then(data => {
             let lessons = [];
+
             data.data.username.lessons.forEach(lesson => {
                 const newDate = getDate(lesson.id)
-                lessons.unshift({id: lesson.id, lesson: lesson.lesson, date: newDate, username: data.data.username})
+                lessons.unshift({id: lesson.id, lesson: lesson.lesson, date: newDate, username: username})
             })
-            this.setState({
-                lessons: lessons
-            });
-        });
+
+            return lessons;
+            //     // this.setState({
+            //     //     lessons: lessons
+            //     // });
+        })
 }

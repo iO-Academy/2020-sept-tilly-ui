@@ -10,6 +10,7 @@ import getFollowing from "../../Functions/getFollowing";
 // import followFetch from "../../Functions/followFetch";
 import './profile.css';
 import ProfileHeader from "./ProfileHeader";
+import getDate from "../../Functions/getDate";
 
 class Profile extends React.Component {
 
@@ -31,11 +32,26 @@ class Profile extends React.Component {
         this.getLessons = getLessons.bind(this);
         // this.getFollowing = getFollowing.bind(this);
         // this.followFetch = followFetch.bind(this);
-
-        this.getLessons(this.props.match.params.username, this.abortController)
+        this.getLessonData();
     }
 
     abortController = new AbortController();
+
+    getLessonData = () => {
+        this.getLessons(this.props.match.params.username, this.abortController)
+            .then(data => {
+                // let lessons = [];
+                // data.data.username.lessons.forEach(lesson => {
+                //     const newDate = getDate(lesson.id)
+                //     lessons.unshift({id: lesson.id, lesson: lesson.lesson, date: newDate, username: data.data.username})
+                // });
+                this.setState({
+                    lessons: data
+                });
+            })
+        // console.log(lessons)
+    }
+
 
     // componentDidMount() {
     //     this.setState({
@@ -47,7 +63,8 @@ class Profile extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps !== this.props) {
-            this.getLessons(this.props.match.params.username, this.abortController)
+            // this.getLessonData()
+            // this.getLessons(this.props.match.params.username, this.abortController)
             this.setState({
                 username: this.props.match.params.username
             })
@@ -72,11 +89,14 @@ class Profile extends React.Component {
         return (
             <div>
                 <Create
+                    currentUser={this.props.currentUser}
+                    username={this.props.match.params.username}
                     id={this.props.id}
                     onCreateLesson={this.props.onAddLesson}
                 />
                 <section id="my-lessons" className="primary">
                     <ProfileHeader
+                        username={this.props.match.params.username}
                         currentUser={this.props.currentUser}
                     />
                     {this.state.lessons.map((lesson, i) =>
