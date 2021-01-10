@@ -47,12 +47,9 @@ class Timeline extends React.Component {
                 // this.getTimeline(this.props.currentUser.username, this.abortController);
                 this.getTimelineData();
             }
-            // if (prevState !== this.state) {
-            //     console.log('yay')
-                this.setState({
-                    visibleLessons: this.state.allLessons.slice(0, this.state.offset)
-                });
-            // }
+            this.setState({
+                visibleLessons: this.state.allLessons.slice(0, this.state.offset)
+            });
         }
     }
 

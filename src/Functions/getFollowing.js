@@ -1,13 +1,15 @@
-export default async function getFollowing(username, abortController) {
-    const query = `query {
+export default function getFollowing(username, abortController) {
+    const query = `
+        query {
             username (username: "${username}") {
                 following {
-                  name,
-                  username,
-                  description
+                    id,
+                    name,
+                    username,
+                    description
                 }
-              }
-            }`
+            }
+        }`
     return fetch('http://localhost:4002/graphql', {
         method: 'POST',
         headers: {

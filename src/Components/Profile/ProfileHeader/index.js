@@ -9,24 +9,49 @@ class ProfileHeader extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentUserFollowing: []
+            // currentUserFollowing: []
         }
-        this.follow = follow.bind(this);
-        this.unfollow = unfollow.bind(this);
-        this.getFollowing = getFollowing.bind(this);
+        // this.follow = follow.bind(this);
+        // this.unfollow = unfollow.bind(this);
+        // this.getFollowing = getFollowing.bind(this);
 
-        if (this.props.currentUser) {
-            this.getFollowing("currentUserFollowing", this.props.currentUser.username, this.abortController);
-        }
+        // if (this.props.currentUser) {
+        //     this.getFollowing("currentUserFollowing", this.props.currentUser.username, this.abortController);
+        // }
     }
 
     abortController = new AbortController();
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps !== this.props && this.props.currentUser) {
-            this.getFollowing("currentUserFollowing", this.props.currentUser.username, this.abortController);
+        if (prevProps !== this.props) {
+            // this.getFollowingData()
         }
     }
+
+    // getFollowingData = () => {
+    //     if (this.props.currentUser.username) {
+    //         this.getFollowing(this.props.currentUser.username, this.abortController)
+    //             .then(data => {
+    //                 this.setState({
+    //                     currentUserFollowing: data.data.username.following
+    //                 })
+    //             })
+    //     }
+    // }
+
+    // followAction = (event) => {
+    //     this.follow(event, this.abortController)
+    //         .then(data => {
+    //             this.getFollowingData()
+    //         })
+    // }
+    //
+    // unfollowAction = (event) => {
+    //     this.unfollow(event, this.abortController)
+    //         .then(data => {
+    //             this.getFollowingData()
+    //         })
+    // }
 
     render() {
         return (
@@ -38,17 +63,18 @@ class ProfileHeader extends React.Component {
                     </h3>
                     {this.props.currentUser.loggedIn &&
                     <div>
-                        {this.state.currentUserFollowing.find(o => o.username === this.props.currentUser.username) ?
+                        {this.props.currentUserFollowing &&
+                        this.props.currentUserFollowing.find(o => o.username === this.props.username) ?
                             <Button
-                                onHandleClick={this.unfollow}
-                                value={this.props.currentUser.id}
+                                onHandleClick={this.props.onUnfollow}
+                                value={this.props.id}
                                 className="generic unfollow"
                                 name="unfollow"
                             />
                             :
                             <Button
-                                onHandleClick={this.follow}
-                                value={this.props.currentUser.id}
+                                onHandleClick={this.props.onFollow}
+                                value={this.props.id}
                                 className="generic"
                                 name="follow"
                             />

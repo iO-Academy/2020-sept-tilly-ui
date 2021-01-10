@@ -35,9 +35,26 @@ class App extends React.Component {
 
     componentDidMount() {
         // this.getData();
+        if (localStorage.getItem('tillyToken')) {
+            const token = localStorage.getItem('tillyToken');
+            try {
+                const decoded = this.decoder(token);
+                this.setState({
+                    loggedIn: true,
+                    id: decoded.id,
+                    username: decoded.username,
+                    token: token
+                });
+                this.getUserData(decoded.username, this.abortController)
+            } catch(err) {
+                console.log(err);
+                // this.logOut();
+            }
+        }
+
     }
     componentWillUnmount() {
-        this.abortController.abort();
+        // this.abortController.abort();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -54,7 +71,7 @@ class App extends React.Component {
                     this.getUserData(decoded.username, this.abortController)
                 } catch(err) {
                     console.log(err);
-                    this.logOut();
+                    // this.logOut();
                 }
             }
         }
@@ -92,16 +109,14 @@ class App extends React.Component {
         localStorage.clear();
         this.setState({
             loggedIn: false,
-            id: '',
-            name: '',
-            username: '',
-            email: '',
-            description: '',
-            lessons: [],
-            following: [],
-            followers: [],
-            allLessons: [],
-            tokenError: ''
+            id: "",
+            name: "",
+            username: "",
+            email: "",
+            description: "",
+            token: "",
+            decoded: "",
+            tokenError: "",
         });
     }
 
@@ -183,15 +198,15 @@ class App extends React.Component {
                                 {/*                             onGetData={this.getData} {...props} />}*/}
                                 {/*/>*/}
                                 <Route
+                                    path="/:username"
+                                    render={props => <Profile currentUser={this.state} {...props} />}
+                                />
+                                <Route
                                     path="/">
                                     <SignUp
                                         onCreateUser={this.createUser}
                                     />
                                 </Route>
-                                <Route
-                                    path="/:username"
-                                    render={props => <Profile currentUser={this.state} {...props} />}
-                                />
                             </Switch>
                         </main>
                     </Router>

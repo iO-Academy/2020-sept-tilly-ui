@@ -1,5 +1,5 @@
 export default function followFetch(query, abortController) {
-    fetch('http://localhost:4002/graphql', {
+    return fetch('http://localhost:4002/graphql', {
         method: 'POST',
         headers: {
             'content-type': 'application/json'
@@ -8,8 +8,8 @@ export default function followFetch(query, abortController) {
         signal: abortController.signal
     })
         .then(r => r.json())
-        .then(data => {
-            this.getFollowing("following", this.props.username, this.abortController);
-            this.getFollowing("currentUserFollowing", this.props.myUsername, this.abortController);
-        });
+        // .then(data => {
+        //     this.getFollowing(this.props.username, this.abortController);
+        //     this.getFollowing(this.props.myUsername, this.abortController);
+        // });
 }
