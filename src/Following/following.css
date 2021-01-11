@@ -1,29 +1,38 @@
-.secondary {
+.following {
     position: fixed;
-    bottom: 0;
-    width: 450px;
+    top: 3vh;
+    right: 20vw;
+    width: 90vw;
     max-width: 20vw;
     height: calc(100vh - 120px);
     margin: 0;
-    padding: 0 40px;
     box-sizing: border-box;
-    box-shadow: 0 10px 15px -5px #111111;
-    overflow-y: scroll;
 }
 
-.secondary-left {
-    left: 0;
-    border-right: 1px solid var(--line-color);
-}
-
-.secondary-right {
-    right: 0;
-    border-left: 1px solid var(--line-color);
-}
-
-.me-follow {
-    margin: 10px auto;
+.followItem {
     display: flex;
     justify-content: space-between;
     font-size: small;
+}
+
+.followingUsername {
+    line-height: 0;
+}
+
+.andMore {
+    text-align: center;
+}
+
+@media screen and (min-width: 800px) {
+    .following {
+        width: 12vw;
+        right: 2vw;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .following {
+        width: 12vw;
+        right: 14vw;
+    }
 }

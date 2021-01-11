@@ -1,8 +1,8 @@
 import React from "react";
 import "./App.css";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import Header from "./Components/Header";
-import Logo from "./Components/Header/Logo";
+import Nav from "./Components/Nav";
+import Logo from "./Components/Nav/Logo";
 import Profile from "./Components/Profile";
 import Timeline from "./Components/Timeline";
 import SignUp from "./Components/LogUp/SignUp";
@@ -99,7 +99,7 @@ class App extends React.Component {
             <div>
                 {this.state.loggedIn ?
                     <Router>
-                        <Header
+                        <Nav
                             username={this.state.username}
                             onLogOut={this.logOut}
                         />

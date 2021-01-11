@@ -27,6 +27,7 @@ a {
 
 h1, h1, h3, h4, h5, h6 {
   text-align: center;
+  margin: 1vh auto 3vh auto;
 }
 
 p {
@@ -34,10 +35,9 @@ p {
 }
 
 main {
-  width: 600px;
-  max-width: 50vw;
+  width: 90vw;
   min-height: calc(100vh - 100px);
-  margin: 40px auto auto auto;
+  margin: 20px auto auto auto;
 }
 
 .primary {
@@ -65,4 +65,16 @@ main {
 .check-length {
   width: 100%;
   text-align: right;
+}
+
+@media screen and (min-width: 800px) {
+  main {
+    width: 60vw;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  main {
+    width: 40vw;
+  }
 }
