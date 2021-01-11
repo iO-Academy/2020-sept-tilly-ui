@@ -1,9 +1,8 @@
-import React from 'react';
+import React from "react";
 import {Link} from "react-router-dom";
-import './timeline.css';
-import getTimeline from "../../Functions/getTimeline";
 import getLessons from "../../Functions/getLessons";
 import getFollowing from "../../Functions/getFollowing";
+import "./timeline.css";
 
 class Timeline extends React.Component {
 
@@ -16,22 +15,12 @@ class Timeline extends React.Component {
             visibleLessons: [],
             offset: 10
         }
-
-        // this.getTimeline = getTimeline.bind(this);
         this.getLessons = getLessons.bind(this);
         this.getFollowing = getFollowing.bind(this);
-
-        // if (this.props.currentUser.username) {
-        //     this.getTimelineData();
-        // }
-        // if (this.props.currentUser) {
-        //     console.log(this.props.currentUser)
-        //     this.getTimeline(this.props.currentUser.username, this.abortController);
-        // }
     }
 
     componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll);
+        window.addEventListener("scroll", this.handleScroll);
         if (this.props.currentUser.username) {
             this.getTimelineData();
         }
@@ -44,7 +33,6 @@ class Timeline extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps !== this.props) {
             if (this.props.currentUser.username) {
-                // this.getTimeline(this.props.currentUser.username, this.abortController);
                 this.getTimelineData();
             }
             this.setState({
@@ -59,24 +47,21 @@ class Timeline extends React.Component {
         if (this.props.currentUser) {
             this.getLessons(this.props.currentUser.username, this.abortController)
                 .then(lessons => {
-                    allLessons = allLessons.concat(lessons)
-                    return this.getFollowing(this.props.currentUser.username, this.abortController)
+                    allLessons = allLessons.concat(lessons);
+                    return this.getFollowing(this.props.currentUser.username, this.abortController);
                 })
                 .then(data => {
                     return Promise.all(
                         data.data.username.following.map(user => {
-                            return this.getLessons(user.username, this.abortController)
-                                // .then(lessons => {
-                                //     return allLessons.concat(lessons)
-                                // })
+                            return this.getLessons(user.username, this.abortController);
                         })
-                    )
+                    );
                 })
                 .then(data => {
                     data.forEach(lessons => {
-                        allLessons = allLessons.concat(lessons)
+                        allLessons = allLessons.concat(lessons);
                     })
-                    return allLessons
+                    return allLessons;
                 })
                 .then(data => {
                     data.sort((a, b) => {
@@ -92,7 +77,7 @@ class Timeline extends React.Component {
                         allLessons: data,
                         visibleLessons: data.slice(0, this.state.offset)
                     });
-                })
+                });
         }
     }
 
@@ -115,7 +100,7 @@ class Timeline extends React.Component {
                     timeline
                 </h3>
                 {this.state.visibleLessons.map((lesson, i) =>
-                    <div key={'lesson' + i} className="lesson">
+                    <div key={"lesson" + i} className="lesson">
                         <span className="small">
                             <Link to={"/" + lesson.username}>
                                 {lesson.username}
