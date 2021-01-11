@@ -89,7 +89,7 @@ class Profile extends React.Component {
                     });
                 });
         }
-        if  (this.props.currentUser.username) {
+        if (this.props.currentUser.username) {
             this.getFollowing(this.props.currentUser.username, this.abortController)
                 .then(data => {
                     this.setState({
@@ -130,12 +130,14 @@ class Profile extends React.Component {
                     currentUser={this.props.currentUser}
                     currentUserFollowing={this.state.currentUserFollowing}
                     username={this.props.match.params.username}
+                    name={this.state.name}
+                    lessons={this.state.lessons}
                     description={this.state.description}
                     following={this.state.following}
                     onFollow={this.followAction}
                     onUnfollow={this.unfollowAction}
                 />
-                {this.props.currentUser.loggedIn && this.props.currentUser.username === this.props.match.params.username &&
+                {this.props.currentUser.username === this.props.match.params.username &&
                 <Create
                     id={this.state.id}
                     currentUser={this.props.currentUser}
@@ -143,6 +145,11 @@ class Profile extends React.Component {
                 />
                 }
                 <section id="my-lessons" className="primary">
+                    {this.props.currentUser.username === this.props.match.params.username ?
+                        <h3>my lessons</h3>
+                        :
+                        <h3>{this.state.username}'s lessons</h3>
+                    }
                 {this.state.lessons.map((lesson, i) =>
                     <div key={"lesson" + i} className="lesson">
                     <span className="fade-text small">

@@ -9,7 +9,7 @@ export default function Following(props) {
             <h4>
                 following
             </h4>
-            {props.following.map((following, i) =>
+            {props.following.length > 0 ? props.following.map((following, i) =>
                 <div
                     key={"following" + i}
                     className="me-follow">
@@ -45,7 +45,10 @@ export default function Following(props) {
                     </div>
                     }
                 </div>
-            )}
+            )
+            :
+            <div className="small fade-text center">this user isn't following anyone yet</div>
+            }
         </section>
     );
 }

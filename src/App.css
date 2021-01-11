@@ -58,6 +58,10 @@ main {
   color: var(--fade-color);
 }
 
+.center {
+  text-align: center;
+}
+
 .check-length {
   width: 100%;
   text-align: right;
