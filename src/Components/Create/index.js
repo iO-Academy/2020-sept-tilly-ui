@@ -52,33 +52,32 @@ class Create extends React.Component {
 
     render() {
         return (
-            this.props.currentUser.loggedIn && this.props.currentUser.username === this.props.username &&
-                <section id="create" className="primary">
-                    <h4>
-                        have you learned something new today?
-                    </h4>
-                    <textarea
-                        value={this.state.text}
-                        name="text"
-                        minLength="1"
-                        maxLength="255"
-                        onChange={this.handleInput}>
-                    </textarea>
-                    <div className="check-length small">
-                    <span className="text-length">
-                        {this.state.length}
-                    </span>
-                        <span className="fade-text">
-                        /255
-                    </span>
-                    </div>
-                    <Button
-                        disabled={this.state.tooLong || this.state.tooShort}
-                        onClick={this.createLesson}
-                        className="generic"
-                        name="create"
-                    />
-                </section>
+            <section id="create" className="primary">
+                <h4>
+                    have you learned something new today?
+                </h4>
+                <textarea
+                    value={this.state.text}
+                    name="text"
+                    minLength="1"
+                    maxLength="255"
+                    onChange={this.handleInput}>
+                </textarea>
+                <div className="check-length small">
+                <span className="text-length">
+                    {this.state.length}
+                </span>
+                    <span className="fade-text">
+                    /255
+                </span>
+                </div>
+                <Button
+                    disabled={this.state.tooLong || this.state.tooShort}
+                    onClick={this.createLesson}
+                    className="generic"
+                    name="create"
+                />
+            </section>
         );
     }
 }

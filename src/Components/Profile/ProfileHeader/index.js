@@ -3,16 +3,14 @@ import Button from "../../Button";
 
 export default function ProfileHeader(props) {
     return (
-        props.currentUser.username !== props.username &&
         <div className="profileHeader">
             <div className={props.currentUser.loggedIn ? "profileTitleSpaceBetween" : "profileTitleCenter"}>
                 <h3>
                     {props.username}
                 </h3>
-                {props.currentUser.loggedIn &&
+                {props.currentUser.username !== props.username && props.currentUser.loggedIn &&
                 <div>
-                    {props.currentUserFollowing &&
-                    props.currentUserFollowing.find(o => o.username === props.username) ?
+                    {props.currentUserFollowing.find(o => o.username === props.username) ?
                         <Button
                             onHandleClick={props.onUnfollow}
                             value={props.id}
@@ -31,7 +29,7 @@ export default function ProfileHeader(props) {
                 }
             </div>
             <div className="profileBio fade-text">
-                {props.currentUser.description}
+                {props.description}
             </div>
         </div>
     );

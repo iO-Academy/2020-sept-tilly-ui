@@ -40,6 +40,7 @@ class Profile extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps !== this.props) {
+            this.getUserData(this.props.match.params.username, this.abortController);
             this.getFollowingData();
             this.getLessonData();
         }
@@ -101,32 +102,34 @@ class Profile extends React.Component {
     render() {
         return (
             <div>
+                <ProfileHeader
+                    id={this.state.id}
+                    currentUser={this.props.currentUser}
+                    currentUserFollowing={this.state.currentUserFollowing}
+                    username={this.props.match.params.username}
+                    description={this.state.description}
+                    following={this.state.following}
+                    onFollow={this.followAction}
+                    onUnfollow={this.unfollowAction}
+                />
+                {this.props.currentUser.loggedIn && this.props.currentUser.username === this.props.match.params.username &&
                 <Create
-                    id={this.props.id}
+                    id={this.state.id}
                     currentUser={this.props.currentUser}
                     username={this.props.match.params.username}
                     onAddLesson={this.addLesson}
-                />
+                />}
                 <section id="my-lessons" className="primary">
-                    <ProfileHeader
-                        id={this.state.id}
-                        currentUser={this.props.currentUser}
-                        currentUserFollowing={this.state.currentUserFollowing}
-                        username={this.props.match.params.username}
-                        following={this.state.following}
-                        onFollow={this.followAction}
-                        onUnfollow={this.unfollowAction}
-                    />
-                    {this.state.lessons.map((lesson, i) =>
-                        <div key={"lesson" + i} className="lesson">
-                        <span className="fade-text small">
-                            {lesson.date}
-                        </span>
-                            <p>
-                                {lesson.lesson}
-                            </p>
-                        </div>
-                    )}
+                {this.state.lessons.map((lesson, i) =>
+                    <div key={"lesson" + i} className="lesson">
+                    <span className="fade-text small">
+                        {lesson.date}
+                    </span>
+                        <p>
+                            {lesson.lesson}
+                        </p>
+                    </div>
+                )}
                 </section>
                 <Following
                     id={this.state.id}
