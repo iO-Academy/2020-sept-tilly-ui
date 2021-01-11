@@ -116,9 +116,9 @@ class Profile extends React.Component {
                 <Create
                     id={this.state.id}
                     currentUser={this.props.currentUser}
-                    username={this.props.match.params.username}
                     onAddLesson={this.addLesson}
-                />}
+                />
+                }
                 <section id="my-lessons" className="primary">
                 {this.state.lessons.map((lesson, i) =>
                     <div key={"lesson" + i} className="lesson">

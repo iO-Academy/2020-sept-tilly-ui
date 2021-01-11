@@ -26,6 +26,7 @@ class Create extends React.Component {
     }
 
     createLesson = () => {
+        console.log(this.state)
         this.props.onAddLesson(this.state.text);
         const token = localStorage.getItem("tillyToken");
         const query = `mutation {
@@ -64,16 +65,16 @@ class Create extends React.Component {
                     onChange={this.handleInput}>
                 </textarea>
                 <div className="check-length small">
-                <span className="text-length">
-                    {this.state.length}
-                </span>
+                    <span className="text-length">
+                        {this.state.length}
+                    </span>
                     <span className="fade-text">
-                    /255
-                </span>
+                        /255
+                    </span>
                 </div>
                 <Button
                     disabled={this.state.tooLong || this.state.tooShort}
-                    onClick={this.createLesson}
+                    onHandleClick={this.createLesson}
                     className="generic"
                     name="create"
                 />
