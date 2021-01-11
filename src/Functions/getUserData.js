@@ -8,7 +8,7 @@ export default function getUserData(username, abortController) {
             description
           }
         }`
-    fetch('http://localhost:4002/graphql', {
+    return fetch('http://localhost:4002/graphql', {
         method: 'POST',
         headers: {
             'content-type': 'application/json'
@@ -18,16 +18,6 @@ export default function getUserData(username, abortController) {
     })
         .then(r => r.json())
         .then(data => {
-            if (data.data.username === null) {
-                this.setState({notFound: true});
-                return;
-            }
-            this.setState({
-                id: data.data.username.id,
-                username: data.data.username.username,
-                name: data.data.username.name,
-                email: data.data.username.email,
-                description: data.data.username.description
-            });
+            return data;
         });
 }

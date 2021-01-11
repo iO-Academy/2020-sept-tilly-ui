@@ -1,5 +1,5 @@
 import React from "react";
-import Following from "../Sides/Following";
+import Following from "../../Following";
 import ProfileHeader from "./ProfileHeader";
 import Create from "../Create";
 import follow from "../../Functions/follow";
@@ -21,7 +21,8 @@ class Profile extends React.Component {
             description: "",
             lessons: [],
             following: [],
-            currentUserFollowing: []
+            currentUserFollowing: [],
+            userNotFound: false
         }
         this.getUserData = getUserData.bind(this);
         this.getLessons = getLessons.bind(this);
@@ -33,21 +34,41 @@ class Profile extends React.Component {
     abortController = new AbortController();
 
     componentDidMount() {
-        this.getUserData(this.props.match.params.username, this.abortController);
-        this.getFollowingData();
-        this.getLessonData();
+        this.getUserData(this.props.match.params.username, this.abortController)
+            .then(data => {
+                this.setUserDataInState(data);
+            });
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps !== this.props) {
-            this.getUserData(this.props.match.params.username, this.abortController);
-            this.getFollowingData();
-            this.getLessonData();
+            this.getUserData(this.props.match.params.username, this.abortController)
+                .then(data => {
+                    this.setUserDataInState(data);
+                });
         }
     }
 
     componentWillUnmount() {
         this.abortController.abort();
+    }
+
+    setUserDataInState = (data) => {
+        if (data.data.username === null) {
+            this.setState({
+                userNotFound: true
+            });
+        } else {
+            this.setState({
+                id: data.data.username.id,
+                username: data.data.username.username,
+                name: data.data.username.name,
+                email: data.data.username.email,
+                description: data.data.username.description
+            });
+            this.getFollowingData();
+            this.getLessonData();
+        }
     }
 
     getLessonData = () => {
@@ -60,13 +81,15 @@ class Profile extends React.Component {
     }
 
     getFollowingData = () => {
-        if (this.props.match.params.username && this.props.currentUser.username) {
+        if (this.props.match.params.username) {
             this.getFollowing(this.props.match.params.username, this.abortController)
                 .then(data => {
                     this.setState({
                         following: data.data.username.following
                     });
                 });
+        }
+        if  (this.props.currentUser.username) {
             this.getFollowing(this.props.currentUser.username, this.abortController)
                 .then(data => {
                     this.setState({
@@ -99,6 +122,8 @@ class Profile extends React.Component {
 
     render() {
         return (
+            this.state.userNotFound ? <h2 className="userNotFound">user not found</h2>
+                :
             <div>
                 <ProfileHeader
                     id={this.state.id}
