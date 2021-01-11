@@ -77,7 +77,6 @@ class Profile extends React.Component {
     }
 
     followAction = (event) => {
-        console.log(event.target.value)
         this.follow(event, this.abortController)
             .then(data => {
                 this.getFollowingData();
@@ -85,7 +84,6 @@ class Profile extends React.Component {
     }
 
     unfollowAction = (event) => {
-        console.log(event.target.value)
         this.unfollow(event, this.abortController)
             .then(data => {
                 this.getFollowingData();

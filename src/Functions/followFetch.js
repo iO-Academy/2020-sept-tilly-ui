@@ -7,9 +7,5 @@ export default function followFetch(query, abortController) {
         body: JSON.stringify({query}),
         signal: abortController.signal
     })
-        .then(r => r.json())
-        // .then(data => {
-        //     this.getFollowing(this.props.username, this.abortController);
-        //     this.getFollowing(this.props.myUsername, this.abortController);
-        // });
+        .then(r => r.json());
 }
