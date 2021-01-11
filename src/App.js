@@ -130,12 +130,12 @@ class App extends React.Component {
         this.setState({...stateCopy});
     }
 
-    addLesson = (text) => {
-        let stateCopy = {...this.state}
-        const lesson = {lesson: text, date: 'just now'};
-        stateCopy.lessons.unshift(lesson);
-        this.setState({...stateCopy});
-    }
+    // addLesson = (text) => {
+    //     let stateCopy = {...this.state}
+    //     const lesson = {lesson: text, date: 'just now'};
+    //     stateCopy.lessons.unshift(lesson);
+    //     this.setState({...stateCopy});
+    // }
 
     render() {
         return (

@@ -100,6 +100,13 @@ class Profile extends React.Component {
             })
     }
 
+    addLesson = (text) => {
+        let stateCopy = {...this.state}
+        const lesson = {lesson: text, date: 'just now'};
+        stateCopy.lessons.unshift(lesson);
+        this.setState({...stateCopy});
+    }
+
     componentDidMount() {
         this.getUserData(this.props.match.params.username, this.abortController);
         this.getFollowingData();
@@ -148,8 +155,8 @@ class Profile extends React.Component {
                 <Create
                     currentUser={this.props.currentUser}
                     username={this.props.match.params.username}
-                    id={this.props.id}
-                    onCreateLesson={this.props.onAddLesson}
+                    id={this.state.id}
+                    onCreateLesson={this.addLesson}
                 />
                 <section id="my-lessons" className="primary">
                     <ProfileHeader

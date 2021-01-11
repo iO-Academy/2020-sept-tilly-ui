@@ -26,6 +26,8 @@ class Create extends React.Component {
     }
 
     createLesson = () => {
+        console.log(this.state.text)
+        console.log(this.props.id)
         this.props.onCreateLesson(this.state.text);
         const token = localStorage.getItem('tillyToken');
         const query = `mutation {
@@ -44,10 +46,12 @@ class Create extends React.Component {
             },
             body: JSON.stringify({query})
         })
-            .then(r => this.setState({
-                text: '',
-                length: 0
-            }));
+            .then(r => {
+                this.setState({
+                    text: '',
+                    length: 0
+                })
+            })
     }
 
     render() {
