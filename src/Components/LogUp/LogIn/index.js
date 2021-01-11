@@ -4,7 +4,6 @@ import {Redirect, Link} from "react-router-dom";
 import decoder from "../../../Functions/decoder";
 import '../logup.css';
 
-
 class LogIn extends React.Component {
 
     constructor(props) {
@@ -53,11 +52,10 @@ class LogIn extends React.Component {
                         const token = data.data.login;
                         const decoded = this.decoder(token);
                         this.setState({
-                            id: decoded.id,
                             incorrect: false,
                             redirect: true
                         });
-                        this.props.onLoginSuccess(this.state.id);
+                        this.props.onLoginSuccess(token, decoded);
                     }
                 });
         } catch(err){
@@ -82,7 +80,7 @@ class LogIn extends React.Component {
                     <p
                         className="small">
                         don't have an account? <Link to="/">create one</Link>
-                        {this.state.redirect && <Redirect to='/' />}
+                        {this.state.redirect && <Redirect to="/" />}
                     </p>
                 </div>
                 <div
@@ -90,9 +88,9 @@ class LogIn extends React.Component {
                     <div
                         className="logup-row small">
                         {this.state.incorrect &&
-                        'The details you entered are incorrect. Try again!'}
+                        "The details you entered are incorrect. Try again!"}
                         {this.state.nonExistent &&
-                        'Cannot find user. Try again!'}
+                        "Cannot find user. Try again!"}
                     </div>
                     {/*username*/}
                     <div

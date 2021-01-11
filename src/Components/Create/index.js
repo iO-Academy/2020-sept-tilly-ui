@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 import Button from "../Button";
-import './create.css';
+import "./create.css";
 
 class Create extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            text: '',
+            text: "",
             length: 0,
             tooLong: false,
             tooShort: true
@@ -26,8 +26,9 @@ class Create extends React.Component {
     }
 
     createLesson = () => {
-        this.props.onCreateLesson(this.state.text);
-        const token = localStorage.getItem('tillyToken');
+        console.log(this.state)
+        this.props.onAddLesson(this.state.text);
+        const token = localStorage.getItem("tillyToken");
         const query = `mutation {
             addTil(
                 lesson: "${this.state.text}",
@@ -37,15 +38,15 @@ class Create extends React.Component {
                 lesson     
             }
         }`;
-        fetch('http://localhost:4002/graphql', {
-            method: 'POST',
+        fetch("http://localhost:4002/graphql", {
+            method: "POST",
             headers: {
-                'content-type': 'application/json'
+                "content-type": "application/json"
             },
             body: JSON.stringify({query})
         })
             .then(r => this.setState({
-                text: '',
+                text: "",
                 length: 0
             }));
     }
@@ -59,8 +60,8 @@ class Create extends React.Component {
                 <textarea
                     value={this.state.text}
                     name="text"
-                    minLength='1'
-                    maxLength='255'
+                    minLength="1"
+                    maxLength="255"
                     onChange={this.handleInput}>
                 </textarea>
                 <div className="check-length small">
@@ -81,6 +82,5 @@ class Create extends React.Component {
         );
     }
 }
-
 
 export default Create;

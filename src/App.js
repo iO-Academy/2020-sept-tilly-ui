@@ -1,10 +1,9 @@
-import React from 'react';
+import React from "react";
 import "./App.css";
-import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Header from "./Components/Header";
 import Logo from "./Components/Header/Logo";
 import Profile from "./Components/Profile";
-import Friend from "./Components/Profile/Friend";
 import Timeline from "./Components/Timeline";
 import SignUp from "./Components/LogUp/SignUp";
 import LogIn from "./Components/LogUp/LogIn";
@@ -17,16 +16,14 @@ class App extends React.Component {
         super(props);
         this.state = {
             loggedIn: false,
-            id: '',
-            name: '',
-            username: '',
-            email: '',
-            description: '',
-            lessons: [],
-            following: [],
-            followers: [],
-            allLessons: [],
-            tokenError: '',
+            id: "",
+            name: "",
+            username: "",
+            email: "",
+            description: "",
+            token: "",
+            decoded: "",
+            tokenError: "",
         }
         this.decoder = decoder.bind(this);
         this.getUserData = getUserData.bind(this);
@@ -37,8 +34,11 @@ class App extends React.Component {
     componentDidMount() {
         this.getData();
     }
-    componentWillUnmount() {
-        this.abortController.abort();
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevState.id !== this.state.id) {
+            this.getData();
+        }
     }
 
     getData = () => {
@@ -52,36 +52,35 @@ class App extends React.Component {
                     username: decoded.username,
                     token: token
                 });
-                this.getUserData(decoded, this.abortController);
+                this.getUserData(decoded.username, this.abortController)
             } catch(err) {
                 console.log(err);
-                this.logOut();
             }
         }
     }
 
-    logIn = (id) => {
+    logIn = async (token, decoded) => {
         this.setState({
             loggedIn: true,
-            id: id,
+            id: decoded.id,
+            token: token,
+            decoded: decoded
         });
-        this.getData();
+        // this.getData();
     }
 
     logOut = () => {
         localStorage.clear();
         this.setState({
             loggedIn: false,
-            id: '',
-            name: '',
-            username: '',
-            email: '',
-            description: '',
-            lessons: [],
-            following: [],
-            followers: [],
-            allLessons: [],
-            tokenError: ''
+            id: "",
+            name: "",
+            username: "",
+            email: "",
+            description: "",
+            token: "",
+            decoded: "",
+            tokenError: "",
         });
     }
 
@@ -92,13 +91,6 @@ class App extends React.Component {
         stateCopy.email = userInfo.email;
         stateCopy.description = userInfo.description;
         stateCopy.loggedIn = true;
-        this.setState({...stateCopy});
-    }
-
-    addLesson = (text) => {
-        let stateCopy = {...this.state}
-        const lesson = {lesson: text, date: 'just now'};
-        stateCopy.lessons.unshift(lesson);
         this.setState({...stateCopy});
     }
 
@@ -114,30 +106,13 @@ class App extends React.Component {
                         <main>
                             <Switch>
                                 <Route
-                                    path={"/" + this.state.username}>
-                                    <Profile
-                                        id={this.state.id}
-                                        username={this.state.username}
-                                        description={this.state.description}
-                                        lessons={this.state.lessons}
-                                        following={this.state.following}
-                                        loggedIn={this.state.loggedIn}
-                                        onAddLesson={this.addLesson}
-                                        onGetData={this.getData}
-                                    />
-                                </Route>
-                                <Route
                                     path="/:username"
-                                    render={props => <Friend myDetails={this.state}
-                                                             onGetData={this.getData} {...props} />}
+                                    render={props => <Profile currentUser={this.state} {...props} />}
                                 />
                                 <Route
                                     path="/">
                                     <Timeline
-                                        username={this.state.username}
-                                        allLessons={this.state.allLessons}
-                                        lessons={this.state.lessons}
-                                        following={this.state.following}
+                                        currentUser={this.state}
                                     />
                                 </Route>
                             </Switch>
@@ -158,8 +133,7 @@ class App extends React.Component {
                                 </Route>
                                 <Route
                                     path="/:username"
-                                    render={props => <Friend myDetails={this.state}
-                                                             onGetData={this.getData} {...props} />}
+                                    render={props => <Profile currentUser={this.state} {...props} />}
                                 />
                                 <Route
                                     path="/">

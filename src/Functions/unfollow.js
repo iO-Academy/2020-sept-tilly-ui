@@ -1,6 +1,7 @@
 import decoder from "./decoder";
+import followFetch from "./followFetch";
 
-export default function unfollow(event) {
+export default function unfollow(event, abortController) {
     const token = localStorage.getItem('tillyToken');
     const decoded = decoder(token);
     const query = `mutation {
@@ -10,5 +11,5 @@ export default function unfollow(event) {
                 token: "${token}"
             )
         }`;
-    this.followFetch(query, this.abortController);
+    return followFetch(query, abortController);
 }

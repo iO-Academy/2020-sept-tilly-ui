@@ -1,17 +1,16 @@
 import React from "react";
-import Button from "../../../Button";
+import Button from "../../Button";
 
 export default function ProfileHeader(props) {
-
     return (
         <div className="profileHeader">
-            <div className={props.myDetails.loggedIn ? "profileTitleSpaceBetween" : "profileTitleCenter"}>
+            <div className={props.currentUser.loggedIn ? "profileTitleSpaceBetween" : "profileTitleCenter"}>
                 <h3>
                     {props.username}
                 </h3>
-                {props.myDetails.loggedIn &&
+                {props.currentUser.username !== props.username && props.currentUser.loggedIn &&
                 <div>
-                    {props.myDetails.following.find(o => o.username === props.username) ?
+                    {props.currentUserFollowing.find(o => o.username === props.username) ?
                         <Button
                             onHandleClick={props.onUnfollow}
                             value={props.id}
@@ -33,5 +32,5 @@ export default function ProfileHeader(props) {
                 {props.description}
             </div>
         </div>
-    )
+    );
 }

@@ -57,10 +57,10 @@ class SignUp extends React.Component {
                     description: "${this.state.description}",
                 )
             }`;
-            fetch('http://localhost:4002/graphql', {
-                method: 'POST',
+            fetch("http://localhost:4002/graphql", {
+                method: "POST",
                 headers: {
-                    'content-type': 'application/json'
+                    "content-type": "application/json"
                 },
                 body: JSON.stringify({query})
             })
@@ -82,20 +82,20 @@ class SignUp extends React.Component {
 
         fields.forEach(field => {
             switch (field) {
-                case 'username':
+                case "username":
                     this.setState({validUsername: this.state.username && usernamePattern.test(this.state.username)});
                     break;
-                case 'name':
+                case "name":
                     this.setState({validName: this.state.name && namePattern.test(this.state.name)})
                     break;
-                case 'email':
+                case "email":
                     this.setState({validEmail: this.state.email && emailPattern.test(this.state.email)});
                     break;
-                case 'password':
+                case "password":
                     this.setState({validPassword: this.state.password && passwordPattern.test(this.state.password)});
                     this.setState({passwordConfirmed: this.state.password === this.state.confirmPassword});
                     break;
-                case 'confirmPassword':
+                case "confirmPassword":
                     this.setState({validPassword: this.state.password && passwordPattern.test(this.state.password)});
                     this.setState({passwordConfirmed: this.state.password && this.state.password === this.state.confirmPassword});
             }
@@ -106,10 +106,10 @@ class SignUp extends React.Component {
         const query = `query {
             availableUsername (username: "${event.target.value}") 
         }`;
-        fetch('http://localhost:4002/graphql', {
-            method: 'POST',
+        fetch("http://localhost:4002/graphql", {
+            method: "POST",
             headers: {
-                'content-type': 'application/json'
+                "content-type": "application/json"
             },
             body: JSON.stringify({query})
         })
@@ -125,10 +125,10 @@ class SignUp extends React.Component {
         const query = `query {
             availableEmail (email: "${event.target.value}") 
         }`;
-        fetch('http://localhost:4002/graphql', {
-            method: 'POST',
+        fetch("http://localhost:4002/graphql", {
+            method: "POST",
             headers: {
-                'content-type': 'application/json'
+                "content-type": "application/json"
             },
             body: JSON.stringify({query})
         })
