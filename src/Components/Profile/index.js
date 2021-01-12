@@ -7,8 +7,10 @@ import follow from "../../Functions/follow";
 import unfollow from "../../Functions/unfollow";
 import getLessons from "../../Functions/getLessons";
 import getFollowing from "../../Functions/getFollowing";
+import getFollowers from "../../Functions/getFollowers";
 import getUserData from "../../Functions/getUserData";
 import "./profile.css";
+import {Switch} from "react-router-dom";
 
 class Profile extends React.Component {
 
@@ -32,6 +34,7 @@ class Profile extends React.Component {
         this.follow = follow.bind(this);
         this.unfollow = unfollow.bind(this);
         this.getFollowing = getFollowing.bind(this);
+        this.getFollowers = getFollowers.bind(this);
     }
 
     abortController = new AbortController();
@@ -90,11 +93,12 @@ class Profile extends React.Component {
                     this.setState({
                         following: data.data.username.following
                     })
-                    return Promise.all(
-                        data.data.username.following.map(user => {
-                            return this.getFollowing(user.username, this.abortController);
-                        })
-                    );
+                })
+            this.getFollowers(this.props.match.params.username, this.abortController)
+                .then(data => {
+                    this.setState({
+                        followers: data.data.username.followers
+                    })
                 })
         }
         if (this.props.currentUser.username) {
@@ -117,14 +121,17 @@ class Profile extends React.Component {
                     })
                     allFollowing = allFollowing.filter(userObj => {
                         return allFollowing.find(user => {
-                            if (user.id === this.props.currentUser.id) {
+                            if (user.id === this.props.currentUser.id ||
+                                this.state.currentUserFollowing.find(userObj => {
+                                    return userObj.id === user.id
+                                })) {
                                 return false
                             }
                             return user.id === userObj.id
                         }) === userObj
                     })
-                    while(youMayKnow.length < 5) {
-                        youMayKnow.push(allFollowing[Math.floor(Math.random() * allFollowing.length)])
+                    while(allFollowing.length > 0) {
+                        youMayKnow.push(allFollowing.splice(Math.floor(Math.random() * allFollowing.length), 1)[0])
                     }
                     this.setState({
                         youMayKnow: youMayKnow
@@ -154,6 +161,68 @@ class Profile extends React.Component {
         this.setState({...stateCopy});
     }
 
+    renderSwitch = (content) => {
+        switch (content) {
+            case "teachers":
+                return <UserList
+                    sidebar={false}
+                    name="teachers"
+                    listTitle={this.state.username + "'s teachers"}
+                    username={this.state.username}
+                    userList={this.state.following}
+                    loggedIn={this.props.currentUser.loggedIn}
+                    onFollow={this.followAction}
+                    onUnfollow={this.unfollowAction}
+                    currentUserUsername={this.props.currentUser.username}
+                    currentUserFollowing={this.state.currentUserFollowing}
+                />
+            case "students":
+                return <UserList
+                    sidebar={false}
+                    name="students"
+                    listTitle={this.state.username + "'s students"}
+                    username={this.state.username}
+                    userList={this.state.followers}
+                    loggedIn={this.props.currentUser.loggedIn}
+                    onFollow={this.followAction}
+                    onUnfollow={this.unfollowAction}
+                    currentUserUsername={this.props.currentUser.username}
+                    currentUserFollowing={this.state.currentUserFollowing}
+                />
+            case "youMayKnow":
+                return <UserList
+                    sidebar={false}
+                    name="teachers"
+                    listTitle={this.state.username + "'s potential chums"}
+                    username={this.state.username}
+                    userList={this.state.youMayKnow}
+                    loggedIn={this.props.currentUser.loggedIn}
+                    onFollow={this.followAction}
+                    onUnfollow={this.unfollowAction}
+                    currentUserUsername={this.props.currentUser.username}
+                    currentUserFollowing={this.state.currentUserFollowing}
+                />
+            default:
+                return <section id="my-lessons" className="primary">
+                    {this.props.currentUser.username === this.props.match.params.username ?
+                        <h3>my lessons</h3>
+                        :
+                        <h3>{this.state.username}'s lessons</h3>
+                    }
+                    {this.state.lessons.map((lesson, i) =>
+                        <div key={"lesson" + i} className="lesson">
+                            <span className="fade-text small">
+                                {lesson.date}
+                            </span>
+                            <p>
+                                {lesson.lesson}
+                            </p>
+                        </div>
+                    )}
+                </section>
+        }
+    }
+
     render() {
         return (
             this.state.userNotFound ? <h2 className="userNotFound">user not found</h2>
@@ -178,38 +247,39 @@ class Profile extends React.Component {
                     onAddLesson={this.addLesson}
                 />
                 }
-                {this.props.match.params.following === "teachers" ?
-                    <UserList
-                        sidebar={false}
-                        name="teachers"
-                        listTitle={this.state.username + "'s teachers"}
-                        username={this.state.username}
-                        userList={this.state.following}
-                        loggedIn={this.props.currentUser.loggedIn}
-                        onFollow={this.followAction}
-                        onUnfollow={this.unfollowAction}
-                        currentUserUsername={this.props.currentUser.username}
-                        currentUserFollowing={this.state.currentUserFollowing}
-                    />
-                    :
-                    <section id="my-lessons" className="primary">
-                        {this.props.currentUser.username === this.props.match.params.username ?
-                            <h3>my lessons</h3>
-                            :
-                            <h3>{this.state.username}'s lessons</h3>
-                        }
-                        {this.state.lessons.map((lesson, i) =>
-                            <div key={"lesson" + i} className="lesson">
-                            <span className="fade-text small">
-                                {lesson.date}
-                            </span>
-                                <p>
-                                    {lesson.lesson}
-                                </p>
-                            </div>
-                        )}
-                    </section>
-                }
+                {this.renderSwitch(this.props.match.params.following)}
+                {/*{this.props.match.params.following === "teachers" ?*/}
+                {/*    <UserList*/}
+                {/*        sidebar={false}*/}
+                {/*        name="teachers"*/}
+                {/*        listTitle={this.state.username + "'s teachers"}*/}
+                {/*        username={this.state.username}*/}
+                {/*        userList={this.state.following}*/}
+                {/*        loggedIn={this.props.currentUser.loggedIn}*/}
+                {/*        onFollow={this.followAction}*/}
+                {/*        onUnfollow={this.unfollowAction}*/}
+                {/*        currentUserUsername={this.props.currentUser.username}*/}
+                {/*        currentUserFollowing={this.state.currentUserFollowing}*/}
+                {/*    />*/}
+                {/*    :*/}
+                {/*    <section id="my-lessons" className="primary">*/}
+                {/*        {this.props.currentUser.username === this.props.match.params.username ?*/}
+                {/*            <h3>my lessons</h3>*/}
+                {/*            :*/}
+                {/*            <h3>{this.state.username}'s lessons</h3>*/}
+                {/*        }*/}
+                {/*        {this.state.lessons.map((lesson, i) =>*/}
+                {/*            <div key={"lesson" + i} className="lesson">*/}
+                {/*            <span className="fade-text small">*/}
+                {/*                {lesson.date}*/}
+                {/*            </span>*/}
+                {/*                <p>*/}
+                {/*                    {lesson.lesson}*/}
+                {/*                </p>*/}
+                {/*            </div>*/}
+                {/*        )}*/}
+                {/*    </section>*/}
+                {/*}*/}
                 <Sidebar
                     sidebar={true}
                     username={this.props.match.params.username}
