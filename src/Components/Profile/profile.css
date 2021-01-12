@@ -33,9 +33,7 @@
 
 .profileBio {
     width: 60%;
-    padding: 10px;
     font-size: small;
-    border: 1px solid var(--line-color);
 }
 
 .userNotFound {

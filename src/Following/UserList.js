@@ -3,45 +3,45 @@ import {Link} from "react-router-dom";
 import Button from "../Components/Button";
 import './following.css';
 
-export default function Following(props) {
-    const firstFour = props.following.slice(0,4);
+export default function UserList(props) {
+    const firstFour = props.userList.slice(0,4);
     return (
-        <section className="following">
+        <section className="userList">
             <h5>
-                following
+                {props.listTitle}
             </h5>
-            {props.following.length > 0 &&
+            {props.userList.length > 0 &&
             <div>
-                {firstFour.map((following, i) =>
+                {firstFour.map((user, i) =>
                     <div
-                        key={"following" + i}
-                        className="followItem">
+                        key={"user" + i}
+                        className="userListItem">
                         <div>
-                            <p className="followingUsername">
-                                <Link to={"/" + following.username}>
-                                    {following.username}
+                            <p className="userListUsername">
+                                <Link to={"/" + user.username}>
+                                    {user.username}
                                 </Link>
                             </p>
                             <p className="fade-text x-small">
-                                {following.description}
+                                {user.description}
                             </p>
                         </div>
                         {props.loggedIn &&
                         props.currentUserFollowing &&
-                        props.currentUserUsername !== following.username &&
+                        props.currentUserUsername !== user.username &&
                         <div>
-                            {!props.currentUserFollowing.find(o => o.username === following.username) ?
+                            {!props.currentUserFollowing.find(o => o.username === user.username) ?
                                 <Button
                                     className="follow"
                                     onHandleClick={props.onFollow}
-                                    value={following.id}
+                                    value={user.id}
                                     name="+"
                                 />
                                 :
                                 <Button
                                     className="follow unfollow unfollow-rotate"
                                     onHandleClick={props.onUnfollow}
-                                    value={following.id}
+                                    value={user.id}
                                     name="+"
                                 />
                             }
@@ -50,16 +50,17 @@ export default function Following(props) {
                     </div>
                 )}
                 <div className="small center">
-                    <Link
-                        to="">
-                        and {props.following.length - 4} more
-                    </Link>
+                    <a
+                        data-param={props.viewParam}
+                        onClick={props.onChangeView}>
+                        and {props.userList.length - 4} more
+                    </a>
                 </div>
             </div>
             }
-            {props.following.length <= 0 &&
+            {props.userList.length <= 0 &&
             <div className="small fade-text center">
-                this user isn't following anyone yet
+                nothing here...
             </div>
             }
         </section>

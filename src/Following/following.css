@@ -1,21 +1,30 @@
-.following {
-    position: fixed;
+.sidebarRight {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
     top: 3vh;
     right: 20vw;
     width: 90vw;
-    max-width: 20vw;
     height: calc(100vh - 120px);
-    margin: 0;
+    max-width: 20vw;
+}
+
+.userList {
+    margin: 0 0 6vh 0;
     box-sizing: border-box;
 }
 
-.followItem {
+.userList h5 {
+    margin: auto auto 10px auto;
+}
+
+.userListItem {
     display: flex;
     justify-content: space-between;
     font-size: small;
 }
 
-.followingUsername {
+.userListUsername {
     line-height: 0;
 }
 
@@ -24,14 +33,14 @@
 }
 
 @media screen and (min-width: 800px) {
-    .following {
+    .sidebarRight {
         width: 12vw;
         right: 2vw;
     }
 }
 
 @media screen and (min-width: 1200px) {
-    .following {
+    .sidebarRight {
         width: 12vw;
         right: 14vw;
     }

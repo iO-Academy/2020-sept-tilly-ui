@@ -1,13 +1,16 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import Button from "../../Button";
 
 export default function ProfileHeader(props) {
     return (
         <div className="profileHeader">
             <div className="profileDetails">
-                <div class="profileTitle">
+                <div className="profileTitle">
                     <h3>
+                        <a onClick={props.onViewLessons}>
                         {props.username}
+                        </a>
                     </h3>
                     <p className="fade-text">
                         {props.name}
