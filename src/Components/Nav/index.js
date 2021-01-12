@@ -72,9 +72,11 @@ class Nav extends React.Component {
                     </div>
                     :
                     <div>
+                        {(this.props.location.pathname === "/login" || this.props.location.pathname === "/") &&
                         <h5>
                             tilly
                         </h5>
+                        }
                         <Link
                             className="navItem navTwo"
                             to="/">

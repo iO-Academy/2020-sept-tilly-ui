@@ -1,11 +1,10 @@
 nav {
     z-index: 10;
-    position: fixed;
-    top: 3vh;
-    left: 22vw;
-    width: 12vw;
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem;
     color: var(--high-color);
-    line-height: 2rem;
+    line-height: 5vh;
 }
 
 .logo {
@@ -17,17 +16,14 @@ nav {
 }
 
 nav > div {
-    margin: auto;
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    flex-direction: row;
 }
 
 .navItem {
     cursor: pointer;
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
 }
 
 .navIcon {
@@ -56,6 +52,8 @@ nav h5 {
 
 .navLogin {
     position: static;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
     margin: 3vh auto;
 }
@@ -70,7 +68,16 @@ nav h5 {
 
 @media screen and (min-width: 800px) {
     nav {
-        left: 2vw;
+        display: block;
+        position: fixed;
+        top: 3vh;
+        left: 1vw;
+        width: 12vw;
+        margin: auto;
+    }
+    nav > div {
+        flex-direction: column;
+        align-items: flex-end;
     }
 }
 
