@@ -1,7 +1,7 @@
 import React from "react";
-import Following from "../../Following/UserList";
 import ProfileHeader from "./ProfileHeader";
 import Create from "../Create";
+import Sidebar from "../../Following/Sidebar";
 import UserList from "../../Following/UserList";
 import follow from "../../Functions/follow";
 import unfollow from "../../Functions/unfollow";
@@ -9,7 +9,6 @@ import getLessons from "../../Functions/getLessons";
 import getFollowing from "../../Functions/getFollowing";
 import getUserData from "../../Functions/getUserData";
 import "./profile.css";
-import Sidebar from "../../Following/Sidebar";
 
 class Profile extends React.Component {
 
@@ -25,9 +24,7 @@ class Profile extends React.Component {
             following: [],
             followers: [],
             currentUserFollowing: [],
-            userNotFound: false,
-            viewFollowing: false,
-            viewFollowers: false
+            userNotFound: false
         }
         this.getUserData = getUserData.bind(this);
         this.getLessons = getLessons.bind(this);
@@ -38,14 +35,14 @@ class Profile extends React.Component {
 
     abortController = new AbortController();
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.getUserData(this.props.match.params.username, this.abortController)
             .then(data => {
                 this.setUserDataInState(data);
             });
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate = (prevProps, prevState, snapshot) => {
         if (prevProps !== this.props) {
             this.getUserData(this.props.match.params.username, this.abortController)
                 .then(data => {
@@ -54,7 +51,7 @@ class Profile extends React.Component {
         }
     }
 
-    componentWillUnmount() {
+    componentWillUnmount = () => {
         this.abortController.abort();
     }
 
@@ -118,19 +115,6 @@ class Profile extends React.Component {
             });
     }
 
-    changeView = (event) => {
-        this.setState({
-            viewFollowing: true
-        });
-    }
-
-    viewLessons = () => {
-        this.setState({
-            viewFollowing: false,
-            viewFollowers: false
-        });
-    }
-
     addLesson = (text) => {
         let stateCopy = {...this.state}
         const lesson = {lesson: text, date: "just now"};
@@ -154,7 +138,6 @@ class Profile extends React.Component {
                     following={this.state.following}
                     onFollow={this.followAction}
                     onUnfollow={this.unfollowAction}
-                    onViewLessons={this.viewLessons}
                 />
                 {this.props.currentUser.username === this.props.match.params.username &&
                 <Create
@@ -163,8 +146,19 @@ class Profile extends React.Component {
                     onAddLesson={this.addLesson}
                 />
                 }
-                {this.state.viewFollowing ?
-                    <Following />
+                {this.props.match.params.following === "teachers" ?
+                    <UserList
+                        sidebar={false}
+                        name="teachers"
+                        listTitle={this.state.username + "'s teachers"}
+                        username={this.state.username}
+                        userList={this.state.following}
+                        loggedIn={this.state.loggedIn}
+                        onFollow={this.onFollow}
+                        onUnfollow={this.onUnfollow}
+                        currentUserUsername={this.state.currentUserUsername}
+                        currentUserFollowing={this.state.currentUserFollowing}
+                    />
                     :
                     <section id="my-lessons" className="primary">
                         {this.props.currentUser.username === this.props.match.params.username ?
@@ -172,19 +166,20 @@ class Profile extends React.Component {
                             :
                             <h3>{this.state.username}'s lessons</h3>
                         }
-                    {this.state.lessons.map((lesson, i) =>
-                        <div key={"lesson" + i} className="lesson">
-                        <span className="fade-text small">
-                            {lesson.date}
-                        </span>
-                            <p>
-                                {lesson.lesson}
-                            </p>
-                        </div>
-                    )}
+                        {this.state.lessons.map((lesson, i) =>
+                            <div key={"lesson" + i} className="lesson">
+                            <span className="fade-text small">
+                                {lesson.date}
+                            </span>
+                                <p>
+                                    {lesson.lesson}
+                                </p>
+                            </div>
+                        )}
                     </section>
                 }
                 <Sidebar
+                    sidebar={true}
                     username={this.props.match.params.username}
                     following={this.state.following}
                     followers={this.state.followers}
@@ -192,7 +187,6 @@ class Profile extends React.Component {
                     loggedIn={this.props.currentUser.loggedIn}
                     onFollow={this.followAction}
                     onUnfollow={this.unfollowAction}
-                    onChangeView={this.changeView}
                     currentUserUsername={this.props.currentUser.username}
                     currentUserFollowing={this.state.currentUserFollowing}
                 />

@@ -8,9 +8,9 @@ export default function ProfileHeader(props) {
             <div className="profileDetails">
                 <div className="profileTitle">
                     <h3>
-                        <a onClick={props.onViewLessons}>
+                        <Link to={"/" + props.username}>
                         {props.username}
-                        </a>
+                        </Link>
                     </h3>
                     <p className="fade-text">
                         {props.name}

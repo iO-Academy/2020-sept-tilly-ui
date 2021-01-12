@@ -4,7 +4,7 @@ import Button from "../Components/Button";
 import './following.css';
 
 export default function UserList(props) {
-    const firstFour = props.userList.slice(0,4);
+    const userList = props.sidebar ? props.userList.slice(0,4) : props.userList;
     return (
         <section className="userList">
             <h5>
@@ -12,7 +12,7 @@ export default function UserList(props) {
             </h5>
             {props.userList.length > 0 &&
             <div>
-                {firstFour.map((user, i) =>
+                {userList.map((user, i) =>
                     <div
                         key={"user" + i}
                         className="userListItem">
@@ -49,13 +49,13 @@ export default function UserList(props) {
                         }
                     </div>
                 )}
+                {props.sidebar &&
                 <div className="small center">
-                    <a
-                        data-param={props.viewParam}
-                        onClick={props.onChangeView}>
+                    <Link to={"/" + props.username + "/" + props.name}>
                         and {props.userList.length - 4} more
-                    </a>
+                    </Link>
                 </div>
+                }
             </div>
             }
             {props.userList.length <= 0 &&

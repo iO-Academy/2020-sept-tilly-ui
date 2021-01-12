@@ -6,6 +6,8 @@ export default function Sidebar(props) {
     return (
         <div className="sidebarRight">
             <UserList
+                sidebar={props.sidebar}
+                name="teachers"
                 listTitle={props.username + "'s teachers"}
                 data-id={props.id}
                 username={props.username}
@@ -13,12 +15,12 @@ export default function Sidebar(props) {
                 loggedIn={props.loggedIn}
                 onFollow={props.onFollow}
                 onUnfollow={props.onUnfollow}
-                onChangeView={props.onChangeView}
-                viewParam="viewFollowing"
                 currentUserUsername={props.currentUserUsername}
                 currentUserFollowing={props.currentUserFollowing}
             />
             <UserList
+                sidebar={props.sidebar}
+                name="students"
                 listTitle={props.username + "'s students"}
                 data-id={props.id}
                 username={props.username}
@@ -26,12 +28,12 @@ export default function Sidebar(props) {
                 loggedIn={props.loggedIn}
                 onFollow={props.onFollow}
                 onUnfollow={props.onUnfollow}
-                onChangeView={props.onChangeView}
-                viewParam="viewFollowers"
                 currentUserUsername={props.currentUserUsername}
                 currentUserFollowing={props.currentUserFollowing}
             />
             <UserList
+                sidebar={props.sidebar}
+                name="youMayKnow"
                 listTitle="you may know"
                 data-id={props.id}
                 username={props.username}
@@ -39,8 +41,6 @@ export default function Sidebar(props) {
                 loggedIn={props.loggedIn}
                 onFollow={props.onFollow}
                 onUnfollow={props.onUnfollow}
-                onChangeView={props.onChangeView}
-                viewParam="viewYouMayKnow"
                 currentUserUsername={props.currentUserUsername}
                 currentUserFollowing={props.currentUserFollowing}
             />

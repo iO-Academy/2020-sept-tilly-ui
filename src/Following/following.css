@@ -1,5 +1,5 @@
 .sidebarRight {
-    display: flex;
+    display: none;
     flex-direction: column;
     position: absolute;
     top: 3vh;
@@ -32,16 +32,17 @@
     text-align: center;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 1000px) {
     .sidebarRight {
-        width: 12vw;
+        display: flex;
+        width: 16vw;
         right: 2vw;
     }
 }
 
 @media screen and (min-width: 1200px) {
     .sidebarRight {
-        width: 12vw;
-        right: 14vw;
+        width: 14vw;
+        right: 12vw;
     }
 }

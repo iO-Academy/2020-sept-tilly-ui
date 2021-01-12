@@ -106,6 +106,10 @@ class App extends React.Component {
                         <main>
                             <Switch>
                                 <Route
+                                    path="/:username/:following"
+                                    render={props => <Profile currentUser={this.state} {...props} />}
+                                />
+                                <Route
                                     path="/:username"
                                     render={props => <Profile currentUser={this.state} {...props} />}
                                 />
