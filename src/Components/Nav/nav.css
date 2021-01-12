@@ -16,11 +16,6 @@ nav {
     width: 50px;
 }
 
-.logoImgLogup {
-    width: 50px;
-    padding: 2vh 0 0 0;
-}
-
 nav > div {
     margin: auto;
     display: flex;
@@ -57,6 +52,20 @@ nav h5 {
     margin: 0 12px;
     text-align: right;
     font-family: "Sansita Swashed", cursive;
+}
+
+.navLogin {
+    position: static;
+    width: 100%;
+    margin: 3vh auto;
+}
+
+.navLogin > div {
+    align-items: center;
+}
+
+.navLogin .navItem {
+    display: none;
 }
 
 @media screen and (min-width: 800px) {

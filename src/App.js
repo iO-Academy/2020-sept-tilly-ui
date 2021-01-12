@@ -2,7 +2,6 @@ import React from "react";
 import "./App.css";
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Nav from "./Components/Nav";
-import Logo from "./Components/Nav/Logo";
 import Profile from "./Components/Profile";
 import Timeline from "./Components/Timeline";
 import SignUp from "./Components/LogUp/SignUp";

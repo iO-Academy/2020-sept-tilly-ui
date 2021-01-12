@@ -1,6 +1,6 @@
 import React from 'react';
 import Logo from "./Logo";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import './nav.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faUser, faCog, faShoePrints, faHammer, faKey } from '@fortawesome/free-solid-svg-icons';
@@ -9,10 +9,11 @@ class Nav extends React.Component {
 
     render() {
         return (
-            <nav>
-                <Logo
-                    padded={false}
-                />
+            <nav className={
+                !this.props.loggedIn
+                && (this.props.location.pathname === "/login" || this.props.location.pathname === "/")
+                ? "navLogin" : null}>
+                <Logo />
                 {this.props.loggedIn ?
                     <div>
                         <Link
@@ -109,4 +110,4 @@ class Nav extends React.Component {
     }
 }
 
-export default Nav;
+export default withRouter(Nav);
