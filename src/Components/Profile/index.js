@@ -24,7 +24,8 @@ class Profile extends React.Component {
             following: [],
             followers: [],
             currentUserFollowing: [],
-            userNotFound: false
+            userNotFound: false,
+            youMayKnow: []
         }
         this.getUserData = getUserData.bind(this);
         this.getLessons = getLessons.bind(this);
@@ -88,16 +89,47 @@ class Profile extends React.Component {
                 .then(data => {
                     this.setState({
                         following: data.data.username.following
-                    });
-                });
+                    })
+                    return Promise.all(
+                        data.data.username.following.map(user => {
+                            return this.getFollowing(user.username, this.abortController);
+                        })
+                    );
+                })
         }
         if (this.props.currentUser.username) {
+            let allFollowing = [];
+            let youMayKnow = [];
             this.getFollowing(this.props.currentUser.username, this.abortController)
                 .then(data => {
                     this.setState({
                         currentUserFollowing: data.data.username.following
-                    });
-                });
+                    })
+                    return Promise.all(
+                        data.data.username.following.map(user => {
+                            return this.getFollowing(user.username, this.abortController);
+                        })
+                    );
+                })
+                .then(data => {
+                    data.forEach(following => {
+                        allFollowing = allFollowing.concat(following.data.username.following)
+                    })
+                    allFollowing = allFollowing.filter(userObj => {
+                        return allFollowing.find(user => {
+                            if (user.id === this.props.currentUser.id) {
+                                return false
+                            }
+                            return user.id === userObj.id
+                        }) === userObj
+                    })
+                    while(youMayKnow.length < 5) {
+                        youMayKnow.push(allFollowing[Math.floor(Math.random() * allFollowing.length)])
+                    }
+                    this.setState({
+                        youMayKnow: youMayKnow
+                    })
+                })
         }
     }
 
