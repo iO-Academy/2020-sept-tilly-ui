@@ -153,10 +153,10 @@ class Profile extends React.Component {
                         listTitle={this.state.username + "'s teachers"}
                         username={this.state.username}
                         userList={this.state.following}
-                        loggedIn={this.state.loggedIn}
-                        onFollow={this.onFollow}
-                        onUnfollow={this.onUnfollow}
-                        currentUserUsername={this.state.currentUserUsername}
+                        loggedIn={this.props.currentUser.loggedIn}
+                        onFollow={this.followAction}
+                        onUnfollow={this.unfollowAction}
+                        currentUserUsername={this.props.currentUser.username}
                         currentUserFollowing={this.state.currentUserFollowing}
                     />
                     :
