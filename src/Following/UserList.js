@@ -49,7 +49,7 @@ export default function UserList(props) {
                         }
                     </div>
                 )}
-                {props.sidebar &&
+                {props.sidebar && props.userList.length > 4 &&
                 <div className="small center">
                     <Link to={"/" + props.username + "/" + props.name}>
                         and {props.userList.length > 5 ? props.userList.length - 4 : 1} more
