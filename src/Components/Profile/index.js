@@ -10,7 +10,6 @@ import getFollowing from "../../Functions/getFollowing";
 import getFollowers from "../../Functions/getFollowers";
 import getUserData from "../../Functions/getUserData";
 import "./profile.css";
-import {Switch} from "react-router-dom";
 
 class Profile extends React.Component {
 
@@ -117,26 +116,26 @@ class Profile extends React.Component {
                 })
                 .then(data => {
                     data.forEach(following => {
-                        allFollowing = allFollowing.concat(following.data.username.following)
-                    })
+                        allFollowing = allFollowing.concat(following.data.username.following);
+                    });
                     allFollowing = allFollowing.filter(userObj => {
                         return allFollowing.find(user => {
                             if (user.id === this.props.currentUser.id ||
                                 this.state.currentUserFollowing.find(userObj => {
-                                    return userObj.id === user.id
+                                    return userObj.id === user.id;
                                 })) {
-                                return false
+                                return false;
                             }
-                            return user.id === userObj.id
-                        }) === userObj
-                    })
+                            return user.id === userObj.id;
+                        }) === userObj;
+                    });
                     while(allFollowing.length > 0) {
-                        youMayKnow.push(allFollowing.splice(Math.floor(Math.random() * allFollowing.length), 1)[0])
+                        youMayKnow.push(allFollowing.splice(Math.floor(Math.random() * allFollowing.length), 1)[0]);
                     }
                     this.setState({
-                        youMayKnow: youMayKnow
-                    })
-                })
+                        youMayKnow: [...youMayKnow]
+                    });
+                });
         }
     }
 
@@ -248,38 +247,6 @@ class Profile extends React.Component {
                 />
                 }
                 {this.renderSwitch(this.props.match.params.following)}
-                {/*{this.props.match.params.following === "teachers" ?*/}
-                {/*    <UserList*/}
-                {/*        sidebar={false}*/}
-                {/*        name="teachers"*/}
-                {/*        listTitle={this.state.username + "'s teachers"}*/}
-                {/*        username={this.state.username}*/}
-                {/*        userList={this.state.following}*/}
-                {/*        loggedIn={this.props.currentUser.loggedIn}*/}
-                {/*        onFollow={this.followAction}*/}
-                {/*        onUnfollow={this.unfollowAction}*/}
-                {/*        currentUserUsername={this.props.currentUser.username}*/}
-                {/*        currentUserFollowing={this.state.currentUserFollowing}*/}
-                {/*    />*/}
-                {/*    :*/}
-                {/*    <section id="my-lessons" className="primary">*/}
-                {/*        {this.props.currentUser.username === this.props.match.params.username ?*/}
-                {/*            <h3>my lessons</h3>*/}
-                {/*            :*/}
-                {/*            <h3>{this.state.username}'s lessons</h3>*/}
-                {/*        }*/}
-                {/*        {this.state.lessons.map((lesson, i) =>*/}
-                {/*            <div key={"lesson" + i} className="lesson">*/}
-                {/*            <span className="fade-text small">*/}
-                {/*                {lesson.date}*/}
-                {/*            </span>*/}
-                {/*                <p>*/}
-                {/*                    {lesson.lesson}*/}
-                {/*                </p>*/}
-                {/*            </div>*/}
-                {/*        )}*/}
-                {/*    </section>*/}
-                {/*}*/}
                 <Sidebar
                     sidebar={true}
                     username={this.props.match.params.username}
