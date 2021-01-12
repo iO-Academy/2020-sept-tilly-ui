@@ -52,7 +52,7 @@ export default function UserList(props) {
                 {props.sidebar &&
                 <div className="small center">
                     <Link to={"/" + props.username + "/" + props.name}>
-                        and {props.userList > 5 ? props.userList.length - 4 : 1} more
+                        and {props.userList.length > 5 ? props.userList.length - 4 : 1} more
                     </Link>
                 </div>
                 }
