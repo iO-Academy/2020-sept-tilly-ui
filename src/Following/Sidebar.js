@@ -37,7 +37,7 @@ export default function Sidebar(props) {
                 listTitle="you may know"
                 data-id={props.id}
                 username={props.username}
-                userList={props.following}
+                userList={props.youMayKnow}
                 loggedIn={props.loggedIn}
                 onFollow={props.onFollow}
                 onUnfollow={props.onUnfollow}

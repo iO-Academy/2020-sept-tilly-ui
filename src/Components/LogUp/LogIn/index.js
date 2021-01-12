@@ -68,9 +68,6 @@ class LogIn extends React.Component {
             <form
                 onSubmit={this.handleSubmit}
                 id="logup">
-                <h5>
-                    today i learned lots... yay!
-                </h5>
                 <h2
                     className="logup-title">
                     log in

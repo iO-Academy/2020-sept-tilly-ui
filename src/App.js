@@ -31,11 +31,11 @@ class App extends React.Component {
 
     abortController = new AbortController();
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.getData();
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate = (prevProps, prevState, snapshot) => {
         if (prevState.id !== this.state.id) {
             this.getData();
         }
@@ -97,58 +97,45 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                {this.state.loggedIn ?
-                    <Router>
-                        <Nav
-                            username={this.state.username}
-                            onLogOut={this.logOut}
-                        />
-                        <main>
-                            <Switch>
-                                <Route
-                                    path="/:username/:following"
-                                    render={props => <Profile currentUser={this.state} {...props} />}
+                <Router>
+                    <Nav
+                        username={this.state.username}
+                        loggedIn={this.state.loggedIn}
+                        onLogOut={this.logOut}
+                    />
+                    <main>
+                        <Switch>
+                            {!this.state.loggedIn &&
+                            <Route
+                                path="/login">
+                                <LogIn
+                                    onLoginSuccess={this.logIn}
                                 />
-                                <Route
-                                    path="/:username"
-                                    render={props => <Profile currentUser={this.state} {...props} />}
-                                />
-                                <Route
-                                    path="/">
+                            </Route>
+                            }
+                            <Route
+                                path="/:username/:following"
+                                render={props => <Profile currentUser={this.state} {...props} />}
+                            />
+                            <Route
+                                path="/:username"
+                                render={props => <Profile currentUser={this.state} {...props} />}
+                            />
+                            <Route
+                                path="/">
+                                {this.state.loggedIn ?
                                     <Timeline
                                         currentUser={this.state}
                                     />
-                                </Route>
-                            </Switch>
-                        </main>
-                    </Router>
-                    :
-                    <Router>
-                        <Logo
-                            padded={true}
-                        />
-                        <main>
-                            <Switch>
-                                <Route
-                                    path="/login">
-                                    <LogIn
-                                        onLoginSuccess={this.logIn}
-                                    />
-                                </Route>
-                                <Route
-                                    path="/:username"
-                                    render={props => <Profile currentUser={this.state} {...props} />}
-                                />
-                                <Route
-                                    path="/">
+                                    :
                                     <SignUp
                                         onCreateUser={this.createUser}
                                     />
-                                </Route>
-                            </Switch>
-                        </main>
-                    </Router>
-                }
+                                }
+                            </Route>
+                        </Switch>
+                    </main>
+                </Router>
             </div>
         );
     }

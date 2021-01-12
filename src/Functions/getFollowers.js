@@ -1,8 +1,8 @@
-export default function getFollowing(username, abortController) {
+export default function getFollowers(username, abortController) {
     const query = `
         query {
             username (username: "${username}") {
-                following {
+                followers {
                     id,
                     name,
                     username,
