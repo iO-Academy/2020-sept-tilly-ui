@@ -1,0 +1,69 @@
+nav {
+    z-index: 10;
+    position: fixed;
+    top: 3vh;
+    left: 22vw;
+    width: 12vw;
+    color: var(--high-color);
+    line-height: 2rem;
+}
+
+.logo {
+    text-align: center;
+}
+
+.logoImg {
+    width: 50px;
+}
+
+.logoImgLogup {
+    width: 50px;
+    padding: 2vh 0 0 0;
+}
+
+nav > div {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.navItem {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.navIcon {
+    width: 50px;
+    text-align: center;
+}
+
+.navText {
+    display: none;
+    text-align: right;
+}
+
+.navOne {
+    font-size: 1.2rem;
+}
+
+.navTwo {
+    font-size: 0.8rem;
+}
+
+@media screen and (min-width: 800px) {
+    nav {
+        left: 2vw;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    nav {
+        left: 14vw;
+    }
+    .navText {
+        display: block;
+    }
+}

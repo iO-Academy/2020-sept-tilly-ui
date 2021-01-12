@@ -1,29 +1,48 @@
-.secondary {
-    position: fixed;
-    bottom: 0;
-    width: 450px;
-    max-width: 20vw;
+.sidebarRight {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 3vh;
+    right: 20vw;
+    width: 90vw;
     height: calc(100vh - 120px);
-    margin: 0;
-    padding: 0 40px;
+    max-width: 20vw;
+}
+
+.userList {
+    margin: 0 0 6vh 0;
     box-sizing: border-box;
-    box-shadow: 0 10px 15px -5px #111111;
-    overflow-y: scroll;
 }
 
-.secondary-left {
-    left: 0;
-    border-right: 1px solid var(--line-color);
+.userList h5 {
+    margin: auto auto 10px auto;
 }
 
-.secondary-right {
-    right: 0;
-    border-left: 1px solid var(--line-color);
-}
-
-.me-follow {
-    margin: 10px auto;
+.userListItem {
     display: flex;
     justify-content: space-between;
     font-size: small;
+}
+
+.userListUsername {
+    line-height: 0;
+}
+
+.andMore {
+    text-align: center;
+}
+
+@media screen and (min-width: 1000px) {
+    .sidebarRight {
+        display: flex;
+        width: 16vw;
+        right: 2vw;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .sidebarRight {
+        width: 14vw;
+        right: 12vw;
+    }
 }

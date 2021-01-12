@@ -54,9 +54,9 @@ class Create extends React.Component {
     render() {
         return (
             <section id="create" className="primary">
-                <h4>
+                <h5>
                     have you learned something new today?
-                </h4>
+                </h5>
                 <textarea
                     value={this.state.text}
                     name="text"

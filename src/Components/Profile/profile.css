@@ -6,33 +6,34 @@
 .lesson {
     width: 100%;
     padding: 10px 0;
-    border-bottom: 1px solid var(--line-color);
 }
 
 .profileHeader {
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin: 80px 0 0 0;
 }
 
-.profileTitleSpaceBetween {
+.profileDetails {
     display: flex;
     justify-content: space-between;
+    margin: 0 0 20px 0;
+    padding: 0 0 40px 0;
+    border-bottom: 1px solid var(--line-color);
 }
 
-.profileTitleCenter {
-    display: flex;
-    justify-content: center;
+.profileTitle {
+
+}
+
+.profileTitle h3 {
+    margin: 0;
+    text-align: left;
 }
 
 .profileBio {
-    margin: 20px 0;
+    width: 60%;
     font-size: small;
-    padding: 20px;
-    background: #2a2a2a;
-    border: 1px solid var(--line-color);
-    box-shadow: 0 5px 15px -5px #111111;
 }
 
 .userNotFound {
