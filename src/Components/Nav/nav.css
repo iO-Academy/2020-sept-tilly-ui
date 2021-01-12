@@ -53,6 +53,12 @@ nav > div {
     font-size: 0.8rem;
 }
 
+nav h5 {
+    margin: 0 12px;
+    text-align: right;
+    font-family: "Sansita Swashed", cursive;
+}
+
 @media screen and (min-width: 800px) {
     nav {
         left: 2vw;

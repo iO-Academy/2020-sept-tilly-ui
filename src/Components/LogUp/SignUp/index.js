@@ -144,11 +144,6 @@ class SignUp extends React.Component {
         return (
             <div
                 id="logup">
-
-                <h5>
-                    today i learned lots... yay!
-                </h5>
-
                 <h2
                     className="logup-title">
                     create an account
