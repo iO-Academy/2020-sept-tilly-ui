@@ -3,6 +3,11 @@ import {Link} from "react-router-dom";
 import getLessons from "../../Functions/getLessons";
 import getFollowing from "../../Functions/getFollowing";
 import "./timeline.css";
+import Create from "../Create";
+import UserList from "../Following/UserList";
+import Sidebar from "../Following/Sidebar";
+import follow from "../../Functions/follow";
+import unfollow from "../../Functions/unfollow";
 
 class Timeline extends React.Component {
 
@@ -11,12 +16,15 @@ class Timeline extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            display: "timeline",
             allLessons: [],
             visibleLessons: [],
             offset: 10
         }
         this.getLessons = getLessons.bind(this);
         this.getFollowing = getFollowing.bind(this);
+        this.follow = follow.bind(this);
+        this.unfollow = unfollow.bind(this);
     }
 
     componentDidMount() {
@@ -43,7 +51,6 @@ class Timeline extends React.Component {
 
     getTimelineData = () => {
         let allLessons = [];
-
         if (this.props.currentUser) {
             this.getLessons(this.props.currentUser.username, this.abortController)
                 .then(lessons => {
@@ -92,29 +99,83 @@ class Timeline extends React.Component {
         }
     }
 
+    handleYouMayKnow = () => {
+        this.setState({
+            display: "youMayKnow"
+        })
+    }
+
+    followAction = (event) => {
+        this.follow(event, this.abortController)
+            .then(data => {
+                this.props.getFollowingData();
+            });
+    }
+
+    unfollowAction = (event) => {
+        this.unfollow(event, this.abortController)
+            .then(data => {
+                this.props.getFollowingData();
+            });
+    }
 
     render() {
         return (
-            <section id="timeline" className="primary">
-                <h3>
-                    timeline
-                </h3>
-                {this.state.visibleLessons.map((lesson, i) =>
-                    <div key={"lesson" + i} className="lesson">
-                        <span className="small">
-                            <Link to={"/" + lesson.username}>
-                                {lesson.username}
-                            </Link> learned,
-                        </span>
-                        <span className="fade-text small">
-                            on {lesson.date}
-                        </span>
-                        <p>
-                            {lesson.lesson}
-                        </p>
-                    </div>
-                )}
-            </section>
+            <div>
+                <Create
+                    id={this.props.currentUser.id}
+                    currentUser={this.props.currentUser}
+                />
+                {this.state.display === "timeline" ?
+                    <section id="timeline" className="primary">
+                        <h3>
+                            timeline
+                        </h3>
+                        {this.state.visibleLessons.map((lesson, i) =>
+                            <div key={"lesson" + i} className="lesson">
+                            <span className="small">
+                                <Link to={"/" + lesson.username}>
+                                    {lesson.username}
+                                </Link> learned,
+                            </span>
+                                <span className="fade-text small">
+                                on {lesson.date}
+                            </span>
+                                <p>
+                                    {lesson.lesson}
+                                </p>
+                            </div>
+                        )}
+                    </section>
+                    :
+                    <UserList
+                        sidebar={false}
+                        username={this.props.currentUser.username}
+                        following={[]}
+                        followers={[]}
+                        youMayKnow={this.props.currentUser.youMayKnow}
+                        loggedIn={this.props.currentUser.loggedIn}
+                        onFollow={this.props.onFollow}
+                        onUnfollow={this.props.onUnfollow}
+                        currentUserUsername={this.props.currentUser.username}
+                        currentUserFollowing={this.props.currentUser.following}
+                        listTitle={this.props.currentUser.username + "'s potential chums"}
+                        userList={this.props.currentUser.youMayKnow}
+                    />
+                }
+                <Sidebar
+                    sidebar={true}
+                    component={"timeline"}
+                    username={this.props.currentUser.username}
+                    youMayKnow={this.props.currentUser.youMayKnow}
+                    loggedIn={this.props.currentUser.loggedIn}
+                    onFollow={this.followAction}
+                    onUnfollow={this.unfollowAction}
+                    youMayKnowLink={this.handleYouMayKnow}
+                    currentUserUsername={this.props.currentUser.username}
+                    currentUserFollowing={this.props.currentUser.following}
+                />
+            </div>
         );
     }
 }
