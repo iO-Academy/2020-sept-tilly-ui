@@ -6,7 +6,7 @@ export default function Sidebar(props) {
     return (
         <div className="sidebarRight">
             {props.component === "profile" &&
-                <>
+                <div>
                     <UserList
                         sidebar={props.sidebar}
                         name="teachers"
@@ -33,7 +33,7 @@ export default function Sidebar(props) {
                         currentUserUsername={props.currentUserUsername}
                         currentUserFollowing={props.currentUserFollowing}
                     />
-                </>
+                </div>
             }
             {props.component === "timeline" &&
                 <UserList

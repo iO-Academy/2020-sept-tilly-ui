@@ -100,43 +100,6 @@ class Profile extends React.Component {
                     })
                 })
         }
-        // if (this.props.currentUser.username) {
-        //     let allFollowing = [];
-        //     let youMayKnow = [];
-        //     this.getFollowing(this.props.currentUser.username, this.abortController)
-        //         .then(data => {
-        //             this.setState({
-        //                 currentUserFollowing: data.data.username.following
-        //             })
-        //             return Promise.all(
-        //                 data.data.username.following.map(user => {
-        //                     return this.getFollowing(user.username, this.abortController);
-        //                 })
-        //             );
-        //         })
-        //         .then(data => {
-        //             data.forEach(following => {
-        //                 allFollowing = allFollowing.concat(following.data.username.following);
-        //             });
-        //             allFollowing = allFollowing.filter(userObj => {
-        //                 return allFollowing.find(user => {
-        //                     if (user.id === this.props.currentUser.id ||
-        //                         this.state.currentUserFollowing.find(userObj => {
-        //                             return userObj.id === user.id;
-        //                         })) {
-        //                         return false;
-        //                     }
-        //                     return user.id === userObj.id;
-        //                 }) === userObj;
-        //             });
-        //             while(allFollowing.length > 0) {
-        //                 youMayKnow.push(allFollowing.splice(Math.floor(Math.random() * allFollowing.length), 1)[0]);
-        //             }
-        //             this.setState({
-        //                 youMayKnow: [...youMayKnow]
-        //             });
-        //         });
-        // }
     }
 
     followAction = (event) => {

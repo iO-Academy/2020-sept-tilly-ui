@@ -146,7 +146,8 @@ class Timeline extends React.Component {
                                 </p>
                             </div>
                         )}
-                    </section> :
+                    </section>
+                    :
                     <UserList
                         sidebar={false}
                         username={this.props.currentUser.username}
@@ -166,15 +167,13 @@ class Timeline extends React.Component {
                     sidebar={true}
                     component={"timeline"}
                     username={this.props.currentUser.username}
-                    following={[]}
-                    followers={[]}
                     youMayKnow={this.props.currentUser.youMayKnow}
                     loggedIn={this.props.currentUser.loggedIn}
                     onFollow={this.followAction}
                     onUnfollow={this.unfollowAction}
+                    youMayKnowLink={this.handleYouMayKnow}
                     currentUserUsername={this.props.currentUser.username}
                     currentUserFollowing={this.props.currentUser.following}
-                    youMayKnowLink={this.handleYouMayKnow}
                 />
             </div>
         );

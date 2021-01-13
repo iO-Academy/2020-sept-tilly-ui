@@ -10,7 +10,7 @@ export default function UserList(props) {
             <h5>
                 {props.listTitle}
             </h5>
-            {props.userList.length > 0 &&
+            {props.userList.length > 0 ?
             <div>
                 {userList.map((user, i) =>
                     <div
@@ -55,7 +55,8 @@ export default function UserList(props) {
                             <Link to={"/" + props.username + "/" + props.name}>
                                 and {props.userList.length - userList.length} more
                             </Link>
-                        </div> :
+                        </div>
+                        :
                         <div className="small center">
                             <Link onClick={props.youMayKnowLink}>
                                 and {props.userList.length - userList.length} more
@@ -64,8 +65,7 @@ export default function UserList(props) {
                     )
                 }
             </div>
-            }
-            {props.userList.length <= 0 &&
+            :
             <div className="small fade-text center">
                 nothing here...
             </div>
