@@ -12,31 +12,41 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    margin: 0 0 3vh 0;
+    padding: 0 0 3vh 0;
+    border-bottom: 1px solid var(--line-color);
 }
 
 .profileDetails {
     display: flex;
     justify-content: space-between;
-    margin: 0 0 20px 0;
-    padding: 0 0 40px 0;
-    border-bottom: 1px solid var(--line-color);
+    margin: 0 0 1vh 0;
 }
 
-.profileTitle {
-
-}
-
-.profileTitle h3 {
+.profileDetails h3 {
     margin: 0;
     text-align: left;
 }
 
 .profileBio {
-    width: 60%;
     font-size: small;
 }
 
 .userNotFound {
     margin: 100px auto;
     text-align: center;
+}
+
+@media screen and (min-width: 800px) {
+    .profileHeader {
+        flex-direction: row;
+        padding: 0 0 1vh 0;
+    }
+    .profileDetails {
+        flex-direction: column;
+        width: 40%;
+    }
+    .profileBio {
+        width: 60%;
+    }
 }
