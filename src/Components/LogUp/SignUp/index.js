@@ -332,7 +332,7 @@ class SignUp extends React.Component {
                     </div>
                 </form>
                 <Button
-                    className="generic"
+                    className="logupButton generic"
                     name="sign up"
                     onHandleClick={this.handleSubmit}
                 />
