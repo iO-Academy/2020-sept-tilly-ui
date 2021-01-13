@@ -50,11 +50,18 @@ export default function UserList(props) {
                     </div>
                 )}
                 {props.sidebar && props.userList.length > userList.length &&
-                <div className="small center">
-                    <Link to={"/" + props.username + "/" + props.name}>
-                        and {props.userList.length - userList.length} more
-                    </Link>
-                </div>
+                    (props.name !== "youMayKnow" ?
+                        <div className="small center">
+                            <Link to={"/" + props.username + "/" + props.name}>
+                                and {props.userList.length - userList.length} more
+                            </Link>
+                        </div> :
+                        <div className="small center">
+                            <Link onClick={props.youMayKnowLink}>
+                                and {props.userList.length - userList.length} more
+                            </Link>
+                        </div>
+                    )
                 }
             </div>
             }

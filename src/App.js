@@ -8,6 +8,7 @@ import SignUp from "./Components/LogUp/SignUp";
 import LogIn from "./Components/LogUp/LogIn";
 import decoder from "./Functions/decoder";
 import getUserData from "./Functions/getUserData";
+import getFollowing from "./Functions/getFollowing";
 
 class App extends React.Component {
 
@@ -23,20 +24,25 @@ class App extends React.Component {
             token: "",
             decoded: "",
             tokenError: "",
+            following: [],
+            youMayKnow: []
         }
         this.decoder = decoder.bind(this);
         this.getUserData = getUserData.bind(this);
+        this.getFollowing = getFollowing.bind(this);
     }
 
     abortController = new AbortController();
 
     componentDidMount = () => {
         this.getData();
+        this.getFollowingData();
     }
 
     componentDidUpdate = (prevProps, prevState, snapshot) => {
         if (prevState.id !== this.state.id) {
             this.getData();
+            this.getFollowingData();
         }
     }
 
@@ -65,7 +71,6 @@ class App extends React.Component {
             token: token,
             decoded: decoded
         });
-        // this.getData();
     }
 
     logOut = () => {
@@ -93,6 +98,46 @@ class App extends React.Component {
         this.setState({...stateCopy});
     }
 
+    getFollowingData = () => {
+        if (this.state.username) {
+            let allFollowing = [];
+            let youMayKnow = [];
+            this.getFollowing(this.state.username, this.abortController)
+                .then(data => {
+                    this.setState({
+                        following: data.data.username.following
+                    })
+                    return Promise.all(
+                        data.data.username.following.map(user => {
+                            return this.getFollowing(user.username, this.abortController);
+                        })
+                    );
+                })
+                .then(data => {
+                    data.forEach(following => {
+                        allFollowing = allFollowing.concat(following.data.username.following);
+                    });
+                    allFollowing = allFollowing.filter(userObj => {
+                        return allFollowing.find(user => {
+                            if (user.id === this.state.id ||
+                                this.state.following.find(userObj => {
+                                    return userObj.id === user.id;
+                                })) {
+                                return false;
+                            }
+                            return user.id === userObj.id;
+                        }) === userObj;
+                    });
+                    while(allFollowing.length > 0) {
+                        youMayKnow.push(allFollowing.splice(Math.floor(Math.random() * allFollowing.length), 1)[0]);
+                    }
+                    this.setState({
+                        youMayKnow: [...youMayKnow]
+                    });
+                });
+        }
+    }
+
     render() {
         return (
             <div>
@@ -114,24 +159,27 @@ class App extends React.Component {
                             }
                             <Route
                                 path="/:username/:following"
-                                render={props => <Profile currentUser={this.state} {...props} />}
+                                render={props => <Profile currentUser={this.state}
+                                                          getFollowing={this.getFollowingData} {...props} />}
                             />
                             <Route
                                 path="/:username"
-                                render={props => <Profile currentUser={this.state} {...props} />}
+                                render={props => <Profile currentUser={this.state}
+                                                          getFollowing={this.getFollowingData} {...props} />}
                             />
                             <Route
-                                path="/">
-                                {this.state.loggedIn ?
-                                    <Timeline
-                                        currentUser={this.state}
-                                    />
+                                path="/"
+                                render={this.state.loggedIn ?
+                                    props =>
+                                        <Timeline currentUser={this.state}
+                                                  getFollowingData={this.getFollowingData}
+                                                  {...props}
+                                        />
                                     :
-                                    <SignUp
-                                        onCreateUser={this.createUser}
+                                    props => <SignUp onCreateUser={this.createUser} {...props}
                                     />
                                 }
-                            </Route>
+                            />
                         </Switch>
                     </main>
                 </Router>
