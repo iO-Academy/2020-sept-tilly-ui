@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import Button from "../Components/Button";
+import Button from "../Button";
 import './following.css';
 
 export default function UserList(props) {
