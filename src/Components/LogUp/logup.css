@@ -27,7 +27,8 @@
 }
 
 .logup-label {
-    width: 100%;
+    min-width: 20vw;
+    line-height: 35px;
 }
 
 .logup-input {
@@ -53,7 +54,7 @@
 }
 
 .pending {
-    background-color: var(--fade-color);
+    background-color: var(--line-color);
 }
 
 .valid {
