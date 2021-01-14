@@ -1,0 +1,12 @@
+.lesson {
+    width: 100%;
+    padding: 10px 0;
+}
+
+.lesson span {
+    margin: auto 15px auto auto;
+}
+
+.lesson-date {
+    color: var(--line-color);
+}

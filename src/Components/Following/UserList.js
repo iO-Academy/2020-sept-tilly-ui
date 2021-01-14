@@ -22,14 +22,14 @@ export default function UserList(props) {
                     <div
                         key={"user" + i}
                         className="userListItem">
-                        <div>
-                            <p className="userListUsername">
+                        <div className="userListName">
+                            <p>
                                 <Link to={"/" + user.username}>
-                                    {user.username}
+                                    {user.name}
                                 </Link>
                             </p>
                             <p className="fade-text x-small">
-                                {user.description}
+                                @{user.username}
                             </p>
                         </div>
                         {props.loggedIn &&
@@ -38,17 +38,17 @@ export default function UserList(props) {
                         <div>
                             {!props.currentUserFollowing.find(o => o.username === user.username) ?
                                 <Button
-                                    className="follow"
+                                    className={props.sidebar ? "follow" : "generic"}
                                     onHandleClick={props.onFollow}
                                     value={user.id}
-                                    name="+"
+                                    name={props.sidebar ? "+" : "follow"}
                                 />
                                 :
                                 <Button
-                                    className="follow unfollow unfollow-rotate"
+                                    className={props.sidebar ? "follow unfollow unfollow-rotate" : "generic unfollow"}
                                     onHandleClick={props.onUnfollow}
                                     value={user.id}
-                                    name="+"
+                                    name={props.sidebar ? "+" : "unfollow"}
                                 />
                             }
                         </div>

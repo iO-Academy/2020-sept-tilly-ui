@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import ProfileHeader from "./ProfileHeader";
 import Create from "../Create";
+import ProfileTabs from "./ProfileTabs";
 import Sidebar from "../Following/Sidebar";
 import UserList from "../Following/UserList";
 import follow from "../../Functions/follow";
@@ -11,8 +12,7 @@ import getFollowing from "../../Functions/getFollowing";
 import getFollowers from "../../Functions/getFollowers";
 import getUserData from "../../Functions/getUserData";
 import "./profile.css";
-import ProfileTabs from "./ProfileTabs";
-import Lessons from "./Lessons";
+import Lesson from "../Lesson";
 
 class Profile extends React.Component {
 
@@ -192,11 +192,21 @@ class Profile extends React.Component {
                         currentUserFollowing={this.props.currentUser.following}
                     />
                     :
-                    <Lessons
-                        currentUser={this.props.currentUser}
-                        username={this.state.username}
-                        lessons={this.state.lessons}
-                    />
+                    <section id="my-lessons">
+                        {this.props.currentUser.username === this.props.match.params.username ?
+                            <h3>my lessons</h3>
+                            :
+                            <h3>{this.state.username}'s lessons</h3>
+                        }
+                        {this.state.lessons.map((lesson, i) =>
+                            <Lesson
+                                key={"lesson" + i}
+                                lesson={lesson}
+                                name={this.state.name}
+                                profile={true}
+                            />
+                        )}
+                    </section>
                 }
                 <Sidebar
                     sidebar={true}
