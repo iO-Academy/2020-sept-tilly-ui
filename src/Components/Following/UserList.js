@@ -7,9 +7,15 @@ export default function UserList(props) {
     const userList = props.sidebar ? props.userList.slice(0,4) : props.userList;
     return (
         <section className="userList">
-            <h5>
-                {props.listTitle}
-            </h5>
+            {props.sidebar ?
+                <p className="center">
+                    {props.listTitle}
+                </p>
+                :
+                <h3>
+                    {props.listTitle}
+                </h3>
+            }
             {props.userList.length > 0 ?
             <div>
                 {userList.map((user, i) =>

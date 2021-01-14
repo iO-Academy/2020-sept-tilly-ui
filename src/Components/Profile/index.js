@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import ProfileHeader from "./ProfileHeader";
 import Create from "../Create";
 import Sidebar from "../Following/Sidebar";
@@ -10,6 +11,8 @@ import getFollowing from "../../Functions/getFollowing";
 import getFollowers from "../../Functions/getFollowers";
 import getUserData from "../../Functions/getUserData";
 import "./profile.css";
+import ProfileTabs from "./ProfileTabs";
+import Lessons from "./Lessons";
 
 class Profile extends React.Component {
 
@@ -149,6 +152,9 @@ class Profile extends React.Component {
                     onAddLesson={this.addLesson}
                 />
                 }
+                <ProfileTabs
+                    username={this.state.username}
+                />
                 {this.props.match.params.following === "teachers" ?
                     <UserList
                         sidebar={false}
@@ -186,23 +192,11 @@ class Profile extends React.Component {
                         currentUserFollowing={this.props.currentUser.following}
                     />
                     :
-                    <section id="my-lessons" className="primary">
-                        {this.props.currentUser.username === this.props.match.params.username ?
-                            <h3>my lessons</h3>
-                            :
-                            <h3>{this.state.username}'s lessons</h3>
-                        }
-                        {this.state.lessons.map((lesson, i) =>
-                            <div key={"lesson" + i} className="lesson">
-                                <span className="fade-text small">
-                                    {lesson.date}
-                                </span>
-                                <p>
-                                    {lesson.lesson}
-                                </p>
-                            </div>
-                        )}
-                    </section>
+                    <Lessons
+                        currentUser={this.props.currentUser}
+                        username={this.state.username}
+                        lessons={this.state.lessons}
+                    />
                 }
                 <Sidebar
                     sidebar={true}
