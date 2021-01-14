@@ -106,7 +106,9 @@ class LogIn extends React.Component {
                             value={this.state.username}
                             onChange={this.handleInput}
                         />
-                        <div className="validity-check"></div>
+                        <div className="validity-check">
+
+                        </div>
                     </div>
                     <div
                         className="logup-row requirements fade-text x-small">
@@ -129,7 +131,9 @@ class LogIn extends React.Component {
                             value={this.state.password}
                             onChange={this.handleInput}
                         />
-                        <div className="validity-check"></div>
+                        <div className="validity-check">
+
+                        </div>
                     </div>
                     <div
                         className="logup-row requirements fade-text x-small">
@@ -137,6 +141,7 @@ class LogIn extends React.Component {
                     </div>
                 </div>
                 <Button
+                    disabled={this.state.username.length < 1 || this.state.password.length < 1}
                     className="generic"
                     name="log in"
                 />

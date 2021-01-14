@@ -2,15 +2,31 @@
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 3vh;
+    top: 2vh;
     right: 20vw;
     width: 90vw;
     height: calc(100vh - 120px);
     max-width: 20vw;
 }
 
+.mainSearch {
+    line-height: 27px;
+}
+
+.mainSearch input {
+    float: right;
+    width: calc(100% - 2rem - 4px);
+    height: 25px;
+    margin: 0 5px 3vh auto;
+    padding: 3px;
+    font-family: var(--main-type);
+    color: var(--main-type);
+    background: var(--line-color);
+    border: 0;
+}
+
 .userList {
-    margin: 0 0 6vh 0;
+    margin: auto 0 6vh 0;
     box-sizing: border-box;
 }
 

@@ -57,6 +57,10 @@ main {
   color: var(--fade-color);
 }
 
+.warn-text {
+  color: var(--warn-color);
+}
+
 .center {
   text-align: center;
 }
@@ -68,7 +72,7 @@ main {
 
 @media screen and (min-width: 800px) {
   main {
-    width: 60vw;
+    width: 50vw;
   }
 }
 
