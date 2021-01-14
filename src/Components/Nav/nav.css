@@ -2,7 +2,7 @@ nav {
     z-index: 10;
     display: flex;
     justify-content: space-between;
-    margin: 1rem;
+    margin: 1rem 0.5rem 1rem 1rem;
     color: var(--high-color);
     line-height: 3vh;
 }
@@ -12,7 +12,7 @@ nav {
 }
 
 .logoImg {
-    width: 50px;
+    width: 3vh;
 }
 
 nav > div {
@@ -27,7 +27,7 @@ nav > div {
 }
 
 .navIcon {
-    width: 50px;
+    width: 12vw;
     text-align: center;
 }
 
@@ -76,9 +76,16 @@ nav h5 {
         margin: auto;
         line-height: 3rem;
     }
+    .logoImg {
+        width: 50px;
+    }
     nav > div {
         flex-direction: column;
         align-items: flex-end;
+    }
+    .navIcon {
+        width: 50px;
+        text-align: center;
     }
 }
 

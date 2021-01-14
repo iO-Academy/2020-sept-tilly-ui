@@ -83,7 +83,7 @@ class LogIn extends React.Component {
                 <div
                     id="logup-form">
                     <div
-                        className="logup-row small">
+                        className="small center">
                         {this.state.incorrect &&
                         "The details you entered are incorrect. Try again!"}
                         {this.state.nonExistent &&
