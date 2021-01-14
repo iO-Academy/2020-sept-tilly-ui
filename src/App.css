@@ -24,8 +24,9 @@ html.light {
   --high-color: #000000;
   --warn-color: #D87C27;
   --fade-color: #939393;
-  --line-color: #dbdbdb;
+  --line-color: #bbbbbb;
   --shadow-color: #f3f3f3;
+  font-weight: bold;
 }
 
 body {
