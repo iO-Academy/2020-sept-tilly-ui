@@ -384,7 +384,7 @@ class SignUp extends React.Component {
                         !this.state.usernameAvailable ||
                         !this.state.emailAvailable
                     }
-                    className="generic"
+                    className="logupButton generic"
                     name="sign up"
                     onHandleClick={this.handleSubmit}
                 />
