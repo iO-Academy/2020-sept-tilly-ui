@@ -76,7 +76,7 @@ class SignUp extends React.Component {
 
     validate = (fields) => {
         const usernamePattern = new RegExp(/^[a-zA-Z0-9]{3,20}$/);
-        const namePattern = new RegExp(/^[a-zA-Z0-9]{3,20}$/);
+        const namePattern = new RegExp(/^(\w+\s?)*$/);
         const emailPattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/);
         const passwordPattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
 
@@ -239,7 +239,7 @@ class SignUp extends React.Component {
                     </div>
                     <div
                         className="logup-row requirements fade-text x-small">
-                        required, 3-20 letters
+                        required, 3-20 letters, spaces allowed
                     </div>
                     {/*Email*/}
                     <div
