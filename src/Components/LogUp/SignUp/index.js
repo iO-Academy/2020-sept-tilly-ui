@@ -84,26 +84,28 @@ class SignUp extends React.Component {
             switch (field) {
                 case "username":
                     this.state.username.length < 3 ?
-                        this.setState({validUsername: null}) :
-                        this.setState({validUsername: usernamePattern.test(this.state.username)});
-                        break;
+                    this.setState({validUsername: null}) :
+                    this.setState({validUsername: usernamePattern.test(this.state.username)});
+                    break;
                 case "name":
                     this.state.name.length < 3 ?
-                        this.setState({validName: null}) :
-                        this.setState({validName: this.state.name && namePattern.test(this.state.name)})
+                    this.setState({validName: null}) :
+                    this.setState({validName: this.state.name && namePattern.test(this.state.name)})
                     break;
                 case "email":
                     this.setState({validEmail: this.state.email && emailPattern.test(this.state.email)});
                     break;
                 case "password":
-                    this.setState({validPassword: this.state.password && passwordPattern.test(this.state.password)});
-                    this.setState({passwordConfirmed: this.state.password === this.state.confirmPassword});
+                    this.setState({
+                        validPassword: this.state.password && passwordPattern.test(this.state.password),
+                        passwordConfirmed: this.state.password && this.state.password === this.state.confirmPassword
+                    })
                     break;
                 case "confirmPassword":
-                    this.state.confirmPassword = "" ?
-                        this.setState({passwordConfirmed: null}) :
-                        this.setState({validPassword: this.state.password && passwordPattern.test(this.state.password)});
-                        this.setState({passwordConfirmed: this.state.password && this.state.password === this.state.confirmPassword});
+                    this.setState({
+                        validPassword: this.state.password && passwordPattern.test(this.state.password),
+                        passwordConfirmed: this.state.password && this.state.password === this.state.confirmPassword
+                    })
             }
         })
     }
