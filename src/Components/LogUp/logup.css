@@ -27,13 +27,13 @@
 }
 
 .logup-label {
-    min-width: 20vw;
-    line-height: 35px;
+    width: 100%;
+    font-size: 0.9rem;
 }
 
 .logup-input {
     width: 50vw;
-    margin: 0 0 0 30px;
+    margin: 0 10px 0 20px;
 }
 
 .validity-check {
@@ -94,6 +94,12 @@
     margin: 20px 0 80px 0;
 }
 
+@media screen and (max-width: 326px){
+    .logup-input {
+        margin: 0;
+    }
+}
+
 @media screen and (min-width: 800px) {
 
     #logup-form {
@@ -106,8 +112,8 @@
     }
 
     .logup-label {
-        min-width: 85px;
-        padding: 0 15px 0 0;
+        min-width: 20vw;
+        line-height: 35px;
     }
 
     .logup-input {
@@ -119,7 +125,7 @@
     }
 
     .requirements {
-        width: 370px;
+        width: 360px;
     }
 
 }

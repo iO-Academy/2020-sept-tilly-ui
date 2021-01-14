@@ -185,12 +185,13 @@ class SignUp extends React.Component {
                             className="validity-check">
                             {!this.state.validUsername ?
                                 <div className="input pending">
-                                    -
-                                </div> :
+                                </div>
+                                :
                                 this.state.usernameAvailable ?
                                     <div className="input valid">
                                     &#10003;
-                                    </div> :
+                                    </div>
+                                    :
                                     <div className="input invalid">
                                         &#10007;
                                     </div>
@@ -202,7 +203,8 @@ class SignUp extends React.Component {
                         <div
                             className="logup-row requirements warn-text x-small">
                             username already taken
-                        </div> :
+                        </div>
+                        :
                         <div
                             className="logup-row requirements fade-text x-small">
                             required, 3-20 letters or numbers
@@ -229,8 +231,8 @@ class SignUp extends React.Component {
                             className="validity-check">
                             {!this.state.validName ?
                                 <div className="input pending">
-                                    -
-                                </div> :
+                                </div>
+                                :
                                 <div className="input valid">
                                     &#10003;
                                 </div>
@@ -262,12 +264,13 @@ class SignUp extends React.Component {
                             className="validity-check">
                             {!this.state.validEmail ?
                                 <div className="input pending">
-                                    -
-                                </div> :
+                                </div>
+                                :
                                 this.state.emailAvailable ?
                                     <div className="input valid">
                                         &#10003;
-                                    </div> :
+                                    </div>
+                                    :
                                     <div className="input invalid">
                                         &#10007;
                                     </div>
@@ -279,7 +282,8 @@ class SignUp extends React.Component {
                         <div
                             className="logup-row requirements warn-text x-small">
                             email already registered
-                        </div> :
+                        </div>
+                        :
                         <div
                             className="logup-row requirements fade-text x-small">
                             required
@@ -305,8 +309,9 @@ class SignUp extends React.Component {
                             className="validity-check">
                             {!this.state.validPassword ?
                                 <div className="input pending">
-                                    -
-                                </div> :
+
+                                </div>
+                                :
                                 <div className="input valid">
                                     &#10003;
                                 </div>
@@ -337,7 +342,7 @@ class SignUp extends React.Component {
                             className="validity-check">
                             {!this.state.passwordConfirmed ?
                                 <div className="input pending">
-                                    -
+
                                 </div> :
                                 <div className="input valid">
                                     &#10003;
