@@ -57,6 +57,10 @@ main {
   color: var(--fade-color);
 }
 
+.warn-text {
+  color: var(--warn-color);
+}
+
 .center {
   text-align: center;
 }

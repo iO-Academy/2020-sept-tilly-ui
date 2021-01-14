@@ -30,3 +30,7 @@ button {
 .unfollow-rotate {
     transform: rotate(45deg);
 }
+
+button:disabled {
+    background: var(--fade-color);
+}
