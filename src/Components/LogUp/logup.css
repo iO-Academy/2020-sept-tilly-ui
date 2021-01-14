@@ -38,7 +38,7 @@
     height: 30px;
 }
 
-.valid-input {
+.input {
     margin: 5px;
     width: 20px;
     height: 20px;
@@ -47,8 +47,19 @@
     line-height: 22px;
     text-align: center;
     color: var(--main-color);
-    background-color: var(--high-color);
     border-radius: 100%;
+}
+
+.pending {
+    background-color: var(--fade-color);
+}
+
+.valid {
+    background-color: var(--high-color);
+}
+
+.invalid {
+    background-color: var(--warn-color);
 }
 
 #logup-form input, #logup-form label {

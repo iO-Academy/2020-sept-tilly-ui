@@ -16,11 +16,11 @@ class SignUp extends React.Component {
             password: "",
             confirmPassword: "",
             description: "",
-            validUsername: false,
-            validName: false,
+            validUsername: null,
+            validName: null,
             validPassword: false,
             passwordConfirmed: false,
-            validEmail: false,
+            validEmail: null,
             usernameAvailable: null,
             emailAvailable: null
         }
@@ -75,18 +75,22 @@ class SignUp extends React.Component {
     }
 
     validate = (fields) => {
-        const usernamePattern = new RegExp(/^(?=.{3,20}$)[a-zA-Z0-9]+/);
-        const namePattern = new RegExp(/^(?=.{3,20}$)[a-zA-Z]+/);
+        const usernamePattern = new RegExp(/^[a-zA-Z0-9]{3,20}$/);
+        const namePattern = new RegExp(/^[a-zA-Z0-9]{3,20}$/);
         const emailPattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/);
         const passwordPattern = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/);
 
         fields.forEach(field => {
             switch (field) {
                 case "username":
-                    this.setState({validUsername: this.state.username && usernamePattern.test(this.state.username)});
-                    break;
+                    this.state.username.length < 3 ?
+                        this.setState({validUsername: null}) :
+                        this.setState({validUsername: usernamePattern.test(this.state.username)});
+                        break;
                 case "name":
-                    this.setState({validName: this.state.name && namePattern.test(this.state.name)})
+                    this.state.name.length < 3 ?
+                        this.setState({validName: null}) :
+                        this.setState({validName: this.state.name && namePattern.test(this.state.name)})
                     break;
                 case "email":
                     this.setState({validEmail: this.state.email && emailPattern.test(this.state.email)});
@@ -96,8 +100,10 @@ class SignUp extends React.Component {
                     this.setState({passwordConfirmed: this.state.password === this.state.confirmPassword});
                     break;
                 case "confirmPassword":
-                    this.setState({validPassword: this.state.password && passwordPattern.test(this.state.password)});
-                    this.setState({passwordConfirmed: this.state.password && this.state.password === this.state.confirmPassword});
+                    this.state.confirmPassword = "" ?
+                        this.setState({passwordConfirmed: null}) :
+                        this.setState({validPassword: this.state.password && passwordPattern.test(this.state.password)});
+                        this.setState({passwordConfirmed: this.state.password && this.state.password === this.state.confirmPassword});
             }
         })
     }
@@ -168,23 +174,38 @@ class SignUp extends React.Component {
                             className="logup-input"
                             type="text"
                             required
+                            maxLength="20"
                             name="username"
                             value={this.state.username}
                             onChange={this.handleInput}
                         />
                         <div
                             className="validity-check">
-                            {this.state.validUsername && this.state.usernameAvailable &&
-                            <div className="valid-input">
-                                &#10003;
-                            </div>
+                            {!this.state.validUsername ?
+                                <div className="input pending">
+                                    -
+                                </div> :
+                                this.state.usernameAvailable ?
+                                    <div className="input valid">
+                                    &#10003;
+                                    </div> :
+                                    <div className="input invalid">
+                                        &#10007;
+                                    </div>
+
                             }
                         </div>
                     </div>
-                    <div
-                        className="logup-row requirements fade-text x-small">
-                        required, 3-20 letters or numbers
-                    </div>
+                    {this.state.validUsername && !this.state.usernameAvailable ?
+                        <div
+                            className="logup-row requirements warn-text x-small">
+                            username already taken
+                        </div> :
+                        <div
+                            className="logup-row requirements fade-text x-small">
+                            required, 3-20 letters or numbers
+                        </div>
+                    }
                     {/*Name*/}
                     <div className="logup-row">
                         <label
@@ -197,16 +218,20 @@ class SignUp extends React.Component {
                             className="logup-input"
                             type="text"
                             required
+                            maxLength="20"
                             name="name"
                             value={this.state.name}
                             onChange={this.handleInput}
                         />
                         <div
                             className="validity-check">
-                            {this.state.validName &&
-                            <div className="valid-input">
-                                &#10003;
-                            </div>
+                            {!this.state.validName ?
+                                <div className="input pending">
+                                    -
+                                </div> :
+                                <div className="input valid">
+                                    &#10003;
+                                </div>
                             }
                         </div>
                     </div>
@@ -233,17 +258,31 @@ class SignUp extends React.Component {
                         />
                         <div
                             className="validity-check">
-                            {this.state.validEmail && this.state.emailAvailable &&
-                            <div className="valid-input">
-                                &#10003;
-                            </div>
+                            {!this.state.validEmail ?
+                                <div className="input pending">
+                                    -
+                                </div> :
+                                this.state.emailAvailable ?
+                                    <div className="input valid">
+                                        &#10003;
+                                    </div> :
+                                    <div className="input invalid">
+                                        &#10007;
+                                    </div>
+
                             }
                         </div>
                     </div>
-                    <div
-                        className="logup-row requirements fade-text x-small">
-                        required
-                    </div>
+                    {this.state.validEmail && !this.state.emailAvailable ?
+                        <div
+                            className="logup-row requirements warn-text x-small">
+                            email already registered
+                        </div> :
+                        <div
+                            className="logup-row requirements fade-text x-small">
+                            required
+                        </div>
+                    }
                     {/*Password*/}
                     <div
                         className="logup-row">
@@ -262,10 +301,13 @@ class SignUp extends React.Component {
                         />
                         <div
                             className="validity-check">
-                            {this.state.validPassword &&
-                            <div className="valid-input">
-                                &#10003;
-                            </div>
+                            {!this.state.validPassword ?
+                                <div className="input pending">
+                                    -
+                                </div> :
+                                <div className="input valid">
+                                    &#10003;
+                                </div>
                             }
                         </div>
                     </div>
@@ -291,10 +333,13 @@ class SignUp extends React.Component {
                         />
                         <div
                             className="validity-check">
-                            {this.state.passwordConfirmed &&
-                            <div className="valid-input">
-                                &#10003;
-                            </div>
+                            {!this.state.passwordConfirmed ?
+                                <div className="input pending">
+                                    -
+                                </div> :
+                                <div className="input valid">
+                                    &#10003;
+                                </div>
                             }
                         </div>
                     </div>
@@ -332,6 +377,13 @@ class SignUp extends React.Component {
                     </div>
                 </form>
                 <Button
+                    disabled={
+                        !this.state.validName ||
+                        !this.state.validPassword ||
+                        !this.state.passwordConfirmed ||
+                        !this.state.usernameAvailable ||
+                        !this.state.emailAvailable
+                    }
                     className="generic"
                     name="sign up"
                     onHandleClick={this.handleSubmit}
