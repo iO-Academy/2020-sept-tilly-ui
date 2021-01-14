@@ -3,16 +3,29 @@
 html {
   --main-color: #202020;
   --bars-color: #282828;
-  --oppo-color: #FFFFFF;
+  --oppo-color: #ffffff;
   --high-color: #3CFFA1;
   --warn-color: #D87C27;
   --fade-color: #a5a5a5;
   --line-color: #535353;
+  --shadow-color: #111111;
   --main-type: "Slabo 13px", serif;
   margin: auto;
   font-family: var(--main-type);
   font-size: 18px;
   color: var(--oppo-color);
+  transition: all 1s ease;
+}
+
+html.light {
+  --main-color: #ffffff;
+  --bars-color: #eaeaea;
+  --oppo-color: #1a1a1a;
+  --high-color: #000000;
+  --warn-color: #D87C27;
+  --fade-color: #939393;
+  --line-color: #dbdbdb;
+  --shadow-color: #f3f3f3;
 }
 
 body {

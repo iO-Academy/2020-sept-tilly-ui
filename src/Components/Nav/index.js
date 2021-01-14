@@ -1,11 +1,26 @@
 import React from 'react';
-import Logo from "./Logo";
 import {Link, withRouter} from "react-router-dom";
-import './nav.css';
+import Logo from "./Logo";
+import LightSwitch from "../LightSwitch";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faUser, faCog, faShoePrints, faHammer, faKey } from '@fortawesome/free-solid-svg-icons';
+import './nav.css';
 
 class Nav extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            dark: true
+        }
+    }
+
+    setMode = () => {
+        document.documentElement.classList.toggle('light');
+        this.setState(prevState => ({
+            dark: !prevState.dark
+        }));
+    }
 
     render() {
         return (
@@ -16,6 +31,10 @@ class Nav extends React.Component {
                 <Logo />
                 {this.props.loggedIn ?
                     <div>
+                        <LightSwitch
+                            checked={this.state.dark}
+                            onHandleChange={this.setMode}
+                        />
                         <Link
                             className="navItem navOne"
                             to="/">

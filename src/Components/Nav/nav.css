@@ -15,6 +15,10 @@ nav {
     width: 3vh;
 }
 
+html.light .logoImg {
+    filter: saturate(0%) brightness(0%);
+}
+
 nav > div {
     display: flex;
     flex-direction: row;

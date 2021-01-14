@@ -20,8 +20,8 @@
     margin: 0 5px 3vh auto;
     padding: 3px;
     font-family: var(--main-type);
-    color: var(--main-type);
-    background: var(--line-color);
+    color: var(--oppo-color);
+    background: var(--bars-color);
     border: 0;
 }
 
