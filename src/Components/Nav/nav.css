@@ -2,7 +2,7 @@ nav {
     z-index: 10;
     display: flex;
     justify-content: space-between;
-    margin: 1rem 0.5rem 1rem 1rem;
+    margin: 0 0.5rem 1rem 0;
     padding: 1rem;
     color: var(--high-color);
     line-height: 3vh;
