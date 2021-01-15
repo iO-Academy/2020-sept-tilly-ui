@@ -3,6 +3,7 @@ nav {
     display: flex;
     justify-content: space-between;
     margin: 1rem 0.5rem 1rem 1rem;
+    padding: 1rem;
     color: var(--high-color);
     line-height: 3vh;
 }
@@ -12,7 +13,7 @@ nav {
 }
 
 .logoImg {
-    width: 3vh;
+    width: 1.6rem;
 }
 
 html.light .logoImg {
@@ -75,10 +76,13 @@ nav h5 {
         display: block;
         position: fixed;
         top: 3vh;
-        left: 1vw;
-        width: 12vw;
+        right: 80vw;
         margin: auto;
         line-height: 3rem;
+        border-radius: 1rem;
+    }
+    html.light nav {
+        background: var(--bars-color);
     }
     .logoImg {
         width: 50px;
@@ -95,7 +99,8 @@ nav h5 {
 
 @media screen and (min-width: 1200px) {
     nav {
-        left: 14vw;
+        right: 73vw;
+        padding-left: 2rem;
     }
     .navText {
         display: block;

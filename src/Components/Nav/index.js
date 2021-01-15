@@ -15,11 +15,23 @@ class Nav extends React.Component {
         }
     }
 
+    componentDidMount = () => {
+        if (localStorage.getItem('lightSwitch')) {
+            const lightSwitch = JSON.parse(localStorage.getItem('lightSwitch'));
+            if (!lightSwitch.dark) document.documentElement.classList.add('light');
+            this.setState({...lightSwitch});
+        }
+    }
+
     setMode = () => {
         document.documentElement.classList.toggle('light');
         this.setState(prevState => ({
             dark: !prevState.dark
         }));
+        setTimeout(() => {
+            const lightSwitch = {...this.state};
+            localStorage.setItem('lightSwitch', JSON.stringify(lightSwitch));
+        }, 50);
     }
 
     render() {
@@ -31,10 +43,6 @@ class Nav extends React.Component {
                 <Logo />
                 {this.props.loggedIn ?
                     <div>
-                        <LightSwitch
-                            checked={this.state.dark}
-                            onHandleChange={this.setMode}
-                        />
                         <Link
                             className="navItem navOne"
                             to="/">
@@ -88,6 +96,10 @@ class Nav extends React.Component {
                                 />
                             </div>
                         </a>
+                        <LightSwitch
+                            checked={this.state.dark}
+                            onHandleChange={this.setMode}
+                        />
                     </div>
                     :
                     <div>

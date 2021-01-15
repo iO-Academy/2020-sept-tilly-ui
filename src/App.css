@@ -19,7 +19,7 @@ html {
 
 html.light {
   --main-color: #ffffff;
-  --bars-color: #eaeaea;
+  --bars-color: #f5f5f5;
   --oppo-color: #1a1a1a;
   --high-color: #000000;
   --warn-color: #D87C27;

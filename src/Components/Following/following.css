@@ -21,8 +21,12 @@
     padding: 3px;
     font-family: var(--main-type);
     color: var(--oppo-color);
-    background: var(--bars-color);
+    background: var(--line-color);
     border: 0;
+}
+
+html.light .mainSearch input {
+    background: var(--bars-color);
 }
 
 .userList {
