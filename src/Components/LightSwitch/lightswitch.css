@@ -1,7 +1,7 @@
 #lightSwitch {
     display: flex;
     justify-content: center;
-    width: 50px;
+    margin-left: 20px;
 }
 
 #lightSwitch input {
@@ -40,6 +40,7 @@
 
 @media screen and (min-width: 800px) {
     #lightSwitch {
+        width: 50px;
         margin: 1.5vh 0;
     }
 }
