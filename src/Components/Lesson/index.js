@@ -7,7 +7,7 @@ export default function Lesson(props) {
         <div className="lesson">
             <span className="small">
                 <Link to={"/" + props.lesson.username}>
-                    {props.lesson.username}
+                    {props.lesson.name}
                 </Link>
             </span>
             <span className="fade-text small lesson-username">

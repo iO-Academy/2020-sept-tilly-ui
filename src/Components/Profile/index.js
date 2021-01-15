@@ -236,7 +236,7 @@ class Profile extends React.Component {
                                 {this.props.currentUser.username === this.props.match.params.username ?
                                     <h3>my lessons</h3>
                                     :
-                                    <h3>{this.state.username}'s lessons</h3>
+                                    <h3>{this.state.name}'s lessons</h3>
                                 }
                                 {this.state.lessons.map((lesson, i) =>
                                     <Lesson

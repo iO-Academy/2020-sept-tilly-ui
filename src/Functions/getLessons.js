@@ -3,6 +3,7 @@ import getDate from "./getDate";
 export default function getLessons(username, abortController) {
     const query = `query {
         username (username: "${username}") {
+            name,
             lessons {
                 id,
                 lesson
@@ -22,7 +23,7 @@ export default function getLessons(username, abortController) {
             let lessons = [];
             data.data.username.lessons.forEach(lesson => {
                 const newDate = getDate(lesson.id)
-                lessons.unshift({id: lesson.id, lesson: lesson.lesson, date: newDate, username: username})
+                lessons.unshift({id: lesson.id, lesson: lesson.lesson, date: newDate, username: username, name: data.data.username.name})
             });
             return lessons;
         });

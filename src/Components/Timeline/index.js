@@ -75,19 +75,15 @@ class Timeline extends React.Component {
                 })
                 .then(data => {
                     data.sort((a, b) => {
-                            if (a.id > b.id) {
-                                return -1;
-                            }
-                            if (a.id < b.id) {
-                                return 1;
-                            }
+                            if (a.id > b.id) return -1;
+                            if (a.id < b.id) return 1;
                             return 0;
                         });
                     this.setState({
                         allLessons: data,
                         visibleLessons: data.slice(0, this.state.offset)
                     });
-                    setTimeout(() => console.log(this.state.visibleLessons), 50)
+                    setTimeout(() => console.log(this.state.visibleLessons), 50);
                 });
         }
     }
