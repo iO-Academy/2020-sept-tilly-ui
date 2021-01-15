@@ -1,11 +1,15 @@
 button {
     font-family: var(--main-type);
     font-weight: bold;
-    background: var(--high-color);
     color: var(--main-color);
+    background: var(--high-color);
     border: none;
     border-radius: 10px;
     box-shadow: 0 5px 15px 1px var(--shadow-color);
+}
+
+html.light button {
+    background: var(--follow-color);
 }
 
 .generic {
@@ -28,10 +32,14 @@ button {
     background: var(--warn-color);
 }
 
+html.light .unfollow {
+    background: var(--unfollow-color);
+}
+
 .unfollow-rotate {
     transform: rotate(45deg);
 }
 
-button:disabled {
+button:disabled, html.light button:disabled {
     background: var(--fade-color);
 }

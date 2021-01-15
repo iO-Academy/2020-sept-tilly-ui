@@ -61,6 +61,7 @@ nav h5 {
     align-items: center;
     width: 100%;
     margin: 3vh auto;
+    padding: 0;
 }
 
 .navLogin > div {
@@ -83,6 +84,9 @@ nav h5 {
     }
     html.light nav {
         background: var(--bars-color);
+    }
+    html.light .navLogin {
+        background: none;
     }
     .logoImg {
         width: 50px;

@@ -7,8 +7,23 @@
     border-radius: 5px;
 }
 
+html.light .lesson {
+    border: var(--main-border);
+}
+
 .lesson span {
     margin: auto 15px auto auto;
+}
+
+.lesson p {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+html.light .lesson p {
+    background: #e2f2ff;
+    border: var(--main-border);
+    box-shadow: 0 0 3px -3px #000;
 }
 
 .lesson-date {
