@@ -14,6 +14,13 @@ export default function UserList(props) {
                 :
                 <h3>
                     {props.listTitle}
+                    {props.listTitle === "search results" &&
+                        <Button
+                            className="exit"
+                            onHandleClick={props.onClearSearch}
+                            name="+"
+                        />
+                    }
                 </h3>
             }
             {props.userList.length > 0 ?

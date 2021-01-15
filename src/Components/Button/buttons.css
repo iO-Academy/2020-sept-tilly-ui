@@ -19,9 +19,9 @@ html.light button {
 }
 
 .follow {
-    margin: 20px 5px;
     width: 20px;
     height: 20px;
+    margin: 20px 5px;
     padding: 0;
     font-family: Arial, sans-serif;
     font-size: large;
@@ -42,4 +42,15 @@ html.light .unfollow {
 
 button:disabled, html.light button:disabled {
     background: var(--fade-color);
+}
+
+.exit, html.light .exit {
+    width: 20px;
+    height: 20px;
+    margin: 0 10px;
+    padding: 0;
+    font-size: large;
+    line-height: 10px;
+    background: var(--warn-color);
+    transform: rotate(45deg);
 }

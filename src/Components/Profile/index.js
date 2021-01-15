@@ -40,6 +40,7 @@ class Profile extends React.Component {
         this.unfollow = unfollow.bind(this);
         this.getFollowing = getFollowing.bind(this);
         this.getFollowers = getFollowers.bind(this);
+        this.search = search.bind(this);
     }
 
     abortController = new AbortController();
@@ -138,11 +139,18 @@ class Profile extends React.Component {
                     this.setState({
                         matchedUsers: data.data.search,
                         display: "search"
-                    }) :
+                    })
+                    :
                     this.setState({
                         display: ""
-                    })
-            })
+                    });
+            });
+    }
+
+    clearSearch = () => {
+        this.setState({
+            display: ""
+        });
     }
 
     render() {
@@ -180,7 +188,9 @@ class Profile extends React.Component {
                         currentUserFollowing={this.props.currentUser.following}
                         listTitle={"search results"}
                         userList={this.state.matchedUsers}
-                    /> :
+                        onClearSearch={this.clearSearch}
+                    />
+                    :
                     <>
                         <ProfileTabs
                             username={this.state.username}

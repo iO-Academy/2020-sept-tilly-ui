@@ -1,15 +1,14 @@
 import React from "react";
-import {Link} from "react-router-dom";
-import getLessons from "../../Functions/getLessons";
-import getFollowing from "../../Functions/getFollowing";
-import "./timeline.css";
 import Create from "../Create";
+import Lesson from "../Lesson";
 import UserList from "../Following/UserList";
 import Sidebar from "../Following/Sidebar";
+import getLessons from "../../Functions/getLessons";
+import getFollowing from "../../Functions/getFollowing";
 import follow from "../../Functions/follow";
 import unfollow from "../../Functions/unfollow";
-import Lesson from "../Lesson";
 import search from "../../Functions/search";
+import "./timeline.css";
 
 class Timeline extends React.Component {
 
@@ -28,9 +27,10 @@ class Timeline extends React.Component {
         this.getFollowing = getFollowing.bind(this);
         this.follow = follow.bind(this);
         this.unfollow = unfollow.bind(this);
+        this.search = search.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
         window.addEventListener("scroll", this.handleScroll);
         if (this.props.currentUser.username) {
             this.getTimelineData();
@@ -41,7 +41,7 @@ class Timeline extends React.Component {
 
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate = (prevProps, prevState, snapshot) => {
         if (prevProps !== this.props) {
             if (this.props.currentUser.username) {
                 this.getTimelineData();
@@ -106,7 +106,7 @@ class Timeline extends React.Component {
     handleYouMayKnow = () => {
         this.setState({
             display: "youMayKnow"
-        })
+        });
     }
 
     followAction = (event) => {
@@ -124,22 +124,29 @@ class Timeline extends React.Component {
     }
 
     handleSearch = (event) => {
-        search(event.target.value, this.abortController)
+        this.search(event.target.value, this.abortController)
             .then(data => {
                 event.target.value ?
                 this.setState({
                     matchedUsers: data.data.search,
                     display: "search"
-                }) :
+                })
+                :
                 this.setState({
                     display: "timeline"
-                })
-            })
+                });
+            });
+    }
+
+    clearSearch = () => {
+        this.setState({
+            display: "timeline"
+        });
     }
 
     render() {
         return (
-            <div>
+            <>
                 <Create
                     id={this.props.currentUser.id}
                     currentUser={this.props.currentUser}
@@ -168,7 +175,8 @@ class Timeline extends React.Component {
                         currentUserFollowing={this.props.currentUser.following}
                         listTitle={this.props.currentUser.username + "'s potential chums"}
                         userList={this.props.currentUser.youMayKnow}
-                    /> :
+                    />
+                    :
                     <UserList
                         sidebar={false}
                         username={this.props.currentUser.username}
@@ -179,6 +187,7 @@ class Timeline extends React.Component {
                         currentUserFollowing={this.props.currentUser.following}
                         listTitle={"search results"}
                         userList={this.state.matchedUsers}
+                        onClearSearch={this.clearSearch}
                     />
                 }
                 <Sidebar
@@ -194,7 +203,7 @@ class Timeline extends React.Component {
                     currentUserFollowing={this.props.currentUser.following}
                     handleSearch={this.handleSearch}
                 />
-            </div>
+            </>
         );
     }
 }
