@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     width: 50px;
-    margin: 0.5vh 0;
 }
 
 #lightSwitch input {
