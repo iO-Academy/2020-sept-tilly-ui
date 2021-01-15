@@ -2,9 +2,10 @@ button {
     font-family: var(--main-type);
     font-weight: bold;
     background: var(--high-color);
+    color: var(--main-color);
     border: none;
     border-radius: 10px;
-    box-shadow: 0 5px 15px 1px #111111;
+    box-shadow: 0 5px 15px 1px var(--shadow-color);
 }
 
 .generic {

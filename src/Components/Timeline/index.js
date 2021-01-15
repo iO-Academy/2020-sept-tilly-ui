@@ -8,6 +8,7 @@ import UserList from "../Following/UserList";
 import Sidebar from "../Following/Sidebar";
 import follow from "../../Functions/follow";
 import unfollow from "../../Functions/unfollow";
+import Lesson from "../Lesson";
 
 class Timeline extends React.Component {
 
@@ -67,7 +68,7 @@ class Timeline extends React.Component {
                 .then(data => {
                     data.forEach(lessons => {
                         allLessons = allLessons.concat(lessons);
-                    })
+                    });
                     return allLessons;
                 })
                 .then(data => {
@@ -84,6 +85,7 @@ class Timeline extends React.Component {
                         allLessons: data,
                         visibleLessons: data.slice(0, this.state.offset)
                     });
+                    setTimeout(() => console.log(this.state.visibleLessons), 50)
                 });
         }
     }
@@ -132,19 +134,11 @@ class Timeline extends React.Component {
                             timeline
                         </h3>
                         {this.state.visibleLessons.map((lesson, i) =>
-                            <div key={"lesson" + i} className="lesson">
-                            <span className="small">
-                                <Link to={"/" + lesson.username}>
-                                    {lesson.username}
-                                </Link> learned,
-                            </span>
-                                <span className="fade-text small">
-                                on {lesson.date}
-                            </span>
-                                <p>
-                                    {lesson.lesson}
-                                </p>
-                            </div>
+                            <Lesson
+                                key={"tLesson" + i}
+                                lesson={lesson}
+                                profile={false}
+                            />
                         )}
                     </section>
                     :

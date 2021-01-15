@@ -1,11 +1,38 @@
 import React from 'react';
-import Logo from "./Logo";
 import {Link, withRouter} from "react-router-dom";
-import './nav.css';
+import Logo from "./Logo";
+import LightSwitch from "../LightSwitch";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faUser, faCog, faShoePrints, faHammer, faKey } from '@fortawesome/free-solid-svg-icons';
+import './nav.css';
 
 class Nav extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            dark: true
+        }
+    }
+
+    componentDidMount = () => {
+        if (localStorage.getItem('lightSwitch')) {
+            const lightSwitch = JSON.parse(localStorage.getItem('lightSwitch'));
+            if (!lightSwitch.dark) document.documentElement.classList.add('light');
+            this.setState({...lightSwitch});
+        }
+    }
+
+    setMode = () => {
+        document.documentElement.classList.toggle('light');
+        this.setState(prevState => ({
+            dark: !prevState.dark
+        }));
+        setTimeout(() => {
+            const lightSwitch = {...this.state};
+            localStorage.setItem('lightSwitch', JSON.stringify(lightSwitch));
+        }, 50);
+    }
 
     render() {
         return (
@@ -69,6 +96,10 @@ class Nav extends React.Component {
                                 />
                             </div>
                         </a>
+                        <LightSwitch
+                            checked={this.state.dark}
+                            onHandleChange={this.setMode}
+                        />
                     </div>
                     :
                     <div>

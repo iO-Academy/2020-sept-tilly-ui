@@ -1,0 +1,16 @@
+.lesson {
+    width: 100%;
+    margin: 10px 0;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    background: var(--bars-color);
+    border-radius: 5px;
+}
+
+.lesson span {
+    margin: auto 15px auto auto;
+}
+
+.lesson-date {
+    color: var(--line-color);
+}

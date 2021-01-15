@@ -23,7 +23,7 @@ export default function Sidebar(props) {
                     <UserList
                         sidebar={props.sidebar}
                         name="teachers"
-                        listTitle={props.username + "'s teachers"}
+                        listTitle={"@" + props.username + "'s teachers"}
                         data-id={props.id}
                         username={props.username}
                         userList={props.following}
@@ -36,7 +36,7 @@ export default function Sidebar(props) {
                     <UserList
                         sidebar={props.sidebar}
                         name="students"
-                        listTitle={props.username + "'s students"}
+                        listTitle={"@" + props.username + "'s students"}
                         data-id={props.id}
                         username={props.username}
                         userList={props.followers}

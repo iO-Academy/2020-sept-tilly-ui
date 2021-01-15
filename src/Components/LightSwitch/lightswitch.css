@@ -1,0 +1,46 @@
+#lightSwitch {
+    display: flex;
+    justify-content: center;
+    margin-left: 20px;
+}
+
+#lightSwitch input {
+    display: none;
+}
+
+#lightSwitch input + label {
+    display: block;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+#lightSwitch input + label span {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    background: #ffc321;
+    transition: all 1.5s ease;
+}
+
+#lightSwitch input + label span:active {
+    transform: rotateY(90deg) scale(0.8);
+}
+
+#lightSwitch input:checked + label span {
+    background: #333;
+    box-shadow: inset 3px 2px 0 #f6c458;
+    transform: rotate(180deg);
+}
+
+#lightSwitch input:checked + label span:active {
+    transform: rotate(359deg) scale(0.8);
+}
+
+@media screen and (min-width: 800px) {
+    #lightSwitch {
+        width: 50px;
+        margin: 1.5vh 0;
+    }
+}

@@ -20,13 +20,17 @@
     margin: 0 5px 3vh auto;
     padding: 3px;
     font-family: var(--main-type);
-    color: var(--main-type);
+    color: var(--oppo-color);
     background: var(--line-color);
     border: 0;
 }
 
+html.light .mainSearch input {
+    background: var(--bars-color);
+}
+
 .userList {
-    margin: auto 0 6vh 0;
+    margin: 0 0 6vh 0;
     box-sizing: border-box;
 }
 
@@ -40,8 +44,8 @@
     font-size: small;
 }
 
-.userListUsername {
-    line-height: 0;
+.userListName {
+    line-height: 10px;
 }
 
 .andMore {

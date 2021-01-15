@@ -74,7 +74,7 @@ class App extends React.Component {
     }
 
     logOut = () => {
-        localStorage.clear();
+        localStorage.removeItem('tillyToken');
         this.setState({
             loggedIn: false,
             id: "",
