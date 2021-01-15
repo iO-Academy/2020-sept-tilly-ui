@@ -16,6 +16,7 @@ export default function Sidebar(props) {
                 />
                 <input
                     type="text"
+                    onChange={props.handleSearch}
                 />
             </div>
             {props.component === "profile" &&

@@ -9,6 +9,7 @@ import Sidebar from "../Following/Sidebar";
 import follow from "../../Functions/follow";
 import unfollow from "../../Functions/unfollow";
 import Lesson from "../Lesson";
+import search from "../../Functions/search";
 
 class Timeline extends React.Component {
 
@@ -20,7 +21,8 @@ class Timeline extends React.Component {
             display: "timeline",
             allLessons: [],
             visibleLessons: [],
-            offset: 10
+            offset: 10,
+            matchedUsers: []
         }
         this.getLessons = getLessons.bind(this);
         this.getFollowing = getFollowing.bind(this);
@@ -121,6 +123,20 @@ class Timeline extends React.Component {
             });
     }
 
+    handleSearch = (event) => {
+        search(event.target.value, this.abortController)
+            .then(data => {
+                event.target.value ?
+                this.setState({
+                    matchedUsers: data.data.search,
+                    display: "search"
+                }) :
+                this.setState({
+                    display: "timeline"
+                })
+            })
+    }
+
     render() {
         return (
             <div>
@@ -141,13 +157,10 @@ class Timeline extends React.Component {
                             />
                         )}
                     </section>
-                    :
+                    : this.state.display === "youMayKnow" ?
                     <UserList
                         sidebar={false}
                         username={this.props.currentUser.username}
-                        following={[]}
-                        followers={[]}
-                        youMayKnow={this.props.currentUser.youMayKnow}
                         loggedIn={this.props.currentUser.loggedIn}
                         onFollow={this.props.onFollow}
                         onUnfollow={this.props.onUnfollow}
@@ -155,6 +168,17 @@ class Timeline extends React.Component {
                         currentUserFollowing={this.props.currentUser.following}
                         listTitle={this.props.currentUser.username + "'s potential chums"}
                         userList={this.props.currentUser.youMayKnow}
+                    /> :
+                    <UserList
+                        sidebar={false}
+                        username={this.props.currentUser.username}
+                        loggedIn={this.props.currentUser.loggedIn}
+                        onFollow={this.props.onFollow}
+                        onUnfollow={this.props.onUnfollow}
+                        currentUserUsername={this.props.currentUser.username}
+                        currentUserFollowing={this.props.currentUser.following}
+                        listTitle={"search results"}
+                        userList={this.state.matchedUsers}
                     />
                 }
                 <Sidebar
@@ -168,6 +192,7 @@ class Timeline extends React.Component {
                     youMayKnowLink={this.handleYouMayKnow}
                     currentUserUsername={this.props.currentUser.username}
                     currentUserFollowing={this.props.currentUser.following}
+                    handleSearch={this.handleSearch}
                 />
             </div>
         );
