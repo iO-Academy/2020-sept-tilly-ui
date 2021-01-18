@@ -129,7 +129,12 @@ class Profile extends React.Component {
 
     addLesson = (text) => {
         let stateCopy = {...this.state}
-        const lesson = {lesson: text, date: "just now"};
+        const lesson = {
+            lesson: text,
+            date: "just now",
+            username: this.state.username,
+            name: this.state.name
+        };
         stateCopy.lessons.unshift(lesson);
         this.setState({...stateCopy});
     }

@@ -26,7 +26,7 @@ class Create extends React.Component {
     }
 
     createLesson = () => {
-        this.props.onAddLesson && this.props.onAddLesson(this.state.text);
+        this.props.onAddLesson(this.state.text);
         const token = localStorage.getItem("tillyToken");
         const query = `mutation {
             addTil(

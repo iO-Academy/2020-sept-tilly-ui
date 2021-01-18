@@ -58,6 +58,12 @@ class App extends React.Component {
                     token: token
                 });
                 this.getUserData(decoded.username, this.abortController)
+                    .then(data =>
+                        this.setState({
+                            name: data.data.username.name,
+                            email: data.data.username.email,
+                            description: data.data.username.description
+                        }));
             } catch(err) {
                 console.log(err);
             }
