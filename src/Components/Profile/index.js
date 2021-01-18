@@ -174,8 +174,8 @@ class Profile extends React.Component {
                         sidebar={false}
                         username={this.props.currentUser.username}
                         loggedIn={this.props.currentUser.loggedIn}
-                        onFollow={this.props.onFollow}
-                        onUnfollow={this.props.onUnfollow}
+                        onFollow={this.followAction}
+                        onUnfollow={this.unfollowAction}
                         currentUserUsername={this.props.currentUser.username}
                         currentUserFollowing={this.props.currentUser.following}
                         listTitle={"search results"}
