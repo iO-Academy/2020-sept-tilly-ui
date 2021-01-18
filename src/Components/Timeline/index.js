@@ -8,6 +8,7 @@ import getFollowing from "../../Functions/getFollowing";
 import follow from "../../Functions/follow";
 import unfollow from "../../Functions/unfollow";
 import search from "../../Functions/search";
+import clearSearch from "../../Functions/clearSearch";
 import "./timeline.css";
 
 class Timeline extends React.Component {
@@ -28,6 +29,7 @@ class Timeline extends React.Component {
         this.follow = follow.bind(this);
         this.unfollow = unfollow.bind(this);
         this.search = search.bind(this);
+        this.clearSearch = clearSearch.bind(this);
     }
 
     componentDidMount = () => {
@@ -129,15 +131,9 @@ class Timeline extends React.Component {
                 })
                 :
                 this.setState({
-                    display: "timeline"
+                    display: ""
                 });
             });
-    }
-
-    clearSearch = () => {
-        this.setState({
-            display: "timeline"
-        });
     }
 
     render() {
@@ -147,20 +143,7 @@ class Timeline extends React.Component {
                     id={this.props.currentUser.id}
                     currentUser={this.props.currentUser}
                 />
-                {this.state.display === "timeline" ?
-                    <section id="timeline" className="primary">
-                        <h3>
-                            timeline
-                        </h3>
-                        {this.state.visibleLessons.map((lesson, i) =>
-                            <Lesson
-                                key={"tLesson" + i}
-                                lesson={lesson}
-                                profile={false}
-                            />
-                        )}
-                    </section>
-                    : this.state.display === "youMayKnow" ?
+                {this.state.display === "youMayKnow" ?
                     <UserList
                         sidebar={false}
                         username={this.props.currentUser.username}
@@ -172,7 +155,7 @@ class Timeline extends React.Component {
                         listTitle={this.props.currentUser.username + "'s potential chums"}
                         userList={this.props.currentUser.youMayKnow}
                     />
-                    :
+                    : this.state.display === "search" ?
                     <UserList
                         sidebar={false}
                         username={this.props.currentUser.username}
@@ -185,6 +168,19 @@ class Timeline extends React.Component {
                         userList={this.state.matchedUsers}
                         onClearSearch={this.clearSearch}
                     />
+                    :
+                    <section id="timeline" className="primary">
+                        <h3>
+                            timeline
+                        </h3>
+                        {this.state.visibleLessons.map((lesson, i) =>
+                        <Lesson
+                            key={"tLesson" + i}
+                            lesson={lesson}
+                            profile={false}
+                        />
+                    )}
+                    </section>
                 }
                 <Sidebar
                     sidebar={true}

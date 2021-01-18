@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import ProfileHeader from "./ProfileHeader";
 import Create from "../Create";
 import ProfileTabs from "./ProfileTabs";
+import Lesson from "../Lesson";
 import Sidebar from "../Following/Sidebar";
 import UserList from "../Following/UserList";
 import follow from "../../Functions/follow";
@@ -12,8 +13,8 @@ import getFollowing from "../../Functions/getFollowing";
 import getFollowers from "../../Functions/getFollowers";
 import getUserData from "../../Functions/getUserData";
 import search from "../../Functions/search";
+import clearSearch from "../../Functions/clearSearch";
 import "./profile.css";
-import Lesson from "../Lesson";
 
 class Profile extends React.Component {
 
@@ -41,6 +42,7 @@ class Profile extends React.Component {
         this.getFollowing = getFollowing.bind(this);
         this.getFollowers = getFollowers.bind(this);
         this.search = search.bind(this);
+        this.clearSearch = clearSearch.bind(this);
     }
 
     abortController = new AbortController();
@@ -145,12 +147,6 @@ class Profile extends React.Component {
                         display: ""
                     });
             });
-    }
-
-    clearSearch = () => {
-        this.setState({
-            display: ""
-        });
     }
 
     render() {
