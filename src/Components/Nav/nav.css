@@ -4,6 +4,7 @@ nav {
     justify-content: space-between;
     margin: 0 0.5rem 1rem 0;
     padding: 1rem;
+    font-family: var(--title-type);
     color: var(--high-color);
     line-height: 3vh;
 }

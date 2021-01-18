@@ -135,6 +135,7 @@ class Timeline extends React.Component {
     }
 
     clearSearch = () => {
+        document.querySelector('.mainSearch input').value = "";
         this.setState({
             display: "timeline"
         });
@@ -195,9 +196,9 @@ class Timeline extends React.Component {
                     onFollow={this.followAction}
                     onUnfollow={this.unfollowAction}
                     youMayKnowLink={this.handleYouMayKnow}
+                    handleSearch={this.handleSearch}
                     currentUserUsername={this.props.currentUser.username}
                     currentUserFollowing={this.props.currentUser.following}
-                    handleSearch={this.handleSearch}
                 />
             </>
         );
