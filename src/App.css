@@ -10,6 +10,7 @@ html {
   --line-color: #535353;
   --shadow-color: #111111;
   --main-type: "Slabo 13px", serif;
+  --title-type: "Sansita Swashed", cursive;
   margin: auto;
   font-family: var(--main-type);
   font-size: 18px;
@@ -46,8 +47,9 @@ a {
 }
 
 h1, h1, h3, h4, h5, h6 {
-  text-align: center;
   margin: 1vh auto 3vh auto;
+  /*font-family: var(--title-type);*/
+  text-align: center;
 }
 
 p {

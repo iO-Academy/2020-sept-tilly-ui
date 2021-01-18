@@ -256,9 +256,9 @@ class Profile extends React.Component {
                     loggedIn={this.props.currentUser.loggedIn}
                     onFollow={this.followAction}
                     onUnfollow={this.unfollowAction}
+                    handleSearch={this.handleSearch}
                     currentUserUsername={this.props.currentUser.username}
                     currentUserFollowing={this.props.currentUser.following}
-                    handleSearch={this.handleSearch}
                 />
             </div>
         );
