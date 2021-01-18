@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import ProfileHeader from "./ProfileHeader";
 import Create from "../Create";
 import ProfileTabs from "./ProfileTabs";
+import Lesson from "../Lesson";
 import Sidebar from "../Following/Sidebar";
 import UserList from "../Following/UserList";
 import follow from "../../Functions/follow";
@@ -12,8 +13,8 @@ import getFollowing from "../../Functions/getFollowing";
 import getFollowers from "../../Functions/getFollowers";
 import getUserData from "../../Functions/getUserData";
 import search from "../../Functions/search";
+import clearSearch from "../../Functions/clearSearch";
 import "./profile.css";
-import Lesson from "../Lesson";
 
 class Profile extends React.Component {
 
@@ -40,6 +41,8 @@ class Profile extends React.Component {
         this.unfollow = unfollow.bind(this);
         this.getFollowing = getFollowing.bind(this);
         this.getFollowers = getFollowers.bind(this);
+        this.search = search.bind(this);
+        this.clearSearch = clearSearch.bind(this);
     }
 
     abortController = new AbortController();
@@ -138,11 +141,12 @@ class Profile extends React.Component {
                     this.setState({
                         matchedUsers: data.data.search,
                         display: "search"
-                    }) :
+                    })
+                    :
                     this.setState({
                         display: ""
-                    })
-            })
+                    });
+            });
     }
 
     render() {
@@ -180,7 +184,9 @@ class Profile extends React.Component {
                         currentUserFollowing={this.props.currentUser.following}
                         listTitle={"search results"}
                         userList={this.state.matchedUsers}
-                    /> :
+                        onClearSearch={this.clearSearch}
+                    />
+                    :
                     <>
                         <ProfileTabs
                             username={this.state.username}
@@ -226,7 +232,7 @@ class Profile extends React.Component {
                                 {this.props.currentUser.username === this.props.match.params.username ?
                                     <h3>my lessons</h3>
                                     :
-                                    <h3>{this.state.username}'s lessons</h3>
+                                    <h3>{this.state.name}'s lessons</h3>
                                 }
                                 {this.state.lessons.map((lesson, i) =>
                                     <Lesson
@@ -250,9 +256,9 @@ class Profile extends React.Component {
                     loggedIn={this.props.currentUser.loggedIn}
                     onFollow={this.followAction}
                     onUnfollow={this.unfollowAction}
+                    handleSearch={this.handleSearch}
                     currentUserUsername={this.props.currentUser.username}
                     currentUserFollowing={this.props.currentUser.following}
-                    handleSearch={this.handleSearch}
                 />
             </div>
         );

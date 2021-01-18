@@ -28,21 +28,24 @@
     font-size: small;
     color: var(--fade-color);
     background: var(--bars-color);
+    border-radius: 5px;
 }
 
 html.light .profileBio {
-    border-radius: 5px;
 }
 
 .profileTabs {
     margin: 2vh auto;
     padding: 1vh;
+    font-size: 0.8rem;
     text-align: center;
     border-radius: 5px;
 }
 
 html.light .profileTabs {
     background: var(--bars-color);
+    border: var(--main-border);
+    border-radius: 5px;
 }
 
 .profileTabs span {

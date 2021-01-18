@@ -1,11 +1,16 @@
 button {
+    cursor: pointer;
     font-family: var(--main-type);
     font-weight: bold;
-    background: var(--high-color);
     color: var(--main-color);
+    background: var(--high-color);
     border: none;
     border-radius: 10px;
     box-shadow: 0 5px 15px 1px var(--shadow-color);
+}
+
+html.light button {
+    background: var(--follow-color);
 }
 
 .generic {
@@ -15,9 +20,9 @@ button {
 }
 
 .follow {
-    margin: 20px 5px;
     width: 20px;
     height: 20px;
+    margin: 20px 5px;
     padding: 0;
     font-family: Arial, sans-serif;
     font-size: large;
@@ -28,10 +33,25 @@ button {
     background: var(--warn-color);
 }
 
+html.light .unfollow {
+    background: var(--unfollow-color);
+}
+
 .unfollow-rotate {
     transform: rotate(45deg);
 }
 
-button:disabled {
+button:disabled, html.light button:disabled {
     background: var(--fade-color);
+}
+
+.exit, html.light .exit {
+    width: 20px;
+    height: 20px;
+    margin: 0 10px;
+    padding: 0;
+    font-size: large;
+    line-height: 10px;
+    background: var(--warn-color);
+    transform: rotate(45deg);
 }

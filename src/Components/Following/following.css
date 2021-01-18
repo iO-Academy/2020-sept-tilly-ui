@@ -27,6 +27,7 @@
 
 html.light .mainSearch input {
     background: var(--bars-color);
+    border: var(--main-border);
 }
 
 .userList {
@@ -41,7 +42,15 @@ html.light .mainSearch input {
 .userListItem {
     display: flex;
     justify-content: space-between;
+    margin: 5px 0;
+    padding: 0 10px;
     font-size: small;
+}
+
+html.light .userListItem {
+    background: var(--bars-color);
+    border: var(--main-border);
+    border-radius: 5px;
 }
 
 .userListName {
