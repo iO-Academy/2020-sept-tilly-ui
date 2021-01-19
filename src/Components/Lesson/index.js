@@ -13,9 +13,9 @@ export default function Lesson(props) {
         if (event.target.classList.contains('lesson-options-modal-bg') || event.key === 'Escape') openOptions(false);
     }
     useEffect(() => {
-        document.addEventListener("keydown", closeOptions, false);
+        document.addEventListener('keyup', closeOptions, false);
         return () => {
-            document.removeEventListener("keydown", closeOptions, false);
+            document.removeEventListener('keyup', closeOptions, false);
         };
     });
     return (
