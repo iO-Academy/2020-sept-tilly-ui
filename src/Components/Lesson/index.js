@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import Button from "../Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,8 +10,14 @@ import '../Button/buttons.css';
 export default function Lesson(props) {
     const [options, openOptions] = useState(false);
     function closeOptions(event) {
-        if (event.target.classList.contains('lesson-options-modal-bg')) openOptions(!options);
+        if (event.target.classList.contains('lesson-options-modal-bg') || event.key === 'Escape') openOptions(false);
     }
+    useEffect(() => {
+        document.addEventListener("keydown", closeOptions, false);
+        return () => {
+            document.removeEventListener("keydown", closeOptions, false);
+        };
+    });
     return (
         <div className="lesson">
             <span className="small">
