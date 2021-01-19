@@ -41,7 +41,7 @@ export default function Lesson(props) {
                         <div
                             className="lesson-options-list"
                             onClick={() => console.log('doing this will delete it')}>
-                            Delete
+                            delete
                             <FontAwesomeIcon
                                 icon={faTrash}
                             />
@@ -51,7 +51,7 @@ export default function Lesson(props) {
                     <Button
                         className="lesson-options delete"
                         name="..."
-                        onHandleClick={() => openOptions(!options)}
+                        onHandleClick={() => openOptions(true)}
                     />
                 )
             }

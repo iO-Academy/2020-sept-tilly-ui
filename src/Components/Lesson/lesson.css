@@ -1,4 +1,5 @@
 .lesson {
+    position: relative;
     width: 100%;
     margin: 10px 0;
     box-sizing: border-box;
@@ -27,11 +28,14 @@ html.light .lesson p {
 }
 
 .lesson-date {
+    display: block;
     color: var(--line-color);
 }
 
 .lesson-options, html.light .lesson-options {
-    float: right;
+    position: absolute;
+    top: 0;
+    right: 0;
     color: var(--line-color);
     transition: 0.5s;
 }
@@ -71,4 +75,13 @@ html.light .lesson p {
 
 .actionBar svg {
     padding: 0 20px 0 0;
+}
+
+@media screen and (min-width: 800px) {
+
+    .lesson-date {
+        display: inline;
+    }
+
+
 }
