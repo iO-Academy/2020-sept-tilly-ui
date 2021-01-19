@@ -23,7 +23,7 @@ export default function Lesson(props) {
     }
 
     function shareLink() {
-        navigator.clipboard.writeText("localhost:3000/" + props.currentUser.username + "/lessons/" + props.lesson.id)
+        navigator.clipboard.writeText("localhost:3000/" + props.lesson.username + "/lessons/" + props.lesson.id)
             .then(data => {
                 openShare(true);
                 setTimeout(() => openShare(false), 5000);
