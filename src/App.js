@@ -9,6 +9,7 @@ import LogIn from "./Components/LogUp/LogIn";
 import decoder from "./Functions/decoder";
 import getUserData from "./Functions/getUserData";
 import getFollowing from "./Functions/getFollowing";
+import Lesson from "./Components/Lesson";
 
 class App extends React.Component {
 
