@@ -83,6 +83,8 @@ export default function Lesson(props) {
                         onClick={closeShare}>
                     </div>
                     <div className="lesson-share-modal">
+                        <h4>Share this lesson!</h4>
+                        <p className="small">Just copy the link below</p>
                         <input type="text"
                             value={"localhost:3000/" + props.currentUser.username + "/lessons/" + props.lesson.id}
                         />
