@@ -62,6 +62,6 @@ button:disabled, html.light button:disabled {
     box-shadow: none;
 }
 
-.actionBar button, html.light .actionBar button {
+.action-bar button, html.light .action-bar button {
     color: var(--high-color);
 }

@@ -13,10 +13,8 @@ export default function Lesson(props) {
 
     useEffect(() => {
         document.addEventListener('keyup', closeOptions, false);
-        document.addEventListener('keyup', closeShare, false);
         return () => {
             document.removeEventListener('keyup', closeOptions, false);
-            document.removeEventListener('keyup', closeShare, false);
         };
     });
 
@@ -24,8 +22,12 @@ export default function Lesson(props) {
         if (event.target.classList.contains('lesson-modal-bg') || event.key === 'Escape') openOptions(false);
     }
 
-    function closeShare(event) {
-        if (event.target.classList.contains('lesson-modal-bg') || event.key === 'Escape') openShare(false);
+    function shareLink() {
+        navigator.clipboard.writeText("localhost:3000/" + props.currentUser.username + "/lessons/" + props.lesson.id)
+            .then(data => {
+                openShare(true);
+                setTimeout(() => openShare(false), 5000)
+            });
     }
 
     return (
@@ -67,28 +69,20 @@ export default function Lesson(props) {
             <p>
                 {props.lesson.lesson}
             </p>
-            <span className="actionBar">
+            <span className="action-bar">
                 <button
-                    onClick={() => openShare(true)}>
+                    onClick={shareLink}>
                     <FontAwesomeIcon icon={faShareAlt} />
                 </button>
                 <button>
                     <FontAwesomeIcon icon={faHeartLine} />
                 </button>
+                {share &&
+                <div className="lesson-share-notify">
+                    link copied to clipboard!
+                </div>
+                }
             </span>
-            {share &&
-                <>
-                    <div
-                        className="lesson-modal-bg modal-dark"
-                        onClick={closeShare}>
-                    </div>
-                    <div className="lesson-share-modal">
-                        <input type="text"
-                            value={"localhost:3000/" + props.currentUser.username + "/lessons/" + props.lesson.id}
-                        />
-                    </div>
-                </>
-            }
         </div>
     );
 }

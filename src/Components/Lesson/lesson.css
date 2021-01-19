@@ -64,38 +64,6 @@ button.lesson-options-list:hover {
     margin: 0 0 0 10px;
 }
 
-.lesson-share-modal {
-    z-index: 101;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    width: 80vw;
-    height: 50vh;
-    margin: auto;
-    top: 33vh;
-    left: 0;
-    right: 0;
-    background: var(--main-color);
-    border-radius: 5px;
-    box-shadow: 0 5px 10px 10px var(--shadow-color);
-}
-
-.lesson-share-modal input {
-    width: 100%;
-    height: 30px;
-    font-family: var(--main-type);
-    text-align: center;
-    color: var(--oppo-color);
-    background: var(--main-color);
-    border: 0;
-}
-
-.modal-dark {
-    background: rgba(0,0,0,0.3);
-}
-
 .lesson-modal-bg {
     z-index: 50;
     position: fixed;
@@ -107,14 +75,26 @@ button.lesson-options-list:hover {
     right: 0;
 }
 
-.actionBar {
+.action-bar {
+    position: relative;
     margin: auto;
     font-size: small;
     color: var(--high-color);
 }
 
-.actionBar svg {
+.action-bar svg {
     padding: 0 20px 0 0;
+}
+
+.lesson-share-notify {
+    position: absolute;
+    min-width: 200px;
+    top: 0;
+    font-size: small;
+    color: var(--fade-color);
+    background: var(--bars-color);
+    border-radius: 5px;
+    animation: fadeShare 5s ease-in-out;
 }
 
 @media screen and (min-width: 800px) {
@@ -128,4 +108,9 @@ button.lesson-options-list:hover {
         height: 200px;
     }
 
+}
+
+@keyframes fadeShare {
+    from {opacity: 1}
+    to {opacity: 0}
 }
