@@ -26,7 +26,7 @@ export default function Lesson(props) {
         navigator.clipboard.writeText("localhost:3000/" + props.currentUser.username + "/lessons/" + props.lesson.id)
             .then(data => {
                 openShare(true);
-                setTimeout(() => openShare(false), 5000)
+                setTimeout(() => openShare(false), 5000);
             });
     }
 
