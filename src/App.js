@@ -68,6 +68,7 @@ class App extends React.Component {
         this.setState({
             loggedIn: true,
             id: decoded.id,
+            username: decoded.username,
             token: token,
             decoded: decoded
         });

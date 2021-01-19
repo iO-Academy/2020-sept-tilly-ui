@@ -85,7 +85,6 @@ class Timeline extends React.Component {
                         allLessons: data,
                         visibleLessons: data.slice(0, this.state.offset)
                     });
-                    setTimeout(() => console.log(this.state.visibleLessons), 50);
                 });
         }
     }
