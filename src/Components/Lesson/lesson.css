@@ -29,3 +29,13 @@ html.light .lesson p {
 .lesson-date {
     color: var(--line-color);
 }
+
+.actionBar {
+    margin: auto;
+    font-size: small;
+    color: var(--high-color);
+}
+
+.actionBar svg {
+    padding: 0 20px 0 0;
+}

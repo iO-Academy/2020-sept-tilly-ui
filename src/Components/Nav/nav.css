@@ -33,6 +33,7 @@ nav > div {
 }
 
 .navIcon {
+    position: relative;
     width: 12vw;
     text-align: center;
 }
@@ -54,6 +55,23 @@ nav h5 {
     margin: 0 12px;
     text-align: right;
     font-family: "Sansita Swashed", cursive;
+}
+
+.notificationDot {
+    position: absolute;
+    top: 3.5vh;
+    left: 0;
+    right: 0;
+    width: 5px;
+    height: 5px;
+    margin: auto;
+    background: red;
+    border-radius: 100%;
+}
+
+.hasNotifications {
+    transform-origin: top;
+    animation: bellRinger 20s ease-in-out infinite;
 }
 
 .navLogin {
@@ -100,6 +118,10 @@ nav h5 {
         width: 50px;
         text-align: center;
     }
+    .notificationDot {
+        top: 1rem;
+        left: 2.5rem;
+    }
 }
 
 @media screen and (min-width: 1200px) {
@@ -110,4 +132,11 @@ nav h5 {
     .navText {
         display: block;
     }
+}
+
+@keyframes bellRinger {
+    0% {transform: rotate(0deg)}
+    1% {transform: rotate(10deg)}
+    2% {transform: rotate(-10deg)}
+    3% {transform: rotate(0deg)}
 }

@@ -3,7 +3,7 @@ import {Link, withRouter} from "react-router-dom";
 import Logo from "./Logo";
 import LightSwitch from "../LightSwitch";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisV, faUser, faCog, faShoePrints, faHammer, faKey } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faUser, faBell, faCog, faShoePrints, faHammer, faKey } from '@fortawesome/free-solid-svg-icons';
 import './nav.css';
 
 class Nav extends React.Component {
@@ -71,6 +71,23 @@ class Nav extends React.Component {
                                 />
                             </div>
                         </Link>
+                        <a
+                            className="navItem navOne">
+                            <div className="navText">
+                                notifications
+                            </div>
+                            <div className="navIcon">
+                                <FontAwesomeIcon
+                                    icon={faBell}
+                                    alt="my notifications"
+                                    title="my notifications"
+                                    className={"navNotification" + this.props.hasNotifications ? " hasNotifications" : ""}
+                                />
+                                {this.props.hasNotifications &&
+                                <div className="notificationDot"></div>
+                                }
+                            </div>
+                        </a>
                         <a className="navItem navTwo">
                             <div className="navText">
                                 settings

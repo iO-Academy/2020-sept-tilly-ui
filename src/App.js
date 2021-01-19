@@ -25,7 +25,8 @@ class App extends React.Component {
             decoded: "",
             tokenError: "",
             following: [],
-            youMayKnow: []
+            youMayKnow: [],
+            hasNotifications: true
         }
         this.decoder = decoder.bind(this);
         this.getUserData = getUserData.bind(this);
@@ -146,6 +147,7 @@ class App extends React.Component {
                     <Nav
                         username={this.state.username}
                         loggedIn={this.state.loggedIn}
+                        hasNotifications={this.state.hasNotifications}
                         onLogOut={this.logOut}
                     />
                     <main>

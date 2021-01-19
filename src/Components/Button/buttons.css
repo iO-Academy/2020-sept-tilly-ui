@@ -55,3 +55,23 @@ button:disabled, html.light button:disabled {
     background: var(--warn-color);
     transform: rotate(45deg);
 }
+
+.lesson button, html.light .lesson button {
+    background: transparent;
+    box-shadow: none;
+}
+
+.actionBar button, html.light .actionBar button {
+    color: var(--high-color);
+}
+
+.delete, html.light .delete {
+    float: right;
+    color: var(--line-color);
+    transform: rotate(45deg);
+    transition: 0.5s;
+}
+
+.delete:hover, html.light .delete:hover {
+    color: var(--fade-color);
+}
