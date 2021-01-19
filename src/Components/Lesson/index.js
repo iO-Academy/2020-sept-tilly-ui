@@ -25,7 +25,7 @@ export default function Lesson(props) {
             <span className="fade-text small lesson-date">
                 {props.lesson.date}
             </span>
-            {props.currentUser.loggedIn && (props.lesson.username === props.currentUser.username) &&
+            {props.lesson.username === props.currentUser.username &&
                 (options ?
                     <div className="lesson-options x-small">
                         <div
