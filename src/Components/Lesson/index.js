@@ -19,7 +19,7 @@ export default function Lesson(props) {
     });
 
     function closeOptions(event) {
-        if (event.target.classList.contains('lesson-modal-bg') || event.key === 'Escape') openOptions(false);
+        if (event.target.classList.contains('lesson-modal-bg') || event.key === "Escape") openOptions(false);
     }
 
     function shareLink() {
