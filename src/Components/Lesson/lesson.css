@@ -30,6 +30,39 @@ html.light .lesson p {
     color: var(--line-color);
 }
 
+.lesson-options, html.light .lesson-options {
+    float: right;
+    color: var(--line-color);
+    transition: 0.5s;
+}
+
+.lesson-options:hover, html.light .lesson-options:hover {
+    color: var(--fade-color);
+}
+
+.lesson-options-list {
+    z-index: 1000;
+    position: relative; /* important! to be able to click on it! */
+    padding: 5px;
+    background: var(--main-color);
+    border-radius: 5px;
+}
+
+.lesson-options svg {
+    margin: 0 0 0 10px;
+}
+
+.lesson-options-modal-bg {
+    z-index: 50;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
 .actionBar {
     margin: auto;
     font-size: small;

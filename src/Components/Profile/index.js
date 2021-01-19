@@ -239,7 +239,7 @@ class Profile extends React.Component {
                                         key={"lesson" + i}
                                         lesson={lesson}
                                         name={this.state.name}
-                                        loggedIn={this.props.currentUser.loggedIn}
+                                        currentUser={this.props.currentUser}
                                         profile={true}
                                     />
                                 )}

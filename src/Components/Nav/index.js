@@ -84,7 +84,8 @@ class Nav extends React.Component {
                                     className={"navNotification" + this.props.hasNotifications ? " hasNotifications" : ""}
                                 />
                                 {this.props.hasNotifications &&
-                                <div className="notificationDot"></div>
+                                <div className="notificationDot">
+                                </div>
                                 }
                             </div>
                         </a>
