@@ -1,4 +1,5 @@
 .lesson {
+    position: relative;
     width: 100%;
     margin: 10px 0;
     box-sizing: border-box;
@@ -27,5 +28,89 @@ html.light .lesson p {
 }
 
 .lesson-date {
+    display: block;
     color: var(--line-color);
+}
+
+.lesson-options, html.light .lesson-options {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: var(--line-color);
+    transition: 0.5s;
+}
+
+.lesson-options:hover, html.light .lesson-options:hover {
+    color: var(--fade-color);
+}
+
+button.lesson-options-list {
+    z-index: 1000;
+    position: relative; /* important! to be able to click on it! */
+    top: 20px;
+    padding: 5px;
+    font-size: x-small;
+    color: var(--line-color);
+    background: var(--main-color);
+    border-radius: 5px;
+    transition: 0.5s;
+}
+
+button.lesson-options-list:hover {
+    color: var(--fade-color);
+}
+
+.lesson-options svg {
+    margin: 0 0 0 10px;
+}
+
+.lesson-modal-bg {
+    z-index: 50;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.action-bar {
+    position: relative;
+    margin: auto;
+    font-size: small;
+    color: var(--high-color);
+}
+
+.action-bar svg {
+    padding: 0 20px 0 0;
+}
+
+.lesson-share-notify {
+    position: absolute;
+    min-width: 200px;
+    top: 0;
+    font-size: small;
+    color: var(--fade-color);
+    background: var(--bars-color);
+    border-radius: 5px;
+    animation: fadeShare 5s ease-in-out;
+}
+
+@media screen and (min-width: 800px) {
+
+    .lesson-date {
+        display: inline;
+    }
+
+    .lesson-share-modal {
+        width: 500px;
+        height: 200px;
+    }
+
+}
+
+@keyframes fadeShare {
+    from {opacity: 1}
+    to {opacity: 0}
 }

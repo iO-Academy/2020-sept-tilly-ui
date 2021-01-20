@@ -1,4 +1,5 @@
 button {
+    outline: none;
     cursor: pointer;
     font-family: var(--main-type);
     font-weight: bold;
@@ -54,4 +55,13 @@ button:disabled, html.light button:disabled {
     line-height: 10px;
     background: var(--warn-color);
     transform: rotate(45deg);
+}
+
+.lesson button, html.light .lesson button {
+    background: transparent;
+    box-shadow: none;
+}
+
+.action-bar button, html.light .action-bar button {
+    color: var(--high-color);
 }
