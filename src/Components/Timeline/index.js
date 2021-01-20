@@ -177,6 +177,7 @@ class Timeline extends React.Component {
                             key={"tLesson" + i}
                             lesson={lesson}
                             currentUser={this.props.currentUser}
+                            getLikedLessons={this.props.getLikedLessons}
                             profile={false}
                         />
                     )}

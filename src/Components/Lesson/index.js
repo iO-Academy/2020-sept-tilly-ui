@@ -6,6 +6,7 @@ import { faShareAlt, faHeart, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartLine } from '@fortawesome/free-regular-svg-icons';
 import './lesson.css';
 import '../Button/buttons.css';
+import getLikedLessons from "../../Functions/getLikedLessons";
 
 export default function Lesson(props) {
     const [options, openOptions] = useState(false);
@@ -23,11 +24,59 @@ export default function Lesson(props) {
     }
 
     function shareLink() {
-        navigator.clipboard.writeText("localhost:3000/" + props.lesson.username + "/lessons/" + props.lesson.id)
+        navigator.clipboard.writeText(window.location.origin + props.lesson.username + "/lessons/" + props.lesson.id)
             .then(data => {
                 openShare(true);
                 setTimeout(() => openShare(false), 5000);
             });
+    }
+
+    let likeLesson = () => {
+        const query = `
+        mutation {
+            like (
+                user: "${props.currentUser.id}",
+                lesson: "${props.lesson.id}",
+                token: "${props.currentUser.token}"
+            )
+        }`
+        return fetch('http://localhost:4002/graphql', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({query})
+        })
+            .then(r => {
+                return r.json()
+            })
+            .then(r => {
+                props.getLikedLessons()
+            })
+    }
+
+    let unlikeLesson = () => {
+        const query = `
+        mutation {
+            unlike (
+                user: "${props.currentUser.id}",
+                lesson: "${props.lesson.id}",
+                token: "${props.currentUser.token}"
+            )
+        }`
+        return fetch('http://localhost:4002/graphql', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({query})
+        })
+            .then(r => {
+                return r.json()
+            })
+            .then(r => {
+                props.getLikedLessons()
+            })
     }
 
     return (
@@ -70,9 +119,16 @@ export default function Lesson(props) {
                 {props.lesson.lesson}
             </p>
             <span className="action-bar">
-                <button>
-                    <FontAwesomeIcon icon={faHeartLine} />
-                </button>
+                {props.currentUser.likedLessons.find(o => o.id === props.lesson.id) ?
+                    <button
+                        onClick={unlikeLesson}>
+                        <FontAwesomeIcon icon={faHeart} />
+                    </button> :
+                    <button
+                        onClick={likeLesson}>
+                        <FontAwesomeIcon icon={faHeartLine}/>
+                    </button>
+                }
                 <button
                     onClick={shareLink}>
                     <FontAwesomeIcon icon={faShareAlt} />
