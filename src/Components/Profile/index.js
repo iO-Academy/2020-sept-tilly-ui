@@ -127,18 +127,6 @@ class Profile extends React.Component {
             });
     }
 
-    addLesson = (text) => {
-        let stateCopy = {...this.state}
-        const lesson = {
-            lesson: text,
-            date: "just now",
-            username: this.state.username,
-            name: this.state.name
-        };
-        stateCopy.lessons.unshift(lesson);
-        this.setState({...stateCopy});
-    }
-
     handleSearch = (event) => {
         search(event.target.value, this.abortController)
             .then(data => {
@@ -175,7 +163,7 @@ class Profile extends React.Component {
                     <Create
                         id={this.state.id}
                         currentUser={this.props.currentUser}
-                        onAddLesson={this.addLesson}
+                        onAddLesson={this.getLessonData}
                     />
                 }
                 {this.state.display === "search" ?
