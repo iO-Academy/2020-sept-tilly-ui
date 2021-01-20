@@ -10,6 +10,7 @@ import decoder from "./Functions/decoder";
 import getUserData from "./Functions/getUserData";
 import getFollowing from "./Functions/getFollowing";
 import Lesson from "./Components/Lesson";
+import Notifications from "./Components/Notifications";
 
 class App extends React.Component {
 
@@ -27,7 +28,8 @@ class App extends React.Component {
             tokenError: "",
             following: [],
             youMayKnow: [],
-            hasNotifications: true
+            hasNotifications: true,
+            notifications
         }
         this.decoder = decoder.bind(this);
         this.getUserData = getUserData.bind(this);
@@ -141,6 +143,10 @@ class App extends React.Component {
         }
     }
 
+    getNotifications = () => {
+
+    }
+
     render() {
         return (
             <div>
@@ -169,6 +175,11 @@ class App extends React.Component {
                             <Route
                                 path="/:username"
                                 render={props => <Profile currentUser={this.state}
+                                                          getFollowing={this.getFollowingData} {...props} />}
+                            />
+                            <Route
+                                path="/notifications"
+                                render={props => <Notifications currentUser={this.state}
                                                           getFollowing={this.getFollowingData} {...props} />}
                             />
                             <Route

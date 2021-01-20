@@ -4,31 +4,65 @@ import Button from "../Button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShareAlt, faHeart, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartLine } from '@fortawesome/free-regular-svg-icons';
-import './lesson.css';
-import '../Button/buttons.css';
-import Lesson from "../Lesson";
+import './notification.css';
 
 export default function Notification(props) {
-    const [options, openOptions] = useState(false);
-    const [share, openShare] = useState(false);
-
+    // const [options, openOptions] = useState(false);
+    // const [share, openShare] = useState(false);
 
     return (
-        <section id="my-lessons">
-            {this.props.currentUser.username === this.props.match.params.username ?
-                <h3>my lessons</h3>
-                :
-                <h3>{this.state.name}'s lessons</h3>
+        <div className="notification">
+            <span className="small">
+                <Link to={"/" + props.lesson.username}>
+                    {props.lesson.name}
+                </Link>
+            </span>
+            <span className="fade-text small notification-username">
+                @{props.lesson.username}
+            </span>
+            <span className="fade-text small lesson-date">
+                {props.lesson.date}
+            </span>
+            {props.lesson.username === props.currentUser.username &&
+            <Button
+                className="lesson-options delete"
+                name="..."
+                onHandleClick={() => openOptions(true)}
+            />
             }
-            {this.state.lessons.map((lesson, i) =>
-                <Lesson
-                    key={"lesson" + i}
-                    lesson={lesson}
-                    name={this.state.name}
-                    currentUser={this.props.currentUser}
-                    profile={true}
-                />
-            )}
-        </section>
-    )
+            {props.lesson.username === props.currentUser.username && options &&
+            <div className="lesson-options">
+                <div
+                    className="lesson-modal-bg"
+                    onClick={closeOptions}>
+                </div>
+                <button
+                    className="lesson-options-list"
+                    onClick={() => console.log('doing this will delete it')}>
+                    delete
+                    <FontAwesomeIcon
+                        icon={faTrash}
+                    />
+                </button>
+            </div>
+            }
+            <p>
+                {props.lesson.lesson}
+            </p>
+            <span className="action-bar">
+                <button>
+                    <FontAwesomeIcon icon={faHeartLine} />
+                </button>
+                <button
+                    onClick={shareLink}>
+                    <FontAwesomeIcon icon={faShareAlt} />
+                </button>
+                {share &&
+                <span className="lesson-share-notify">
+                    link copied to clipboard!
+                </span>
+                }
+            </span>
+        </div>
+    );
 }
