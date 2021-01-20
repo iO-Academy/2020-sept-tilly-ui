@@ -245,6 +245,8 @@ class Profile extends React.Component {
                                         lesson={lesson}
                                         name={this.state.name}
                                         currentUser={this.props.currentUser}
+                                        getLikedLessons={this.props.getLikedLessons}
+                                        getLessonsAgain={this.getLessonData}
                                         profile={true}
                                     />
                                 )}
