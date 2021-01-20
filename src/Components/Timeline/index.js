@@ -54,6 +54,10 @@ class Timeline extends React.Component {
         }
     }
 
+    componentWillUnmount = () => {
+        window.removeEventListener("scroll", this.handleScroll);
+    }
+
     getTimelineData = () => {
         let allLessons = [];
         if (this.props.currentUser) {
@@ -96,7 +100,7 @@ class Timeline extends React.Component {
             })
             this.setState({
                 visibleLessons: this.state.allLessons.slice(0, this.state.offset)
-            })
+            });
         }
     }
 
@@ -141,6 +145,7 @@ class Timeline extends React.Component {
                 <Create
                     id={this.props.currentUser.id}
                     currentUser={this.props.currentUser}
+                    onAddLesson={this.getTimelineData}
                 />
                 {this.state.display === "youMayKnow" ?
                     <UserList
@@ -177,6 +182,8 @@ class Timeline extends React.Component {
                             key={"tLesson" + i}
                             lesson={lesson}
                             currentUser={this.props.currentUser}
+                            getLikedLessons={this.props.getLikedLessons}
+                            getLessonsAgain={this.getTimelineData}
                             profile={false}
                         />
                     )}

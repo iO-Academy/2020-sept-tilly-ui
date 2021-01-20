@@ -9,8 +9,10 @@ import LogIn from "./Components/LogUp/LogIn";
 import decoder from "./Functions/decoder";
 import getUserData from "./Functions/getUserData";
 import getFollowing from "./Functions/getFollowing";
+import getLikedLessons from "./Functions/getLikedLessons";
 import Lesson from "./Components/Lesson";
 import Notifications from "./Components/Notifications";
+import getNotifications from "./Functions/getNotifications";
 
 class App extends React.Component {
 
@@ -29,11 +31,14 @@ class App extends React.Component {
             following: [],
             youMayKnow: [],
             hasNotifications: true,
-            notifications
+            likedLessons: [],
+            notifications: []
         }
         this.decoder = decoder.bind(this);
         this.getUserData = getUserData.bind(this);
         this.getFollowing = getFollowing.bind(this);
+        this.getLikedLessons = getLikedLessons.bind(this);
+        this.getNotifications = getNotifications.bind(this);
     }
 
     abortController = new AbortController();
@@ -41,12 +46,16 @@ class App extends React.Component {
     componentDidMount = () => {
         this.getData();
         this.getFollowingData();
+        this.getLikedLessonsData();
+        this.getNotificationsData();
     }
 
     componentDidUpdate = (prevProps, prevState, snapshot) => {
         if (prevState.id !== this.state.id) {
             this.getData();
             this.getFollowingData();
+            this.getLikedLessonsData();
+            this.getNotificationsData();
         }
     }
 
@@ -62,6 +71,12 @@ class App extends React.Component {
                     token: token
                 });
                 this.getUserData(decoded.username, this.abortController)
+                    .then(data =>
+                        this.setState({
+                            name: data.data.username.name,
+                            email: data.data.username.email,
+                            description: data.data.username.description
+                        }));
             } catch(err) {
                 console.log(err);
             }
@@ -143,11 +158,29 @@ class App extends React.Component {
         }
     }
 
-    getNotifications = () => {
-
+    getLikedLessonsData = () => {
+        if (this.state.username) {
+            this.getLikedLessons(this.state.username, this.abortController)
+                .then(data => {
+                    this.setState({
+                        likedLessons: data.data.username.likedLessons
+                    })
+                })
+        }
     }
 
-    render() {
+    getNotificationsData = () => {
+        if (this.state.username) {
+            this.getNotifications(this.state.username, this.abortController)
+                .then(data => {
+                    this.setState({
+                        notifications: data
+                    })
+                })
+        }
+    }
+
+        render() {
         return (
             <div>
                 <Router>
@@ -170,17 +203,21 @@ class App extends React.Component {
                             <Route
                                 path="/:username/:following"
                                 render={props => <Profile currentUser={this.state}
-                                                          getFollowing={this.getFollowingData} {...props} />}
+                                                          getFollowing={this.getFollowingData}
+                                                          getLikedLessons={this.getLikedLessonsData}
+                                                          {...props} />}
                             />
                             <Route
                                 path="/:username"
                                 render={props => <Profile currentUser={this.state}
-                                                          getFollowing={this.getFollowingData} {...props} />}
+                                                          getFollowing={this.getFollowingData}
+                                                          {...props} />}
                             />
                             <Route
                                 path="/notifications"
                                 render={props => <Notifications currentUser={this.state}
-                                                          getFollowing={this.getFollowingData} {...props} />}
+                                                                getNotifications={this.getNotificationsData}
+                                                                {...props} />}
                             />
                             <Route
                                 path="/"
@@ -188,6 +225,7 @@ class App extends React.Component {
                                     props =>
                                         <Timeline currentUser={this.state}
                                                   getFollowingData={this.getFollowingData}
+                                                  getLikedLessons={this.getLikedLessonsData}
                                                   {...props}
                                         />
                                     :
