@@ -73,6 +73,7 @@ main {
 
 .x-small {
   font-size: x-small;
+  line-height: 5px;
 }
 
 .fade-text {
