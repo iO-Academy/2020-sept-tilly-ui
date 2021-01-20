@@ -180,7 +180,7 @@ class App extends React.Component {
         }
     }
 
-        render() {
+    render() {
         return (
             <div>
                 <Router>
@@ -201,6 +201,12 @@ class App extends React.Component {
                             </Route>
                             }
                             <Route
+                                path="/notifications"
+                                render={props => <Notifications currentUser={this.state}
+                                                                getNotifications={this.getNotificationsData}
+                                                                {...props} />}
+                            />
+                            <Route
                                 path="/:username/:following"
                                 render={props => <Profile currentUser={this.state}
                                                           getFollowing={this.getFollowingData}
@@ -212,12 +218,6 @@ class App extends React.Component {
                                 render={props => <Profile currentUser={this.state}
                                                           getFollowing={this.getFollowingData}
                                                           {...props} />}
-                            />
-                            <Route
-                                path="/notifications"
-                                render={props => <Notifications currentUser={this.state}
-                                                                getNotifications={this.getNotificationsData}
-                                                                {...props} />}
                             />
                             <Route
                                 path="/"

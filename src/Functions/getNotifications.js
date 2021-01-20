@@ -6,6 +6,7 @@ export default function getNotifications(username, abortController) {
             notifications {
                 id,
                 sender {
+                    name,
                     username
                 },
                 type,
@@ -31,7 +32,8 @@ export default function getNotifications(username, abortController) {
                 const newDate = getDate(notification.id)
                 notifications.unshift({
                     id: notification.id,
-                    sender: notification.sender.username,
+                    senderName: notification.sender.name,
+                    senderUsername: notification.sender.username,
                     date: newDate,
                     type: notification.type,
                     lesson: notification.lesson.id,
