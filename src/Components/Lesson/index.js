@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import Button from "../Button";
+import getLikedLessons from "../../Functions/getLikedLessons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShareAlt, faHeart, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartLine } from '@fortawesome/free-regular-svg-icons';
 import './lesson.css';
 import '../Button/buttons.css';
-import getLikedLessons from "../../Functions/getLikedLessons";
 
 export default function Lesson(props) {
     const [options, openOptions] = useState(false);
@@ -39,7 +39,7 @@ export default function Lesson(props) {
                 lesson: "${props.lesson.id}",
                 token: "${props.currentUser.token}"
             )
-        }`
+        }`;
         return fetch('http://localhost:4002/graphql', {
             method: 'POST',
             headers: {
@@ -48,17 +48,40 @@ export default function Lesson(props) {
             body: JSON.stringify({query})
         })
             .then(r => {
-                return r.json()
+                return r.json();
             })
             .then(r => {
-                props.getLikedLessons()
-            })
+                props.getLikedLessons();
+            });
     }
 
     let unlikeLesson = () => {
         const query = `
         mutation {
             unlike (
+                user: "${props.currentUser.id}",
+                lesson: "${props.lesson.id}",
+                token: "${props.currentUser.token}"
+            )
+        }`;
+        return fetch('http://localhost:4002/graphql', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({query})
+        })
+            .then(r => {
+                return r.json();
+            })
+            .then(r => {
+                props.getLikedLessons();
+            });
+    }
+
+    let deleteLesson = () => {
+        const query = `mutation {
+            deleteLesson (
                 user: "${props.currentUser.id}",
                 lesson: "${props.lesson.id}",
                 token: "${props.currentUser.token}"
@@ -72,11 +95,12 @@ export default function Lesson(props) {
             body: JSON.stringify({query})
         })
             .then(r => {
-                return r.json()
+                return r.json();
             })
             .then(r => {
-                props.getLikedLessons()
-            })
+                props.getLessonsAgain();
+                openOptions(false);
+            });
     }
 
     return (
@@ -107,7 +131,7 @@ export default function Lesson(props) {
                 </div>
                 <button
                     className="lesson-options-list"
-                    onClick={() => console.log('doing this will delete it')}>
+                    onClick={deleteLesson}>
                     delete
                     <FontAwesomeIcon
                         icon={faTrash}
@@ -123,7 +147,8 @@ export default function Lesson(props) {
                     <button
                         onClick={unlikeLesson}>
                         <FontAwesomeIcon icon={faHeart} />
-                    </button> :
+                    </button>
+                    :
                     <button
                         onClick={likeLesson}>
                         <FontAwesomeIcon icon={faHeartLine}/>
