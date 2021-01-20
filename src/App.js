@@ -9,6 +9,7 @@ import LogIn from "./Components/LogUp/LogIn";
 import decoder from "./Functions/decoder";
 import getUserData from "./Functions/getUserData";
 import getFollowing from "./Functions/getFollowing";
+import getLikedLessons from "./Functions/getLikedLessons";
 import Lesson from "./Components/Lesson";
 
 class App extends React.Component {
@@ -27,11 +28,13 @@ class App extends React.Component {
             tokenError: "",
             following: [],
             youMayKnow: [],
-            hasNotifications: true
+            hasNotifications: true,
+            likedLessons: []
         }
         this.decoder = decoder.bind(this);
         this.getUserData = getUserData.bind(this);
         this.getFollowing = getFollowing.bind(this);
+        this.getLikedLessons = getLikedLessons.bind(this);
     }
 
     abortController = new AbortController();
@@ -39,12 +42,14 @@ class App extends React.Component {
     componentDidMount = () => {
         this.getData();
         this.getFollowingData();
+        this.getLikedLessonsData();
     }
 
     componentDidUpdate = (prevProps, prevState, snapshot) => {
         if (prevState.id !== this.state.id) {
             this.getData();
             this.getFollowingData();
+            this.getLikedLessonsData();
         }
     }
 
@@ -74,6 +79,7 @@ class App extends React.Component {
             token: token,
             decoded: decoded
         });
+        console.log(token)
     }
 
     logOut = () => {
@@ -141,6 +147,17 @@ class App extends React.Component {
         }
     }
 
+    getLikedLessonsData = () => {
+        if (this.state.username) {
+            this.getLikedLessons(this.state.username, this.abortController)
+                .then(data => {
+                    this.setState({
+                        likedLessons: data.data.username.likedLessons
+                    })
+                })
+        }
+    }
+
     render() {
         return (
             <div>
@@ -164,7 +181,8 @@ class App extends React.Component {
                             <Route
                                 path="/:username/:following"
                                 render={props => <Profile currentUser={this.state}
-                                                          getFollowing={this.getFollowingData} {...props} />}
+                                                          getFollowing={this.getFollowingData}
+                                                          getLikedLessons={this.getLikedLessonsData} {...props} />}
                             />
                             <Route
                                 path="/:username"
@@ -177,6 +195,7 @@ class App extends React.Component {
                                     props =>
                                         <Timeline currentUser={this.state}
                                                   getFollowingData={this.getFollowingData}
+                                                  getLikedLessons={this.getLikedLessonsData}
                                                   {...props}
                                         />
                                     :
