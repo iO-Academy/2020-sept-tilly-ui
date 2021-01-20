@@ -70,17 +70,17 @@ export default function Lesson(props) {
                 {props.lesson.lesson}
             </p>
             <span className="action-bar">
+                <button>
+                    <FontAwesomeIcon icon={faHeartLine} />
+                </button>
                 <button
                     onClick={shareLink}>
                     <FontAwesomeIcon icon={faShareAlt} />
                 </button>
-                <button>
-                    <FontAwesomeIcon icon={faHeartLine} />
-                </button>
                 {share &&
-                <div className="lesson-share-notify">
+                <span className="lesson-share-notify">
                     link copied to clipboard!
-                </div>
+                </span>
                 }
             </span>
         </div>
