@@ -44,20 +44,21 @@ html.light .lesson p {
     color: var(--fade-color);
 }
 
-button.lesson-options-list {
+button.lesson-options-list, html.light button.lesson-options-list {
     z-index: 1000;
     position: relative; /* important! to be able to click on it! */
     top: 20px;
     padding: 5px;
     font-size: x-small;
-    color: var(--line-color);
+    color: var(--fade-color);
     background: var(--main-color);
+    border: 1px solid var(--fade-color);
     border-radius: 5px;
     transition: 0.5s;
 }
 
-button.lesson-options-list:hover {
-    color: var(--fade-color);
+button.lesson-options-list:hover, html.light button.lesson-options-list:hover {
+    color: #ff0000;
 }
 
 .lesson-options svg {
@@ -87,7 +88,6 @@ button.lesson-options-list:hover {
 }
 
 .lesson-share-notify {
-    position: absolute;
     min-width: 200px;
     top: 0;
     font-size: small;
