@@ -135,12 +135,25 @@ class Timeline extends React.Component {
             });
     }
 
+    addLesson = (text) => {
+        let stateCopy = {...this.state}
+        const lesson = {
+            lesson: text,
+            date: "just now",
+            username: this.props.currentUser.username,
+            name: this.props.currentUser.name
+        };
+        stateCopy.visibleLessons.unshift(lesson);
+        this.setState({...stateCopy});
+    }
+
     render() {
         return (
             <>
                 <Create
                     id={this.props.currentUser.id}
                     currentUser={this.props.currentUser}
+                    onAddLesson={this.addLesson}
                 />
                 {this.state.display === "youMayKnow" ?
                     <UserList
