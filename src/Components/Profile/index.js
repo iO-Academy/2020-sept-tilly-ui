@@ -15,6 +15,7 @@ import getUserData from "../../Functions/getUserData";
 import search from "../../Functions/search";
 import clearSearch from "../../Functions/clearSearch";
 import "./profile.css";
+import createNotification from "../../Functions/createNotification";
 
 class Profile extends React.Component {
 
@@ -114,6 +115,13 @@ class Profile extends React.Component {
     followAction = (event) => {
         this.follow(event, this.abortController)
             .then(data => {
+                data.data.follow &&
+                createNotification(
+                    this.props.currentUser.id,
+                    event.target.value,
+                    "follow",
+                    this.props.currentUser.token
+                )
                 this.getFollowingData();
                 this.props.getFollowing();
             });
@@ -235,6 +243,7 @@ class Profile extends React.Component {
                                         currentUser={this.props.currentUser}
                                         getLikedLessons={this.props.getLikedLessons}
                                         getLessonsAgain={this.getLessonData}
+                                        getNotifications={this.props.getNotifications}
                                         profile={true}
                                     />
                                 )}

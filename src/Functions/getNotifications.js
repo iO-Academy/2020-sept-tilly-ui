@@ -36,7 +36,7 @@ export default function getNotifications(username, abortController) {
                     senderUsername: notification.sender.username,
                     date: newDate,
                     type: notification.type,
-                    lesson: notification.lesson.id,
+                    lesson: notification.lesson ? notification.lesson.id : null,
                     status: notification.status
                 })
             });

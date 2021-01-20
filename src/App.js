@@ -203,7 +203,6 @@ class App extends React.Component {
                             <Route
                                 path="/notifications"
                                 render={props => <Notifications currentUser={this.state}
-                                                                getNotifications={this.getNotificationsData}
                                                                 {...props} />}
                             />
                             <Route
@@ -211,12 +210,15 @@ class App extends React.Component {
                                 render={props => <Profile currentUser={this.state}
                                                           getFollowing={this.getFollowingData}
                                                           getLikedLessons={this.getLikedLessonsData}
+                                                          getNotifications={this.getNotificationsData}
                                                           {...props} />}
                             />
                             <Route
                                 path="/:username"
                                 render={props => <Profile currentUser={this.state}
                                                           getFollowing={this.getFollowingData}
+                                                          getLikedLessons={this.getLikedLessonsData}
+                                                          getNotifications={this.getNotificationsData}
                                                           {...props} />}
                             />
                             <Route
@@ -224,8 +226,9 @@ class App extends React.Component {
                                 render={this.state.loggedIn ?
                                     props =>
                                         <Timeline currentUser={this.state}
-                                                  getFollowingData={this.getFollowingData}
+                                                  getFollowing={this.getFollowingData}
                                                   getLikedLessons={this.getLikedLessonsData}
+                                                  getNotifications={this.getNotificationsData}
                                                   {...props}
                                         />
                                     :
