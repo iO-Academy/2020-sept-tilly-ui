@@ -10,6 +10,7 @@ import unfollow from "../../Functions/unfollow";
 import search from "../../Functions/search";
 import clearSearch from "../../Functions/clearSearch";
 import "./timeline.css";
+import createNotification from "../../Functions/createNotification";
 
 class Timeline extends React.Component {
 
@@ -113,14 +114,21 @@ class Timeline extends React.Component {
     followAction = (event) => {
         this.follow(event, this.abortController)
             .then(data => {
-                this.props.getFollowingData();
+                data.data.follow &&
+                createNotification(
+                    this.props.currentUser.id,
+                    event.target.value,
+                    "follow",
+                    this.props.currentUser.token
+                )
+                this.props.getFollowing();
             });
     }
 
     unfollowAction = (event) => {
         this.unfollow(event, this.abortController)
             .then(data => {
-                this.props.getFollowingData();
+                this.props.getFollowing();
             });
     }
 
@@ -152,8 +160,8 @@ class Timeline extends React.Component {
                         sidebar={false}
                         username={this.props.currentUser.username}
                         loggedIn={this.props.currentUser.loggedIn}
-                        onFollow={this.props.onFollow}
-                        onUnfollow={this.props.onUnfollow}
+                        onFollow={this.followAction}
+                        onUnfollow={this.unfollowAction}
                         currentUserUsername={this.props.currentUser.username}
                         currentUserFollowing={this.props.currentUser.following}
                         listTitle={this.props.currentUser.username + "'s potential chums"}
@@ -164,8 +172,8 @@ class Timeline extends React.Component {
                         sidebar={false}
                         username={this.props.currentUser.username}
                         loggedIn={this.props.currentUser.loggedIn}
-                        onFollow={this.props.onFollow}
-                        onUnfollow={this.props.onUnfollow}
+                        onFollow={this.followAction}
+                        onUnfollow={this.unfollowAction}
                         currentUserUsername={this.props.currentUser.username}
                         currentUserFollowing={this.props.currentUser.following}
                         listTitle={"search results"}
@@ -179,11 +187,12 @@ class Timeline extends React.Component {
                         </h3>
                         {this.state.visibleLessons.map((lesson, i) =>
                         <Lesson
-                            key={"tLesson" + i}
+                            key={"Lesson" + i}
                             lesson={lesson}
                             currentUser={this.props.currentUser}
                             getLikedLessons={this.props.getLikedLessons}
                             getLessonsAgain={this.getTimelineData}
+                            getNotifications={this.props.getNotifications}
                             profile={false}
                         />
                     )}

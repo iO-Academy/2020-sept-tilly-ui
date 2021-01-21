@@ -7,6 +7,7 @@ import { faShareAlt, faHeart, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartLine } from '@fortawesome/free-regular-svg-icons';
 import './lesson.css';
 import '../Button/buttons.css';
+import createNotification from "../../Functions/createNotification";
 
 export default function Lesson(props) {
     const [options, openOptions] = useState(false);
@@ -51,6 +52,17 @@ export default function Lesson(props) {
                 return r.json();
             })
             .then(r => {
+                r.data.like &&
+                createNotification(
+                    props.currentUser.id,
+                    props.lesson.userId,
+                    "like",
+                    props.currentUser.token,
+                    props.lesson.id
+                )
+                    .then(() => {
+                        props.getNotifications()
+                    })
                 props.getLikedLessons();
             });
     }

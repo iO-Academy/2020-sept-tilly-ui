@@ -71,7 +71,8 @@ class Nav extends React.Component {
                                 />
                             </div>
                         </Link>
-                        <a
+                        <Link
+                            to="/notifications"
                             className="navItem navOne">
                             <div className="navText">
                                 notifications
@@ -88,7 +89,7 @@ class Nav extends React.Component {
                                 </div>
                                 }
                             </div>
-                        </a>
+                        </Link>
                         <a className="navItem navTwo">
                             <div className="navText">
                                 settings

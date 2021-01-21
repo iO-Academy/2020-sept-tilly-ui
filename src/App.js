@@ -11,6 +11,8 @@ import getUserData from "./Functions/getUserData";
 import getFollowing from "./Functions/getFollowing";
 import getLikedLessons from "./Functions/getLikedLessons";
 import Lesson from "./Components/Lesson";
+import Notifications from "./Components/Notifications";
+import getNotifications from "./Functions/getNotifications";
 
 class App extends React.Component {
 
@@ -29,12 +31,14 @@ class App extends React.Component {
             following: [],
             youMayKnow: [],
             hasNotifications: true,
-            likedLessons: []
+            likedLessons: [],
+            notifications: []
         }
         this.decoder = decoder.bind(this);
         this.getUserData = getUserData.bind(this);
         this.getFollowing = getFollowing.bind(this);
         this.getLikedLessons = getLikedLessons.bind(this);
+        this.getNotifications = getNotifications.bind(this);
     }
 
     abortController = new AbortController();
@@ -43,6 +47,7 @@ class App extends React.Component {
         this.getData();
         this.getFollowingData();
         this.getLikedLessonsData();
+        this.getNotificationsData();
     }
 
     componentDidUpdate = (prevProps, prevState, snapshot) => {
@@ -50,6 +55,7 @@ class App extends React.Component {
             this.getData();
             this.getFollowingData();
             this.getLikedLessonsData();
+            this.getNotificationsData();
         }
     }
 
@@ -85,7 +91,6 @@ class App extends React.Component {
             token: token,
             decoded: decoded
         });
-        console.log(token)
     }
 
     logOut = () => {
@@ -164,6 +169,17 @@ class App extends React.Component {
         }
     }
 
+    getNotificationsData = () => {
+        if (this.state.username) {
+            this.getNotifications(this.state.username, this.abortController)
+                .then(data => {
+                    this.setState({
+                        notifications: data
+                    })
+                })
+        }
+    }
+
     render() {
         return (
             <div>
@@ -185,23 +201,34 @@ class App extends React.Component {
                             </Route>
                             }
                             <Route
+                                path="/notifications"
+                                render={props => <Notifications currentUser={this.state}
+                                                                {...props} />}
+                            />
+                            <Route
                                 path="/:username/:following"
                                 render={props => <Profile currentUser={this.state}
                                                           getFollowing={this.getFollowingData}
-                                                          getLikedLessons={this.getLikedLessonsData} {...props} />}
+                                                          getLikedLessons={this.getLikedLessonsData}
+                                                          getNotifications={this.getNotificationsData}
+                                                          {...props} />}
                             />
                             <Route
                                 path="/:username"
                                 render={props => <Profile currentUser={this.state}
-                                                          getFollowing={this.getFollowingData} {...props} />}
+                                                          getFollowing={this.getFollowingData}
+                                                          getLikedLessons={this.getLikedLessonsData}
+                                                          getNotifications={this.getNotificationsData}
+                                                          {...props} />}
                             />
                             <Route
                                 path="/"
                                 render={this.state.loggedIn ?
                                     props =>
                                         <Timeline currentUser={this.state}
-                                                  getFollowingData={this.getFollowingData}
+                                                  getFollowing={this.getFollowingData}
                                                   getLikedLessons={this.getLikedLessonsData}
+                                                  getNotifications={this.getNotificationsData}
                                                   {...props}
                                         />
                                     :
