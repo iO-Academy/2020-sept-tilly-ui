@@ -13,6 +13,7 @@ import getFollowing from "./Functions/getFollowing";
 import getLikedLessons from "./Functions/getLikedLessons";
 import Notifications from "./Components/Notifications";
 import getNotifications from "./Functions/getNotifications";
+import viewAllNotifications from "./Functions/viewAllNotifications";
 
 class App extends React.Component {
 
@@ -30,7 +31,7 @@ class App extends React.Component {
             tokenError: "",
             following: [],
             youMayKnow: [],
-            hasNotifications: true,
+            hasNewNotifications: false,
             likedLessons: [],
             notifications: []
         }
@@ -39,6 +40,7 @@ class App extends React.Component {
         this.getFollowing = getFollowing.bind(this);
         this.getLikedLessons = getLikedLessons.bind(this);
         this.getNotifications = getNotifications.bind(this);
+        this.viewAllNotifications = viewAllNotifications.bind(this);
     }
 
     abortController = new AbortController();
@@ -175,9 +177,25 @@ class App extends React.Component {
                 .then(data => {
                     this.setState({
                         notifications: data
-                    })
-                })
+                    });
+                    data.forEach(notification => {
+                        !notification.viewed &&
+                            this.setState({
+                                hasNewNotifications: true
+                            });
+                    });
+                });
         }
+    }
+
+    handleViewAllNotifications = () => {
+        this.viewAllNotifications(this.state.id, this.state.token, this.abortController)
+            .then(() => {
+                this.getNotificationsData()
+                this.setState({
+                    hasNewNotifications: false
+                })
+            })
     }
 
     render() {
@@ -185,9 +203,10 @@ class App extends React.Component {
             <div>
                 <Router>
                     <Nav
+                        currentUser={this.state}
                         username={this.state.username}
                         loggedIn={this.state.loggedIn}
-                        hasNotifications={this.state.hasNotifications}
+                        hasNewNotifications={this.state.hasNewNotifications}
                         onLogOut={this.logOut}
                     />
                     <main>
@@ -204,6 +223,7 @@ class App extends React.Component {
                             <Route
                                 path="/notifications"
                                 render={props => <Notifications currentUser={this.state}
+                                                                viewAllNotifications={this.handleViewAllNotifications}
                                                                 {...props} />}
                             />
                             }
