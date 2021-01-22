@@ -11,7 +11,6 @@ import '../Button/buttons.css';
 export default function Lesson(props) {
     const [options, openOptions] = useState(false);
     const [share, openShare] = useState(false);
-
     useEffect(() => {
         document.addEventListener('keyup', closeOptions, false);
         return () => {
@@ -165,6 +164,9 @@ export default function Lesson(props) {
                         <FontAwesomeIcon icon={faHeartLine}/>
                     </button>
                 }
+                <span className="like-count">
+                    {props.lesson.likeCount > 0 ? props.lesson.likeCount : ""}
+                </span>
                 <button
                     onClick={shareLink}>
                     <FontAwesomeIcon icon={faShareAlt} />
