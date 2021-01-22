@@ -29,7 +29,7 @@ export default function getNotifications(username, abortController) {
         .then(data => {
             let notifications = [];
             data.data.username.notifications.forEach(notification => {
-                const newDate = getDate(notification.id)
+                const newDate = getDate(notification.id);
                 notifications.unshift({
                     id: notification.id,
                     senderName: notification.sender.name,

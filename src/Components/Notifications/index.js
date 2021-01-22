@@ -9,7 +9,7 @@ export default function Notifications(props) {
     });
 
     return (
-        <section id="my-lessons">
+        <section>
             <h3>notifications</h3>
             {props.currentUser.notifications.map((notification, i) => {
                 return (
@@ -23,7 +23,9 @@ export default function Notifications(props) {
                                 <Link to={"/" + props.currentUser.username + "/lessons/" + notification.lesson}> lesson</Link>
                             </p> :
                             <p>
-                                <Link to={"/" + notification.senderUsername}>{notification.senderName}</Link> followed you
+                                <Link to={"/" + notification.senderUsername}>
+                                    {notification.senderName}
+                                </Link> followed you
                             </p>
                         }
                     </div>

@@ -99,15 +99,15 @@ class SignUp extends React.Component {
                     this.setState({
                         validPassword: this.state.password && passwordPattern.test(this.state.password),
                         passwordConfirmed: this.state.password && this.state.password === this.state.confirmPassword
-                    })
+                    });
                     break;
                 case "confirmPassword":
                     this.setState({
                         validPassword: this.state.password && passwordPattern.test(this.state.password),
                         passwordConfirmed: this.state.password && this.state.password === this.state.confirmPassword
-                    })
+                    });
             }
-        })
+        });
     }
 
     async checkUsername(event) {

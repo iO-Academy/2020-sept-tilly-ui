@@ -1,7 +1,7 @@
 import decoder from "./decoder";
 
 export default function createNotification(sender, recipient, type, token, lesson) {
-    if (lesson === undefined) {
+    if (lesson === null) {
         const query = `
             mutation {
                 addNotification(
@@ -18,7 +18,7 @@ export default function createNotification(sender, recipient, type, token, lesso
                 'content-type': 'application/json'
             },
             body: JSON.stringify({query})
-        })
+        });
     } else {
         const query = `
                 mutation {
@@ -37,6 +37,6 @@ export default function createNotification(sender, recipient, type, token, lesso
                 'content-type': 'application/json'
             },
             body: JSON.stringify({query})
-        })
+        });
     }
 }

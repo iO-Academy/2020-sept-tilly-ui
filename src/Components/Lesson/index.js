@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import Button from "../Button";
-import getLikedLessons from "../../Functions/getLikedLessons";
+import createNotification from "../../Functions/createNotification";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShareAlt, faHeart, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartLine } from '@fortawesome/free-regular-svg-icons';
 import './lesson.css';
 import '../Button/buttons.css';
-import createNotification from "../../Functions/createNotification";
 
 export default function Lesson(props) {
     const [options, openOptions] = useState(false);
@@ -25,7 +24,7 @@ export default function Lesson(props) {
     }
 
     function shareLink() {
-        navigator.clipboard.writeText(window.location.origin + props.lesson.username + "/lessons/" + props.lesson.id)
+        navigator.clipboard.writeText(window.location.origin + "/" + props.lesson.username + "/lessons/" + props.lesson.id)
             .then(data => {
                 openShare(true);
                 setTimeout(() => openShare(false), 5000);
@@ -61,8 +60,8 @@ export default function Lesson(props) {
                     props.lesson.id
                 )
                     .then(() => {
-                        props.getNotifications()
-                    })
+                        if (props.getNotifications) props.getNotifications();
+                    });
                 props.getLikedLessons();
             });
     }

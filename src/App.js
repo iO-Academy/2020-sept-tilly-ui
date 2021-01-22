@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Nav from "./Components/Nav";
 import Profile from "./Components/Profile";
 import Timeline from "./Components/Timeline";
+import SingleLesson from "./Components/SingleLesson";
 import SignUp from "./Components/LogUp/SignUp";
 import LogIn from "./Components/LogUp/LogIn";
 import decoder from "./Functions/decoder";
@@ -218,11 +219,21 @@ class App extends React.Component {
                                 />
                             </Route>
                             }
+                            {this.state.loggedIn &&
                             <Route
                                 path="/notifications"
                                 render={props => <Notifications currentUser={this.state}
                                                                 viewAllNotifications={this.handleViewAllNotifications}
                                                                 {...props} />}
+                            />
+                            }
+                            <Route
+                                path="/:username/lessons/:lessonId"
+                                render={props => <SingleLesson currentUser={this.state}
+                                                          getFollowing={this.getFollowingData}
+                                                          getLikedLessons={this.getLikedLessonsData}
+                                                          getNotifications={this.getNotificationsData}
+                                                          {...props} />}
                             />
                             <Route
                                 path="/:username/:following"
