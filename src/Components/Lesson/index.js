@@ -12,7 +12,6 @@ import createNotification from "../../Functions/createNotification";
 export default function Lesson(props) {
     const [options, openOptions] = useState(false);
     const [share, openShare] = useState(false);
-console.log(props.lesson)
     useEffect(() => {
         document.addEventListener('keyup', closeOptions, false);
         return () => {
@@ -166,7 +165,9 @@ console.log(props.lesson)
                         <FontAwesomeIcon icon={faHeartLine}/>
                     </button>
                 }
-                {props.lesson.likeCount > 0 ? props.lesson.likeCount : ""}
+                <span className="like-count">
+                    {props.lesson.likeCount > 0 ? props.lesson.likeCount : ""}
+                </span>
                 <button
                     onClick={shareLink}>
                     <FontAwesomeIcon icon={faShareAlt} />

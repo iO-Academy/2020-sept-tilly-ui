@@ -87,6 +87,11 @@ button.lesson-options-list:hover, html.light button.lesson-options-list:hover {
     padding: 0 0 0 0;
 }
 
+.like-count {
+    display: inline-block;
+    min-width: 15px;
+}
+
 .lesson-share-notify {
     min-width: 200px;
     top: 0;
