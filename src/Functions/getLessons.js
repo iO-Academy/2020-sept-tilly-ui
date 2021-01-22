@@ -7,7 +7,10 @@ export default function getLessons(username, abortController) {
             name,
             lessons {
                 id,
-                lesson
+                lesson,
+                likedBy {
+                    id
+                }
             }
         }
     }`
@@ -24,7 +27,15 @@ export default function getLessons(username, abortController) {
             let lessons = [];
             data.data.username.lessons.forEach(lesson => {
                 const newDate = getDate(lesson.id)
-                lessons.unshift({id: lesson.id, lesson: lesson.lesson, date: newDate, username: username, userId: data.data.username.id, name: data.data.username.name})
+                lessons.unshift({
+                    id: lesson.id,
+                    lesson: lesson.lesson,
+                    date: newDate,
+                    username: username,
+                    userId: data.data.username.id,
+                    name: data.data.username.name,
+                    likeCount: lesson.likedBy.length
+                })
             });
             return lessons;
         });
