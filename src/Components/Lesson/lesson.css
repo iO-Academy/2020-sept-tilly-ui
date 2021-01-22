@@ -83,10 +83,6 @@ button.lesson-options-list:hover, html.light button.lesson-options-list:hover {
     color: var(--high-color);
 }
 
-.action-bar svg {
-    padding: 0 0 0 0;
-}
-
 .like-count {
     display: inline-block;
     min-width: 15px;
