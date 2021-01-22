@@ -26,8 +26,8 @@ html.light {
   --follow-color: #6082ff;
   --unfollow-color: #ff6e00;
   --warn-color: #D87C27;
-  --fade-color: #526571;
-  --line-color: #a4b8cd;
+  --fade-color: #5c9ed4;
+  --line-color: #98c5ff;
   --shadow-color: #6f90b6;
   --main-border: 1px solid var(--line-color);
 }

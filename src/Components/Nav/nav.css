@@ -69,11 +69,6 @@ nav h5 {
     border-radius: 100%;
 }
 
-.hasNewNotifications {
-    transform-origin: top;
-    animation: bellRinger 20s ease-in-out infinite;
-}
-
 .navLogin {
     position: static;
     flex-direction: column;

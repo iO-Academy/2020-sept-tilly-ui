@@ -8,14 +8,6 @@
     border-radius: 5px;
 }
 
-.unread {
-    border: 1px solid var(--high-color);
-}
-
-html.light .unread {
-    background: var(--fade-color);
-}
-
 html.light .notification {
     border: var(--main-border);
 }
@@ -33,6 +25,11 @@ html.light .notification p {
     background: #e2f2ff;
     border: var(--main-border);
     box-shadow: 0 0 3px -3px #000;
+}
+
+.unread, html.light .unread {
+    background: var(--fade-color);
+    border: 1px solid var(--high-color);
 }
 
 @media screen and (min-width: 800px) {
