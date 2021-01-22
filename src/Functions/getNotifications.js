@@ -29,7 +29,7 @@ export default function getNotifications(username, abortController) {
         .then(data => {
             let notifications = [];
             data.data.username.notifications.forEach(notification => {
-                const newDate = getDate(notification.id)
+                const newDate = getDate(notification.id);
                 notifications.unshift({
                     id: notification.id,
                     senderName: notification.sender.name,
@@ -38,8 +38,9 @@ export default function getNotifications(username, abortController) {
                     type: notification.type,
                     lesson: notification.lesson ? notification.lesson.id : null,
                     status: notification.status
-                })
+                });
             });
+            console.log(notifications)
             return notifications;
         });
 }

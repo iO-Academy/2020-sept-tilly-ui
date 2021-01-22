@@ -200,11 +200,13 @@ class App extends React.Component {
                                 />
                             </Route>
                             }
+                            {this.state.loggedIn &&
                             <Route
                                 path="/notifications"
                                 render={props => <Notifications currentUser={this.state}
                                                                 {...props} />}
                             />
+                            }
                             <Route
                                 path="/:username/:following"
                                 render={props => <Profile currentUser={this.state}

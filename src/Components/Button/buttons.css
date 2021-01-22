@@ -7,10 +7,11 @@ button {
     background: var(--high-color);
     border: none;
     border-radius: 10px;
-    box-shadow: 0 5px 15px 1px var(--shadow-color);
+    box-shadow: 0 3px 10px 1px var(--shadow-color);
 }
 
 html.light button {
+    color: var(--line-color);
     background: var(--follow-color);
 }
 

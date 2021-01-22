@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShareAlt, faHeart, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faHeartLine } from '@fortawesome/free-regular-svg-icons';
 import './notification.css';
 
 export default function Notifications(props) {
 
     return (
-        <section id="my-lessons">
+        <section>
             <h3>notifications</h3>
-            {props.currentUser.notifications.map((notification, i) => {
-                return (
+            {props.currentUser.notifications.map((notification, i) =>
                     <div className="notification">
                         <span className="fade-text small lesson-date">
                             {notification.date}
                         </span>
                         {notification.type === "like" ?
                             <p>
-                                <Link to={"/" + notification.senderUsername}>{notification.senderName}</Link> liked your lesson
-                            </p> :
+                                <Link to={"/" + notification.senderUsername}>
+                                    {notification.senderName}
+                                </Link> liked your lesson
+                            </p>
+                            :
                             <p>
-                                <Link to={"/" + notification.senderUsername}>{notification.senderName}</Link> followed you
+                                <Link to={"/" + notification.senderUsername}>
+                                    {notification.senderName}
+                                </Link> followed you
                             </p>
                         }
                     </div>
-                )
-            })}
+            )}
         </section>
     )
 }

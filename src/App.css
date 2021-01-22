@@ -20,15 +20,15 @@ html {
 
 html.light {
   --main-color: #ffffff;
-  --bars-color: rgba(219, 237, 255, 0.3);
+  --bars-color: rgba(219, 237, 255, 0.5);
   --oppo-color: #1a1a1a;
   --high-color: #000000;
-  --follow-color: #7a7aff;
-  --unfollow-color: #ff6e00;
+  --follow-color: #6082ff;
+  --unfollow-color: #ff985e;
   --warn-color: #D87C27;
-  --fade-color: #939393;
-  --line-color: #c6dcff;
-  --shadow-color: #e2e2e2;
+  --fade-color: #526571;
+  --line-color: #ffffff;
+  --shadow-color: #6f90b6;
   --main-border: 1px solid var(--line-color);
 }
 
