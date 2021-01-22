@@ -82,9 +82,9 @@ class Nav extends React.Component {
                                     icon={faBell}
                                     alt="my notifications"
                                     title="my notifications"
-                                    className={"navNotification" + this.props.hasNotifications ? " hasNotifications" : ""}
+                                    className={"navNotification" + this.props.hasNewNotifications ? " hasNewNotifications" : ""}
                                 />
-                                {this.props.hasNotifications &&
+                                {this.props.hasNewNotifications &&
                                 <div className="notificationDot">
                                 </div>
                                 }

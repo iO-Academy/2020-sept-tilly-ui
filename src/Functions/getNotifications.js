@@ -13,7 +13,7 @@ export default function getNotifications(username, abortController) {
                 lesson {
                     id
                 },
-                status
+                viewed
             }
         }
     }`
@@ -37,7 +37,7 @@ export default function getNotifications(username, abortController) {
                     date: newDate,
                     type: notification.type,
                     lesson: notification.lesson ? notification.lesson.id : null,
-                    status: notification.status
+                    viewed: notification.viewed
                 })
             });
             return notifications;

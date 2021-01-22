@@ -8,6 +8,10 @@
     border-radius: 5px;
 }
 
+.unread {
+    border: 1px solid var(--high-color)
+}
+
 html.light .notification {
     border: var(--main-border);
 }
