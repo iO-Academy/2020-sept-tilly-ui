@@ -10,7 +10,6 @@ import decoder from "./Functions/decoder";
 import getUserData from "./Functions/getUserData";
 import getFollowing from "./Functions/getFollowing";
 import getLikedLessons from "./Functions/getLikedLessons";
-import Lesson from "./Components/Lesson";
 import Notifications from "./Components/Notifications";
 import getNotifications from "./Functions/getNotifications";
 import viewAllNotifications from "./Functions/viewAllNotifications";
@@ -177,14 +176,14 @@ class App extends React.Component {
                 .then(data => {
                     this.setState({
                         notifications: data
-                    })
+                    });
                     data.forEach(notification => {
                         !notification.viewed &&
                             this.setState({
                                 hasNewNotifications: true
-                            })
-                    })
-                })
+                            });
+                    });
+                });
         }
     }
 

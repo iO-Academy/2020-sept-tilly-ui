@@ -9,7 +9,11 @@
 }
 
 .unread {
-    border: 1px solid var(--high-color)
+    border: 1px solid var(--high-color);
+}
+
+html.light .unread {
+    background: var(--fade-color);
 }
 
 html.light .notification {
