@@ -90,9 +90,10 @@ class Nav extends React.Component {
                                 }
                             </div>
                         </Link>
-                        <a className="navItem navTwo">
+                        <Link to="/editProfile"
+                              className="navItem navTwo">
                             <div className="navText">
-                                settings
+                                edit my details
                             </div>
                             <div className="navIcon">
                                 <FontAwesomeIcon
@@ -101,7 +102,7 @@ class Nav extends React.Component {
                                     title="settings"
                                 />
                             </div>
-                        </a>
+                        </Link>
                         <a className="navItem navTwo"
                            onClick={this.props.onLogOut}>
                             <div className="navText">

@@ -5,6 +5,7 @@ export default function getUserData(username, abortController) {
             username,
             name,
             email,
+            hash,
             description
           }
         }`
