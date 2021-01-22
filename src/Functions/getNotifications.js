@@ -40,7 +40,6 @@ export default function getNotifications(username, abortController) {
                     status: notification.status
                 });
             });
-            console.log(notifications)
             return notifications;
         });
 }

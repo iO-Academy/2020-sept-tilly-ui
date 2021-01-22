@@ -4,13 +4,13 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Nav from "./Components/Nav";
 import Profile from "./Components/Profile";
 import Timeline from "./Components/Timeline";
+import SingleLesson from "./Components/SingleLesson";
 import SignUp from "./Components/LogUp/SignUp";
 import LogIn from "./Components/LogUp/LogIn";
 import decoder from "./Functions/decoder";
 import getUserData from "./Functions/getUserData";
 import getFollowing from "./Functions/getFollowing";
 import getLikedLessons from "./Functions/getLikedLessons";
-import Lesson from "./Components/Lesson";
 import Notifications from "./Components/Notifications";
 import getNotifications from "./Functions/getNotifications";
 
@@ -207,6 +207,14 @@ class App extends React.Component {
                                                                 {...props} />}
                             />
                             }
+                            <Route
+                                path="/:username/lessons/:lessonId"
+                                render={props => <SingleLesson currentUser={this.state}
+                                                          getFollowing={this.getFollowingData}
+                                                          getLikedLessons={this.getLikedLessonsData}
+                                                          getNotifications={this.getNotificationsData}
+                                                          {...props} />}
+                            />
                             <Route
                                 path="/:username/:following"
                                 render={props => <Profile currentUser={this.state}

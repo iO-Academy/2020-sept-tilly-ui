@@ -11,7 +11,7 @@ button {
 }
 
 html.light button {
-    color: var(--line-color);
+    /*color: var(--line-color);*/
     background: var(--follow-color);
 }
 
