@@ -29,6 +29,10 @@ class UserForm extends React.Component {
         this.decoder = decoder.bind(this);
     }
 
+    componentDidMount() {
+        this.validateOnLoad()
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps !== this.props) {
             this.validateOnLoad()
@@ -321,7 +325,12 @@ class UserForm extends React.Component {
                             type="password"
                             required
                             name="password"
-                            value={this.state.password}
+                            value={this.props.currentUser && this.state.password === this.props.currentUser.hash ?
+                                "" :
+                                this.state.password}
+                            placeholder={this.props.currentUser && this.state.password === this.props.currentUser.hash ?
+                                "unchanged" :
+                                ""}
                             onChange={this.handleInput}
                         />
                         <div
@@ -354,7 +363,12 @@ class UserForm extends React.Component {
                             type="password"
                             required
                             name="confirmPassword"
-                            value={this.state.confirmPassword}
+                            value={this.props.currentUser && this.state.password === this.props.currentUser.hash ?
+                                "" :
+                                this.state.confirmPassword}
+                            placeholder={this.props.currentUser && this.state.password === this.props.currentUser.hash ?
+                                "unchanged" :
+                                ""}
                             onChange={this.handleInput}
                         />
                         <div
