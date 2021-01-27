@@ -1,0 +1,11 @@
+#editProfile {
+    position: relative;
+    width: 400px;
+    max-width: 90vw;
+    margin: auto;
+    text-align: center;
+}
+
+.editProfile-title {
+    margin: 40px 0 30px 0;
+}

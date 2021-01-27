@@ -14,6 +14,7 @@ import getLikedLessons from "./Functions/getLikedLessons";
 import Notifications from "./Components/Notifications";
 import getNotifications from "./Functions/getNotifications";
 import viewAllNotifications from "./Functions/viewAllNotifications";
+import EditProfile from "./Components/EditProfile";
 
 class App extends React.Component {
 
@@ -25,6 +26,7 @@ class App extends React.Component {
             name: "",
             username: "",
             email: "",
+            hash: "",
             description: "",
             token: "",
             decoded: "",
@@ -77,6 +79,7 @@ class App extends React.Component {
                         this.setState({
                             name: data.data.username.name,
                             email: data.data.username.email,
+                            hash: data.data.username.hash,
                             description: data.data.username.description
                         }));
             } catch(err) {
@@ -224,6 +227,13 @@ class App extends React.Component {
                                 path="/notifications"
                                 render={props => <Notifications currentUser={this.state}
                                                                 viewAllNotifications={this.handleViewAllNotifications}
+                                                                {...props} />}
+                            />
+                            }
+                            <Route
+                                path="/editProfile"
+                                render={props => <EditProfile currentUser={this.state}
+                                                              getUserData={this.getData}
                                                                 {...props} />}
                             />
                             }
