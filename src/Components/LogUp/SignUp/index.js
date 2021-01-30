@@ -33,8 +33,8 @@ class SignUp extends React.Component {
             .then(data => {
                 const token = data.data.addUser;
                 const decoded = this.decoder(token);
-                this.setState({id: decoded.id});
-                this.props.onCreateUser(this.state);
+                // this.setState({id: decoded.id});
+                this.props.onCreateUser(name, username, email, password, description, token, decoded);
             });
     }
 
