@@ -113,12 +113,14 @@ class App extends React.Component {
         });
     }
 
-    createUser = (userInfo) => {
+    createUser = (name, username, email, password, description, token, decoded) => {
         let stateCopy = {...this.state};
-        stateCopy.name = userInfo.name;
-        stateCopy.username = userInfo.username;
-        stateCopy.email = userInfo.email;
-        stateCopy.description = userInfo.description;
+        stateCopy.name = name;
+        stateCopy.username = username;
+        stateCopy.email = email;
+        stateCopy.description = description;
+        stateCopy.token = token;
+        stateCopy.decoded = decoded;
         stateCopy.loggedIn = true;
         this.setState({...stateCopy});
     }
